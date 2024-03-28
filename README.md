@@ -1,4 +1,4 @@
-# Airbnb Clone with React and Vite
+# Airbnb with React and Vite
 
 This project is a clone of Airbnb, developed using React and Vite. It's designed to demonstrate the capabilities of React for building sophisticated single-page applications (SPAs) with a focus on performance and developer experience. Vite, as a build tool, enhances the development experience with features like fast hot module replacement (HMR).
 
