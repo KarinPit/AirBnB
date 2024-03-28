@@ -29,4 +29,3 @@ Idan ben abu
 - React documentation
 - Vite documentation
 - Scss
-- 
