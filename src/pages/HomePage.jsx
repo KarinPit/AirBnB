@@ -1,9 +1,11 @@
 import React from "react";
 
+import HouseExample from "../assets/img/HouseExample.jpg"
+
 export function HomePage() {
   return (
     <section>
-      <h1>AIR BNB</h1>
+      <img src={HouseExample}></img>
     </section>
   );
 }

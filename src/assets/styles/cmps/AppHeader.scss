@@ -1,21 +1,39 @@
 .app-header {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+
+  a {
+    display: flex;
+    justify-content: center;
+  }
+
   .logo {
-    width: rem(102px);
+    width: rem(100px);
     height: rem(32px);
   }
+
+  .header__center {
+    display: flex;
+    gap: 20px;
+
+    button {
+      font-size: rem(16px);
+      cursor: pointer;
+    }
+  }
+
   .header__right {
     display: flex;
     align-items: center;
-    > * {
+
+    >* {
       padding: $spacing-md;
       display: flex;
       align-items: center;
     }
+
     img {
       width: rem(16px);
       height: rem(16px);

@@ -1,5 +1,6 @@
 import { HomePage } from "./pages/HomePage.jsx";
 import { StayIndex } from "./pages/StayIndex.jsx";
+import { StayDetails } from "./pages/StayDetails.jsx";
 import { ExperienceIndex } from "./pages/ExperienceIndex.jsx";
 import { OnlineExperienceIndex } from "./pages/OnlineExperienceIndex.jsx";
 import { ContactRenterPage } from "./pages/ContactRenterPage.jsx";
@@ -19,12 +20,16 @@ const routes = [
     label: "Stays",
   },
   {
+    path: "stay/:stayId",
+    component: <StayDetails />,
+  },
+  {
     path: "experience",
     component: <ExperienceIndex />,
     label: "Experiences",
   },
   {
-    path: "online-expreience",
+    path: "online-experience",
     component: <OnlineExperienceIndex />,
     label: "Online Experiences",
   },
