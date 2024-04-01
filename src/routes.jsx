@@ -1,26 +1,22 @@
-import { HomePage } from "./pages/HomePage.jsx";
-import { StayIndex } from "./pages/StayIndex.jsx";
-import { StayDetails } from "./pages/StayDetails.jsx";
-import { ExperienceIndex } from "./pages/ExperienceIndex.jsx";
-import { OnlineExperienceIndex } from "./pages/OnlineExperienceIndex.jsx";
-import { ContactRenterPage } from "./pages/ContactRenterPage.jsx";
-import { HomePageClient } from "./pages/HomePageClient.jsx";
-import { HomePageRenter } from "./pages/HomePageRenter.jsx";
-import { OrderRequestPage } from "./pages/OrderRequestPage.jsx";
+import { ContactRenterIndex } from "./pages/ContactRenterIndex"
+import { ExperienceIndex } from "./pages/ExperienceIndex"
+import { OnlineExperienceIndex } from "./pages/OnlineExperienceIndex"
+import { OrderIndex } from "./pages/OrderIndex"
+import { ProfileIndex } from "./pages/ProfileIndex"
+import { RenterIndex } from "./pages/RenterIndex"
+import { TravelerIndex } from "./pages/TravelerIndex"
+import { StayIndex } from "./pages/StayIndex"
+
 
 const routes = [
   {
     path: "/",
-    component: <HomePage />,
+    component: <TravelerIndex />,
   },
   {
     path: "stay",
     component: <StayIndex />,
     label: "Stays",
-  },
-  {
-    path: "stay/:stayId",
-    component: <StayDetails />,
   },
   {
     path: "experience",
@@ -33,20 +29,20 @@ const routes = [
     label: "Online Experiences",
   },
   {
+    path: "profile",
+    component: <ProfileIndex />,
+  },
+  {
+    path: "order",
+    component: <OrderIndex />,
+  },
+  {
     path: "contact-renter",
-    component: <ContactRenterPage />,
+    component: <ContactRenterIndex />,
   },
   {
-    path: "home-client",
-    component: <HomePageClient />,
-  },
-  {
-    path: "home-renter",
-    component: <HomePageRenter />,
-  },
-  {
-    path: "order-request",
-    component: <OrderRequestPage />,
+    path: "renter-home",
+    component: <RenterIndex />,
   },
 ];
 

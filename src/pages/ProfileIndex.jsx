@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ProfilePage() {
+export function ProfileIndex() {
     return (
         <div>
             <h1>Profile Page</h1>
@@ -9,5 +9,3 @@ function ProfilePage() {
         </div>
     );
 }
-
-export default ProfilePage;

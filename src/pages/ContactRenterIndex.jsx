@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export function ContactRenterPage() {
+export function ContactRenterIndex() {
     const [message, setMessage] = useState('');
 
     const handleMessageChange = (e) => {

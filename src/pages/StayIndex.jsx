@@ -1,3 +1,11 @@
+import React from 'react';
+
 export function StayIndex() {
-  return <h2>This is the Stays page</h2>;
+    return (
+        <div>
+            {/* Render the property details using the id prop */}
+            <h1>Stay Details</h1>
+            {/* Add more property details rendering here */}
+        </div>
+    )
 }
