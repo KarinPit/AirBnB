@@ -8,7 +8,6 @@ import { HomePageClient } from "./pages/HomePageClient.jsx";
 import { HomePageRenter } from "./pages/HomePageRenter.jsx";
 import { OrderRequestPage } from "./pages/OrderRequestPage.jsx";
 
-// Routes accesible from the main navigation (in AppHeader)
 const routes = [
   {
     path: "/",
