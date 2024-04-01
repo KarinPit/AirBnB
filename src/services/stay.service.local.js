@@ -15,6 +15,18 @@ export const stayService = {
 window.cs = stayService
 
 
+/*
+TO DO: 
+
+1. Change the query function filter to filter by userID
+  // Example - figuring up if the user is an owner:
+  // userService.login()
+    //  const userStays = stayService.query({ownerId: loggeinUser._id})
+    //  loggeinUser.isOwner = userStays.length > 0
+
+
+
+*/
 async function query(filterBy = { txt: '', price: 0 }) {
     var stays = await storageService.query(STORAGE_KEY)
     if (filterBy.txt) {

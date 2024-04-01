@@ -1,5 +1,13 @@
 import React from 'react';
 
+/*
+TO DO:
+  // StayEdit - make it super easy to add Stay for development
+  // StayList, StayPreview
+  // Order, confirm Order
+  // Lastly: StayExplore, Filtering
+*/
+
 export function StayIndex() {
     return (
         <div>
