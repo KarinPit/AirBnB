@@ -65,8 +65,8 @@ function loadFromStorage(key) {
 
 // util function
 function getAssetSrc(name) {
-    const path = `/src/assets/${name}`
-    const modules = import.meta.glob('/src/assets/*', { eager: true })
+    const path = `/src/assets/svg/${name}`
+    const modules = import.meta.glob('/src/assets/svg/*', { eager: true })
     const mod = modules[path]
     return mod.default
 }

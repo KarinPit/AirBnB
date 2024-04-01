@@ -1,41 +1,48 @@
 import { HomePage } from "./pages/HomePage.jsx";
-import { AboutUs } from "./pages/AboutUs.jsx";
-import { CarIndex } from "./pages/CarIndex.jsx";
-import { ReviewIndex } from "./pages/ReviewIndex.jsx";
-import { ChatApp } from "./pages/Chat.jsx";
-import { AdminApp } from "./pages/AdminIndex.jsx";
+import { StayIndex } from "./pages/StayIndex.jsx";
+import { ExperienceIndex } from "./pages/ExperienceIndex.jsx";
+import { OnlineExperienceIndex } from "./pages/OnlineExperienceIndex.jsx";
+import { ContactRenterPage } from "./pages/ContactRenterPage.jsx";
+import { HomePageClient } from "./pages/HomePageClient.jsx";
+import { HomePageRenter } from "./pages/HomePageRenter.jsx";
+import { OrderRequestPage } from "./pages/OrderRequestPage.jsx";
 
 // Routes accesible from the main navigation (in AppHeader)
 const routes = [
   {
     path: "/",
     component: <HomePage />,
-    label: "Home 🏠 ",
   },
   {
-    path: "car",
-    component: <CarIndex />,
-    label: "Cars",
+    path: "stay",
+    component: <StayIndex />,
+    label: "Stays",
   },
   {
-    path: "review",
-    component: <ReviewIndex />,
-    label: "Reviews",
+    path: "experience",
+    component: <ExperienceIndex />,
+    label: "Experiences",
   },
   {
-    path: "chat",
-    component: <ChatApp />,
-    label: "Chat",
+    path: "online-expreience",
+    component: <OnlineExperienceIndex />,
+    label: "Online Experiences",
   },
   {
-    path: "about",
-    component: <AboutUs />,
-    label: "About us",
+    path: "contact-renter",
+    component: <ContactRenterPage />,
   },
   {
-    path: "admin",
-    component: <AdminApp />,
-    label: "Admin Only",
+    path: "home-client",
+    component: <HomePageClient />,
+  },
+  {
+    path: "home-renter",
+    component: <HomePageRenter />,
+  },
+  {
+    path: "order-request",
+    component: <OrderRequestPage />,
   },
 ];
 

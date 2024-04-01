@@ -4,7 +4,7 @@ export function HomePageRenter() {
 
     return (
         <div>
-            <h1> HomePageClient</h1>        
+            <h1> HomePageRenter</h1>        
         </div>
     );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function ContactRenterPage() {
+export function ContactRenterPage() {
     const [message, setMessage] = useState('');
 
     const handleMessageChange = (e) => {
@@ -24,5 +24,3 @@ function ContactRenterPage() {
         </div>
     );
 }
-
-export default ContactRenterPage;
