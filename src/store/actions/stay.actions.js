@@ -1,4 +1,4 @@
-import { stayService } from "../../services/stay.service.js";
+import { stayService } from "../../services/stay.service.local.js";
 import { store } from '../store.js'
 
 import { showErrorMsg } from '../../services/event-bus.service.js'
@@ -8,7 +8,7 @@ import { REMOVE_STAY, SET_STAY, SET_STAYS } from "../reducers/stay.reducer.js";
 export async function loadStays() {
     try {
         store.dispatch({ type: LOADING_START })
-        const stays = await stayService.getStays()
+        const stays = await stayService.query()
         store.dispatch({ type: SET_STAYS, stays })
     } catch (err) {
         console.log('StayActions: err in loadStays', err)
@@ -26,28 +26,14 @@ export async function removeStay(stayId) {
     }
 }
 
-export async function addStay(stayData) {
+export async function updateStay(stay) {
     try {
-        const stay = await stayService.add(stayData)
+        const res = await stayService.save(stay)
         store.dispatch({
             type: SET_STAY,
-            stay
+            res
         })
-        return stay
-    } catch (err) {
-        console.log('Cannot add stay', err)
-        throw err
-    }
-}
-
-export async function updateStay(stayData) {
-    try {
-        const stay = await stayService.update(stayData)
-        store.dispatch({
-            type: SET_STAY,
-            stay
-        })
-        return stay
+        return res
     } catch (err) {
         console.log('Cannot update stay', err)
         throw err
@@ -56,8 +42,8 @@ export async function updateStay(stayData) {
 
 export async function loadStay(stayId) {
     try {
-        const stay = await stayService.getById(stayId);
-        store.dispatch({ type: SET_STAY, stay })
+        const res = await stayService.getById(stayId);
+        store.dispatch({ type: SET_STAY, res })
     } catch (err) {
         showErrorMsg('Cannot load stay')
         console.log('Cannot load stay', err)
