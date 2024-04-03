@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /*
 TO DO:
@@ -9,11 +9,11 @@ TO DO:
 */
 
 export function StayIndex() {
-    return (
-        <div>
-            {/* Render the property details using the id prop */}
-            <h1>Stay Details</h1>
-            {/* Add more property details rendering here */}
-        </div>
-    )
+  return (
+    <div>
+      {/* Render the property details using the id prop */}
+      <h1>Stay Details</h1>
+      {/* Add more property details rendering here */}
+    </div>
+  );
 }

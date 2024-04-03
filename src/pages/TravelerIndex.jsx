@@ -1,5 +1,6 @@
-import React from 'react';
-
+import React from "react";
+import FilterCategories from "../cmps/FilterCategories";
+import FilterAdvanced from "../cmps/FilterAdvanced";
 
 /*
 TO DO:
@@ -13,9 +14,13 @@ TO DO:
 */
 
 export function TravelerIndex() {
-    return (
-        <div>
-            <h1> HomePageClient</h1>
-        </div>
-    );
+  return (
+    <section>
+      <h1> HomePageClient</h1>
+      <div className="traveler-category-bar">
+        <FilterCategories />
+        <FilterAdvanced />
+      </div>
+    </section>
+  );
 }

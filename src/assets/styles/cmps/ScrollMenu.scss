@@ -1,0 +1,98 @@
+.scroll-menu-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  position: relative;
+
+  .scroll-menu-children {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 32px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    label {
+      scroll-snap-align: start;
+      scroll-snap-stop: normal;
+      text-size-adjust: 100%;
+      gap: 9px;
+      height: 78px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      span {
+        font-size: 0.75rem;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .scroll-button-container {
+    height: 100%;
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background-color: $color-white;
+
+    &.left {
+      left: 0;
+      &::after {
+        content: "";
+        position: absolute;
+        height: 100%;
+        right: -40px;
+        width: 40px;
+        background-image: linear-gradient(
+          to left,
+          rgba(255, 255, 255, 0),
+          rgb(255, 255, 255) 40px
+        );
+      }
+    }
+
+    &.right {
+      right: 0;
+      &::before {
+        content: "";
+        position: absolute;
+        height: 100%;
+        left: -40px; // Adjust as needed
+        width: 40px; // Width of the gradient effect
+        background-image: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0),
+          rgb(255, 255, 255) 40px
+        );
+      }
+    }
+  }
+
+  .scroll-button {
+    height: 28px;
+    width: 28px;
+    cursor: pointer;
+    border: 0.5px solid rgb(0 0 0 / 0.3);
+    outline: none;
+    border-radius: 50%;
+    transition: box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1);
+
+    img {
+      margin: auto;
+      display: block;
+      height: 12px;
+      width: 12px;
+    }
+  }
+}
