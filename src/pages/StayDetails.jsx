@@ -8,7 +8,7 @@ TO DO:
   // Lastly: StayExplore, Filtering
 */
 
-export function StayIndex() {
+export function StayDetails() {
   return (
     <div>
       {/* Render the property details using the id prop */}

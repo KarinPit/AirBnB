@@ -1,54 +1,61 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function ScrollMenu({ children }) {
+export default function ScrollMenu({
+  children,
+  LeftIcon,
+  RightIcon,
+  scrollRef,
+}) {
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
-  const scrollRef = useRef(null);
 
   useEffect(() => {
-    checkScrollPosition();
-  }, [children]);
+    const checkScrollPosition = () => {
+      if (scrollRef.current) {
+        const el = scrollRef.current;
+        const isStart = el.scrollLeft <= 0;
+        const isEnd =
+          Math.ceil(el.scrollLeft + el.offsetWidth) >= el.scrollWidth;
+        setIsAtStart(isStart);
+        setIsAtEnd(isEnd);
+      }
+    };
 
-  const checkScrollPosition = () => {
+    checkScrollPosition();
     const el = scrollRef.current;
-    if (el) {
-      const isStart = el.scrollLeft <= 0;
-      const isEnd = Math.ceil(el.scrollLeft + el.offsetWidth) >= el.scrollWidth;
-      setIsAtStart(isStart);
-      setIsAtEnd(isEnd);
-    }
-  };
+    el.addEventListener("scroll", checkScrollPosition);
+
+    return () => el.removeEventListener("scroll", checkScrollPosition);
+  }, [children, scrollRef]);
 
   return (
     <div className="scroll-menu-wrapper">
       {!isAtStart && (
-        <div className="scroll-button-container left">
+        <div className="scroll-menu-arrows left">
           <button
-            className="scroll-button"
+            className="scroll-menu-arrow"
             onClick={() =>
-              scrollRef.current.scrollBy({ left: -200, behavior: "smooth" })
+              scrollRef.current.scrollBy({ left: -300, behavior: "smooth" })
             }
+            aria-label="Scroll Left"
           >
-            <img src="/assets/svg/left-arrow.svg" alt="Left Icon" />
+            <LeftIcon />
           </button>
         </div>
       )}
-      <div
-        className="scroll-menu-children"
-        ref={scrollRef}
-        onScroll={checkScrollPosition}
-      >
+      <div className="scroll-menu-childrens" ref={scrollRef}>
         {children}
       </div>
       {!isAtEnd && (
-        <div className="scroll-button-container right">
+        <div className="scroll-menu-arrows right">
           <button
-            className="scroll-button"
+            className="scroll-menu-arrow"
             onClick={() =>
-              scrollRef.current.scrollBy({ left: 200, behavior: "smooth" })
+              scrollRef.current.scrollBy({ left: 300, behavior: "smooth" })
             }
+            aria-label="Scroll Right"
           >
-            <img src="/assets/svg/right-arrow.svg" alt="Right Icon" />
+            <RightIcon />
           </button>
         </div>
       )}

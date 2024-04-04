@@ -67,3 +67,11 @@ $gradient-secondary: radial-gradient(circle at center, #FF385C 0%, #E61E4D 27.5%
 $mobile-breakpoint: 460px;
 $narrow-breakpoint: 720px;
 $normal-breakpoint: 960px;
+
+//ZINDEX 
+$z-index-high :1;
+
+//Scroll Arrows 
+$scroll-arrow-bg-start: rgba(255, 255, 255, 0);
+$scroll-arrow-bg-end: rgb(255, 255, 255);
+$scroll-arrow-width: 40px;
