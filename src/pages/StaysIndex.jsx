@@ -48,7 +48,6 @@ export function StayIndex() {
 
   return (
     <section>
-      <h1>{stays.length}</h1>
       <h1> HomePageClient</h1>
       <div className="stays-index-category-bar">
         <FilterCategories
