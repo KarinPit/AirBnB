@@ -2,18 +2,19 @@ import { stayService } from "../../services/stay.service.local.js";
 import { store } from '../store.js'
 
 import { showErrorMsg } from '../../services/event-bus.service.js'
-import { LOADING_DONE, LOADING_START } from "../reducers/system.reducer.js";
+import { SET_IS_LOADING } from "../reducers/system.reducer.js";
 import { REMOVE_STAY, SET_STAY, SET_STAYS } from "../reducers/stay.reducer.js";
 
+
 export async function loadStays() {
+    store.dispatch({ type: SET_IS_LOADING, isLoading: true })
     try {
-        store.dispatch({ type: LOADING_START })
         const stays = await stayService.query()
         store.dispatch({ type: SET_STAYS, stays })
     } catch (err) {
         console.log('StayActions: err in loadStays', err)
     } finally {
-        store.dispatch({ type: LOADING_DONE })
+        store.dispatch({ type: SET_IS_LOADING, isLoading: false })
     }
 }
 
