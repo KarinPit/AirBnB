@@ -1,6 +1,3 @@
-
 export function OrderIndex() {
-    return (
-        <h2>OrderRequestPage</h2>
-    )
+  return <h2>OrderRequestPage </h2>;
 }
