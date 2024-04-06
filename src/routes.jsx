@@ -1,12 +1,11 @@
-import { ContactRenterIndex } from "./pages/ContactRenterIndex"
-import { ExperienceIndex } from "./pages/ExperienceIndex"
-import { OnlineExperienceIndex } from "./pages/OnlineExperienceIndex"
-import { OrderIndex } from "./pages/OrderIndex"
-import { ProfileIndex } from "./pages/ProfileIndex"
-import { RenterIndex } from "./pages/RenterIndex"
-import { TravelerIndex } from "./pages/TravelerIndex"
-import { StayIndex } from "./pages/StayIndex"
-
+import { ContactRenterIndex } from "./pages/ContactRenterIndex";
+import { ExperienceIndex } from "./pages/ExperienceIndex";
+import { OnlineExperienceIndex } from "./pages/OnlineExperienceIndex";
+import { OrderIndex } from "./pages/OrderIndex";
+import { ProfileIndex } from "./pages/ProfileIndex";
+import { RenterIndex } from "./pages/RenterIndex";
+import { TravelerIndex } from "./pages/TravelerIndex";
+import { StayIndex } from "./pages/StayIndex";
 
 const routes = [
   {
