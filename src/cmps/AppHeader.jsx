@@ -1,9 +1,12 @@
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 import Logo from "../assets/svg/logo.svg";
 import Language from "../assets/svg/language.svg";
 
 import { utilService } from "../services/util.service.js";
+import FilterStay from "./FilterStay";
+
+import "../assets/styles/main.scss"
 
 export function AppHeader() {
     return (
@@ -11,9 +14,9 @@ export function AppHeader() {
             <Link to={'/'}><img className="logo" src={Logo} alt="logo" /></Link>
 
             <div className="header__center">
-                <Link to={'/stay'}><button>Stays</button></Link>
-                <Link to={'/experience'}><button>Experiences</button></Link>
-                <Link to={'/online-experience'}><button>Online Experiences</button></Link>
+                <Link to={'/stay'}><button>Stays</button></NavLink>
+                <Link to={'/experience'}><button>Experiences</button></NavLink>
+                <Link to={'/online-experience'}><button>Online Experiences</button></NavLink>
             </div>
 
             <div className="header__right">
@@ -27,6 +30,11 @@ export function AppHeader() {
                     <h5>Account</h5>
                 </div>
             </div>
+            <div className="header_search">
+                <FilterStay/>
+            </div>
+
+
         </header>
     );
 }
