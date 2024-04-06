@@ -1,3 +1,31 @@
 .filter-advanced-button {
-  padding-inline-start: em(4px);
+  display: flex;
+  align-items: center;
+  align-self: center;
+  // padding: em(7px) em(16px) em(7px) em(16px);
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 12px;
+  height:48px;
+  min-width: 48px;
+  cursor: pointer;
+  &:hover{
+    border: 1px solid black;
+    background-color: rgb(247, 247, 247);
+
+  }
+  .filter-advanced-span {
+    display: grid;
+    grid-auto-flow: column;
+    gap:8px;
+    align-items: center;
+    padding-right: em(16px);
+    padding-left: em(16px);
+    padding-top: em(2px);
+    svg {
+      height: 16px;
+      width: 16px;
+      line-height: 20px;
+      stroke-width: 3;
+    }
+  }
 }

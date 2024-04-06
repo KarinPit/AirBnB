@@ -1,0 +1,65 @@
+.advanced-filter {
+  &::before {
+    content: "";
+    width: 100%;
+    height: 1px;
+    color: rgb(34, 34, 34);
+    display: flex;
+    line-height: 20.02px;
+  }
+  section {
+    .advanced-filter-content {
+      padding-block-start: 32px;
+      padding-block-end: 32px;
+      padding-inline-start: 24px;
+      padding-inline-end: 24px;
+    }
+    &::after {
+      content: "";
+      display: flex;
+      height: 1px;
+      background: rgb(235, 235, 235);
+      line-height: 28.8px;
+    }
+  }
+  .advanced-filter-title {
+    line-height: 1.5rem;
+    padding-block-end: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    color: $color-black;
+    font-family: AirbnbCereal-Book;
+  }
+  .advanced-filter-subtitle {
+    font-family: AirbnbCereal-Light;
+    font-size: 14px;
+    line-height: 1.125rem;
+    padding-block-end: 24px;
+    margin-block-start: 4px;
+  }
+}
+.advanced-filter__type-places {
+  display: flex;
+  justify-content: space-between;
+
+  .option {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    text-align: center;
+    flex-grow: 1;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #f7f7f7;
+    }
+
+    &.active {
+      background-color: #000;
+      color: #fff; 
+    }
+  }
+}

@@ -1,9 +1,6 @@
 .scroll-menu-wrapper {
-  display: flex;
-  align-items: center;
-  width: 100%;
   overflow: hidden;
-  border-radius: 8px;
+
   position: relative;
   .scroll-menu-childrens {
     overflow-x: auto;
@@ -27,7 +24,7 @@
       left: 0;
       &::after {
         @include arrow-fade(left);
-        right: -#{$scroll-arrow-width}; 
+        right: -#{$scroll-arrow-width};
       }
     }
 

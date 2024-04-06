@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import FilterAdvanced from "../cmps/FilterAdvanced";
-import FilterCategories from "../cmps/FilterCategories";
 import { useSelector } from "react-redux";
-import { stayService } from "../services/stay.service.local";
 import { useSearchParams } from "react-router-dom";
+
+import FilterCategories from "../cmps/FilterCategories";
+import { stayService } from "../services/stay.service.local";
 import { loadStays, setFilterBy } from "../store/actions/stay.actions";
-import { store } from "../store/store";
+import AdvancedFilter from "../cmps/AdvancedFilter";
 
 /*
 TO DO:
@@ -54,7 +54,7 @@ export function StayIndex() {
           onSetFilter={onSetFilter}
           filterBy={{ category_tag }}
         />
-        <FilterAdvanced />
+        <AdvancedFilter />
       </div>
     </section>
   );

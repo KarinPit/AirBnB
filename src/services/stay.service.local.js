@@ -89,7 +89,6 @@ function sanitizeFilter(filterObject) {
 };
 
 async function addstayMsg(stayId, txt) {
-  // Later, this is all done by the backend
   const stay = await getById(stayId);
   if (!stay.msgs) stay.msgs = [];
 

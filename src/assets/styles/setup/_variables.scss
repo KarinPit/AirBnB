@@ -64,9 +64,10 @@ $gradient-secondary: radial-gradient(circle at center, #FF385C 0%, #E61E4D 27.5%
 
 
 // Breakpoints
-$mobile-breakpoint: 460px;
-$narrow-breakpoint: 720px;
-$normal-breakpoint: 960px;
+$mobile-breakpoint: 576px;
+$narrow-breakpoint: 768px;
+$normal-breakpoint: 992px;
+$wide-breakpoint: 1200px;
 
 //ZINDEX 
 $z-index-high :1;
