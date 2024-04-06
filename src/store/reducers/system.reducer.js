@@ -1,5 +1,4 @@
-export const LOADING_START = "LOADING_START";
-export const LOADING_DONE = "LOADING_DONE";
+export const SET_IS_LOADING = "SET_IS_LOADING";
 
 const initialState = {
   isLoading: false,
@@ -7,10 +6,8 @@ const initialState = {
 
 export function systemReducer(state = initialState, action = {}) {
   switch (action.type) {
-    case LOADING_START:
-      return { ...state, isLoading: true };
-    case LOADING_DONE:
-      return { ...state, isLoading: false };
+    case SET_IS_LOADING:
+      return { ...state, isLoading: action.isLoading }
     default:
       return state;
   }
