@@ -1,30 +1,44 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
-export function MultiRangeSlider({ min, max, onChange }) {
-  const [minVal, setMinVal] = useState(min);
-  const [maxVal, setMaxVal] = useState(max);
-  const minValRef = useRef(null);
-  const maxValRef = useRef(null);
-  const range = useRef(null);
+const minDistance = 30;
 
-  // Calculate the percentage position for the labels
-  const getPercent = (value) => Math.round(((value - min) / (max - min)) * 100);
+export function MultiRangeSlider({ min, max, selectedRange, onChange }) {
+  const [minVal, setMinVal] = useState(selectedRange.min);
+  const [maxVal, setMaxVal] = useState(selectedRange.max);
 
-  // Calculate the left position based on value
-  const getLeft = (value) => `${getPercent(value)}%`;
-
-  // Update the range whenever the values change
   useEffect(() => {
-    if (range.current) {
-      range.current.style.left = getLeft(minVal);
-      range.current.style.width = getLeft(maxVal - minVal);
-    }
-  }, [minVal, maxVal]);
+    setMinVal(selectedRange.min);
+    setMaxVal(selectedRange.max);
+  }, [selectedRange]);
 
-  // When the range values change, call the passed onChange function
   useEffect(() => {
     onChange({ min: minVal, max: maxVal });
-  }, [minVal, maxVal, onChange]);
+  }, [minVal, maxVal]);
+
+  const handleMinChange = (e) => {
+    const newValue = Math.min(Number(e.target.value), maxVal - minDistance);
+    setMinVal(newValue);
+
+    if (newValue > maxVal - minDistance) {
+      setMaxVal(newValue + minDistance);
+    }
+  };
+
+  const handleMaxChange = (e) => {
+    const newValue = Math.max(Number(e.target.value), minVal + minDistance);
+    setMaxVal(newValue);
+
+    if (newValue < minVal + minDistance) {
+      setMinVal(newValue - minDistance);
+    }
+  };
+
+  const trackWidth = max - min;
+  const adjustedLeft = Math.max(0, ((minVal - min) / trackWidth) * 100);
+  const adjustedWidth = Math.min(
+    100 - adjustedLeft,
+    ((maxVal - minVal) / trackWidth) * 100
+  );
 
   return (
     <div className="multi-range-slider">
@@ -33,12 +47,7 @@ export function MultiRangeSlider({ min, max, onChange }) {
         min={min}
         max={max}
         value={minVal}
-        ref={minValRef}
-        onChange={(e) => {
-          const value = Math.min(Number(e.target.value), maxVal - 1);
-          setMinVal(value);
-          onChange({ min: value, max: maxVal });
-        }}
+        onChange={handleMinChange}
         className="thumb"
         style={{ zIndex: minVal > max - 100 ? 5 : 3 }}
       />
@@ -47,17 +56,19 @@ export function MultiRangeSlider({ min, max, onChange }) {
         min={min}
         max={max}
         value={maxVal}
-        ref={maxValRef}
-        onChange={(e) => {
-          const value = Math.max(Number(e.target.value), minVal + 1);
-          setMaxVal(value);
-          onChange({ min: minVal, max: value });
-        }}
+        onChange={handleMaxChange}
         className="thumb"
+        style={{ zIndex: maxVal < min + 100 ? 5 : 3 }}
       />
       <div className="slider">
         <div className="slider__track" />
-        <div ref={range} className="slider__range" />
+        <div
+          className="slider__highlight"
+          style={{
+            left: `${adjustedLeft + 3}%`,
+            width: `${adjustedWidth - 3}%`,
+          }}
+        />
       </div>
     </div>
   );

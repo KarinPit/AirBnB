@@ -1,0 +1,16 @@
+.chip-list-wrapper {
+  .chip-list-title {
+    padding-top: 4px;
+    padding-bottom: 20px;
+    font-size: em(12px);
+    padding-inline: 2px;
+    color: rgb(34, 34, 34);
+  }
+  .chip-list {
+    display: flex;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

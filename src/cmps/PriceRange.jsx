@@ -6,6 +6,12 @@ import MultiRangeInputs from "./MultiRangeInputs";
 export function PriceRange() {
   const [priceHistogram, setPriceHistogram] = useState([]);
   const [selectedRange, setSelectedRange] = useState({ min: 0, max: 1000 });
+  const absoluteMinPrice = Math.min(...dummyStays.map((stay) => stay.price));
+  const absoluteMaxPrice = Math.max(...dummyStays.map((stay) => stay.price));
+
+  const handleRangeChange = (newRange) => {
+    setSelectedRange(newRange);
+  };
 
   const maxBarHeight = 100;
   const maxCount = Math.max(...priceHistogram.map((item) => item.count));
@@ -63,11 +69,16 @@ export function PriceRange() {
       </div>
       <div className="price-range-slider">
         <MultiRangeSlider
-          min={Math.min(...dummyStays.map((stay) => stay.price))}
-          max={Math.max(...dummyStays.map((stay) => stay.price))}
+          min={absoluteMinPrice}
+          max={absoluteMaxPrice}
+          selectedRange={selectedRange}
           onChange={setSelectedRange}
         />
-        <MultiRangeInputs min={selectedRange.min} max={selectedRange.max} />
+        <MultiRangeInputs
+          min={selectedRange.min}
+          max={selectedRange.max}
+          onRangeChange={handleRangeChange}
+        />
       </div>
     </div>
   );
