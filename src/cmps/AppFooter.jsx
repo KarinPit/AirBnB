@@ -1,7 +1,10 @@
 export function AppFooter() {
-  return (
     <div>
-      <h1>Airbnb Footer</h1>
+        <p>Authors:</p>
+        <ul>
+            <li>Asaf Erdman</li>
+            <li>Idan ben abu</li>
+            <li>Karin Pitlik</li>
+        </ul>
     </div>
-  );
 }

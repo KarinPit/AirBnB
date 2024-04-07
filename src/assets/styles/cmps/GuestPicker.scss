@@ -1,0 +1,65 @@
+
+.guest-input-container {
+  position: relative;
+  
+  /* Other styles */
+}
+.guest-picker-dropdown {
+  position: fixed;
+  left: 0;
+  top: 100%;
+  width: auto;
+  height: auto;
+  background: white;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 12px 0px;
+  border-radius: 16px;
+  padding: 20px;
+  z-index: 1001;
+  .guest-input-container {
+    position: relative;
+    /* Other styles */
+  }
+  .guest-picker-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    label {
+      flex-grow: 1;
+      margin-right: 10px;
+    }
+
+    .guest-picker-controls {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        padding: 5px 10px;
+        border: 1px solid #ddd;
+        background: #ffffff;
+        cursor: pointer;
+        border-radius: 50%;
+        height: 32px;
+        width: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          background: #e7e7e7;
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
