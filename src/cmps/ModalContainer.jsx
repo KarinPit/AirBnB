@@ -1,4 +1,5 @@
 import React from "react";
+
 import { CloseIcon } from "../services/svg.service";
 
 export default function ModalContainer({
@@ -18,7 +19,7 @@ export default function ModalContainer({
             <CloseIcon />
           </button>
           <span>{headerTitle}</span>
-          <div /> {/* Placeholder for potential future content */}
+          <div />
         </header>
         <div className="modal-content">{children}</div>
         {footerContent && <footer>{footerContent}</footer>}

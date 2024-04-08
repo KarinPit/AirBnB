@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Chip({ option, isSelected, onSelect }) {
+export function Chip({ option, isSelected, onSelect }) {
   return (
     <div className="chip-wrapper">
       <button

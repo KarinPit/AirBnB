@@ -16,11 +16,13 @@ export default function FilterCategories({ onSetFilter, filterBy }) {
       })
       .catch((error) => console.error("Failed to fetch images:", error));
   }, []);
+
   useEffect(() => {
     if (images.length > 0) {
       setTimeout(() => scrollToFocus(category_tag), 0);
     }
   }, [images]);
+
   const scrollToFocus = (categoryTag) => {
     const focusIndex = images.findIndex((image) => image.title === categoryTag);
 

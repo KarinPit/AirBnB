@@ -1,33 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+
+import { useFormikContext } from "formik";
+
 import { PriceRange } from "../PriceRange";
 import ButtonGroup from "../ButtonsGroup";
-import { ChipList } from "../Chips/ChipList";
-const typePlaces = [
-  { key: "any", label: "Any type" },
-  { key: "room", label: "Room" },
-  { key: "entire", label: "Entire home" },
-];
+import CardSelectList from "../CardSelect/CardSelectList";
+import {
+  Amenities,
+  PropertyType,
+  RoomTypes,
+  RoomsAndBeds,
+  TopTierStays,
+} from "../../constants";
+import { ChipList } from "../Chip/ChipList";
+import CheckboxList from "../Checkbox/CheckboxList";
+import { getTotalStaysFiltered } from "../../store/actions/stay.actions";
 
 export default function AdvancedFilterForm() {
-  const [selectedType, setSelectedType] = useState("any");
+  const { handleSubmit, values } = useFormikContext();
 
-  const handleSelect = (type) => {
-    setSelectedType(type);
-  };
+  useEffect(() => {
+    getTotalStaysFiltered(values);
+  }, [values]);
 
   return (
-    <div className="advanced-filter">
+    <form
+      id="advancedFilterForm"
+      className="advanced-filter"
+      autoComplete="off"
+      onSubmit={handleSubmit}
+    >
       <section>
         <div className="advanced-filter-content">
-          <h2 className="advanced-filter-title">Type of place</h2>
-          <p className="advanced-filter-subtitle">
-            Search rooms, entire homes, or any type of place
-          </p>
+          <div className="advanced-filter-head">
+            <h2 className="advanced-filter-title">Type of place</h2>
+            <p className="advanced-filter-subtitle">
+              Search rooms, entire homes, or any type of place
+            </p>
+          </div>
           <ButtonGroup
-            options={typePlaces}
+            options={RoomTypes}
             className="advanced-filter__type-places"
-            value={selectedType}
-            handleClick={handleSelect}
+            name="room_types"
           />
         </div>
       </section>
@@ -42,25 +56,58 @@ export default function AdvancedFilterForm() {
       </section>
       <section>
         <div className="advanced-filter-content">
-          <h2 className="advanced-filter-title advanced-filter-only-title">
+          <h2 className="advanced-filter-title advanced-filter__no-subtittle">
             Rooms and beds
           </h2>
           <div className="advanced-filter__chip-list">
             <ChipList
-              name={"Bedrooms"}
-              options={["Any", 1, 2, 3, 4, 5, 6, 7, "8+"]}
+              label="Bedrooms"
+              name="min_bedrooms"
+              options={RoomsAndBeds}
             />
+            <ChipList label="Beds" name="min_beds" options={RoomsAndBeds} />
+
             <ChipList
-              name={"Beds"}
-              options={["Any", 1, 2, 3, 4, 5, 6, 7, "8+"]}
-            />
-            <ChipList
-              name={"Bathrooms"}
-              options={["Any", 1, 2, 3, 4, 5, 6, 7, "8+"]}
+              label="Bathrooms"
+              name="min_bathrooms"
+              options={RoomsAndBeds}
             />
           </div>
         </div>
       </section>
-    </div>
+      <section>
+        <div className="advanced-filter-content">
+          <h2 className="advanced-filter-title advanced-filter__no-subtittle">
+            Top-tier stays
+          </h2>
+          <div className="advanced-filter__top-tier">
+            <CardSelectList name="guest_favorite" options={TopTierStays} />
+          </div>
+        </div>
+      </section>
+      <section>
+        <div className="advanced-filter-content">
+          <h2 className="advanced-filter-title advanced-filter__no-subtittle">
+            Property type
+          </h2>
+          <div className="advanced-filter__property-type">
+            <CardSelectList
+              name="l2_property_type_ids"
+              options={PropertyType}
+            />
+          </div>
+        </div>
+      </section>
+      <section>
+        <div className="advanced-filter-content">
+          <h2 className="advanced-filter-title advanced-filter__no-subtittle">
+            Amenities
+          </h2>
+          <div className="">
+            <CheckboxList fieldName="amenities" options={Amenities} />
+          </div>
+        </div>
+      </section>
+    </form>
   );
 }

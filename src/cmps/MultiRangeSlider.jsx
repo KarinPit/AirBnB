@@ -1,35 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useFormikContext } from "formik";
 
 const minDistance = 30;
 
-export function MultiRangeSlider({ min, max, selectedRange, onChange }) {
-  const [minVal, setMinVal] = useState(selectedRange.min);
-  const [maxVal, setMaxVal] = useState(selectedRange.max);
+export function MultiRangeSlider({ min, max }) {
+  const { values, setFieldValue } = useFormikContext();
+  const minVal = values.price_min;
+  const maxVal = values.price_max;
 
+  // Ensure the min and max values are updated in Formik when the component mounts or the external min/max props change.
   useEffect(() => {
-    setMinVal(selectedRange.min);
-    setMaxVal(selectedRange.max);
-  }, [selectedRange]);
-
-  useEffect(() => {
-    onChange({ min: minVal, max: maxVal });
-  }, [minVal, maxVal]);
+    setFieldValue("price_min", min);
+    setFieldValue("price_max", max);
+  }, [min, max, setFieldValue]);
 
   const handleMinChange = (e) => {
     const newValue = Math.min(Number(e.target.value), maxVal - minDistance);
-    setMinVal(newValue);
+    setFieldValue("price_min", newValue);
 
     if (newValue > maxVal - minDistance) {
-      setMaxVal(newValue + minDistance);
+      setFieldValue("price_max", newValue + minDistance);
     }
   };
 
   const handleMaxChange = (e) => {
     const newValue = Math.max(Number(e.target.value), minVal + minDistance);
-    setMaxVal(newValue);
+    setFieldValue("price_max", newValue);
 
     if (newValue < minVal + minDistance) {
-      setMinVal(newValue - minDistance);
+      setFieldValue("price_min", newValue - minDistance);
     }
   };
 
@@ -41,7 +40,7 @@ export function MultiRangeSlider({ min, max, selectedRange, onChange }) {
   );
 
   return (
-    <div className="multi-range-slider">
+    <div>
       <input
         type="range"
         min={min}
@@ -49,7 +48,6 @@ export function MultiRangeSlider({ min, max, selectedRange, onChange }) {
         value={minVal}
         onChange={handleMinChange}
         className="thumb"
-        style={{ zIndex: minVal > max - 100 ? 5 : 3 }}
       />
       <input
         type="range"
@@ -58,15 +56,14 @@ export function MultiRangeSlider({ min, max, selectedRange, onChange }) {
         value={maxVal}
         onChange={handleMaxChange}
         className="thumb"
-        style={{ zIndex: maxVal < min + 100 ? 5 : 3 }}
       />
       <div className="slider">
         <div className="slider__track" />
         <div
           className="slider__highlight"
           style={{
-            left: `${adjustedLeft + 3}%`,
-            width: `${adjustedWidth - 3}%`,
+            left: `${adjustedLeft}%`,
+            width: `${adjustedWidth}%`,
           }}
         />
       </div>

@@ -24,9 +24,10 @@ export function StayIndex() {
   const isLoading = useSelector(
     (storeState) => storeState.stayModule.isLoading
   );
-
   const [searchParams, setSearchParams] = useSearchParams();
+
   useEffect(() => {
+    const testt = stayService.getFilterFromParams(searchParams);
     setFilterBy(stayService.getFilterFromParams(searchParams));
   }, []);
 
@@ -42,7 +43,7 @@ export function StayIndex() {
     setFilterBy(fieldsToUpdate);
   }
 
-  const { category_tag } = filterBy;
+  const { category_tag, ...rest } = filterBy;
 
   if (isLoading) return <h1>loading...</h1>;
 
@@ -54,7 +55,7 @@ export function StayIndex() {
           onSetFilter={onSetFilter}
           filterBy={{ category_tag }}
         />
-        <AdvancedFilter />
+        <AdvancedFilter filterBy={rest} onSetFilter={onSetFilter} />
       </div>
     </section>
   );

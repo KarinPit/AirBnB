@@ -7,12 +7,14 @@ const STORAGE_KEY = "stay";
 
 export const stayService = {
   query,
+  applyFilters,
   getById,
   save,
   remove,
   getFilterFromParams,
   getDefaultFilter,
   sanitizeFilter,
+  countChangedFilters,
   addstayMsg,
 };
 window.cs = stayService;
@@ -31,18 +33,48 @@ TO DO:
 */
 _createStays();
 async function query(filterBy) {
-  var stays = await storageService.query(STORAGE_KEY);
+  let stays = await storageService.query(STORAGE_KEY);
   if (filterBy) {
-    let { category_tag } = filterBy;
-    const regex = new RegExp(category_tag, "i");
-
-    stays = stays.filter((stay) =>
-      stay.labels.some((label) => regex.test(label))
-    );
+    stays = applyFilters(stays, filterBy);
   }
   return stays;
 }
 
+function applyFilters(stays, filterBy) {
+  return stays.filter((stay) => {
+    // Category tag filter
+    // const categoryTagMatch =
+    //   !filterBy.category_tag ||
+    //   stay.labels.some((label) =>
+    //     new RegExp(filterBy.category_tag, "i").test(label)
+    //   );
+
+    // Amenities filter
+    const amenitiesMatch =
+      !filterBy.amenities ||
+      filterBy.amenities.every((amenity) => stay.amenities.includes(amenity));
+
+    // Property type filter
+    const propertyTypeMatch =
+      !filterBy.l2_property_type_ids ||
+      filterBy.l2_property_type_ids.every((property) => stay.type === property);
+
+    // Price range filter
+    const priceMinMatch =
+      filterBy.price_min === undefined || stay.price >= filterBy.price_min;
+    const priceMaxMatch =
+      filterBy.price_max === undefined || stay.price <= filterBy.price_max;
+    const priceMatch = priceMinMatch && priceMaxMatch;
+
+    // Combine all filter checks
+    return (
+      // categoryTagMatch &&
+      amenitiesMatch && 
+      priceMatch
+      // categoryTagMatch && amenitiesMatch && propertyTypeMatch && priceMatch
+    );
+  });
+}
 function getById(stayId) {
   return storageService.get(STORAGE_KEY, stayId);
 }
@@ -67,15 +99,44 @@ async function save(stay) {
 function getFilterFromParams(searchParams) {
   const defaultFilter = getDefaultFilter();
   const filterBy = {};
-  for (const field in defaultFilter) {
-    filterBy[field] = searchParams.get(field) || defaultFilter[field];
-  }
+
+  Object.entries(defaultFilter).forEach(([field, defaultValue]) => {
+    const isFieldArray = Array.isArray(defaultValue);
+    let value = isFieldArray
+      ? searchParams.getAll(field)
+      : searchParams.get(field);
+
+    if (value === null || (isFieldArray && value.length === 0)) {
+      filterBy[field] = defaultValue;
+    } else if (typeof defaultValue === "number") {
+      value = Number(value);
+      filterBy[field] = isNaN(value) ? defaultValue : value;
+    } else if (isFieldArray && typeof defaultValue[0] === "number") {
+      filterBy[field] = value.map((val) => {
+        const numVal = Number(val);
+        return isNaN(numVal) ? val : numVal;
+      });
+    } else {
+      filterBy[field] = value;
+    }
+  });
+
   return filterBy;
 }
 
-function getDefaultFilter() {
+function getDefaultFilter(
+  category_tag,
+  room_types = "any_type",
+  amenities = [],
+  price_min,
+  price_max
+) {
   return {
-    category_tag: null,
+    category_tag,
+    room_types,
+    price_min,
+    price_max,
+    amenities,
   };
 }
 
@@ -86,7 +147,24 @@ function sanitizeFilter(filterObject) {
     }
     return acc;
   }, {});
-};
+}
+
+function countChangedFilters(currentFilters, initialFilters) {
+  return Object.keys(currentFilters).reduce((count, key) => {
+    const currentValue = currentFilters[key];
+    const initialValue = initialFilters[key];
+
+    // For arrays, compare lengths and contents
+    if (Array.isArray(currentValue) && Array.isArray(initialValue)) {
+      const isDifferent =
+        currentValue.length !== initialValue.length ||
+        currentValue.some((val, index) => val !== initialValue[index]);
+      return count + (isDifferent ? 1 : 0);
+    }
+
+    return count + (currentValue !== initialValue ? 1 : 0);
+  }, 0);
+}
 
 async function addstayMsg(stayId, txt) {
   const stay = await getById(stayId);

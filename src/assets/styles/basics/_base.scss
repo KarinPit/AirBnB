@@ -23,7 +23,6 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: AirbnbCereal-Book;
   margin: 0;
   line-height: 1;
 }
@@ -32,16 +31,6 @@ section,
 main,
 footer {
   padding: 5px;
-}
-svg {
-  display: block;
-  fill: none;
-  height: 12px;
-  width: 12px;
-  stroke: currentcolor;
-  // stroke-width: 5.33333;
-  stroke-width: 3;
-  overflow: visible;
 }
 img {
   width: 100%;
@@ -63,4 +52,5 @@ button {
   border: none;
   padding: 0;
   font-family: AirbnbCereal-Book;
+  cursor: pointer;
 }

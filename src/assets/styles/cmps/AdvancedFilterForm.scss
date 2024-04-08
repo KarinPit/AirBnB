@@ -2,12 +2,13 @@
   &::before {
     content: "";
     width: 100%;
-    height: $track-height; 
+    height: $track-height;
     color: $color-dark-gray;
     display: flex;
     line-height: $line-height-large;
   }
   section {
+    padding:0;
     .advanced-filter-content {
       padding-block-start: $padding-xxxl;
       padding-block-end: $padding-xxxl;
@@ -17,39 +18,43 @@
     &::after {
       content: "";
       display: flex;
-      height: $track-height; 
+      height: $track-height;
       background: $color-ultra-light-gray;
       line-height: $line-height-extra-large;
     }
   }
+  .advanced-filter-head {
+    padding-block-end: em(24px);
+  }
   .advanced-filter-title {
-    line-height: $line-height-standard; 
+    line-height: rem(26px);
     padding-block-end: $padding-sm;
-    font-size: $font-size-xl;
+    font-size: rem($font-size-xl);
     font-weight: $font-weight-bold;
     color: $color-black;
   }
-  .advanced-filter-only-title {
+  .advanced-filter__no-subtittle {
     padding-block-end: $padding-xxxl;
   }
   .advanced-filter-subtitle {
     font-family: $font-family-light;
     font-size: $font-size-small;
     line-height: $line-height-standard;
-    padding-block-end: $padding-xxl;
-    margin-block-start: $padding-xs;
+    margin-block-start: rem($padding-xs);
     color: $color-dark-gray;
   }
 }
 
 .advanced-filter__type-places {
+  padding-inline-end: em(48px);
+  padding-inline-start: em(48px);
   display: flex;
   justify-content: space-between;
   height: $height-standard;
   .option {
     padding: $padding-lg $padding-sm;
 
-    border: $border-thick; 
+    border: $border-thick;
     line-height: $line-height-standard;
     background-color: $color-white;
     font-size: $font-size-medium;
@@ -62,7 +67,7 @@
       border-top-left-radius: $border-radius;
       border-bottom-left-radius: $border-radius;
     }
-    &:last-child { 
+    &:last-child {
       border-top-right-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
     }
@@ -72,7 +77,11 @@
 
     &.active {
       background-color: $color-dark-gray;
-      background-image: linear-gradient(to bottom, rgba($color-white, 0.16), rgba($color-white, 0));
+      background-image: linear-gradient(
+        to bottom,
+        rgba($color-white, 0.16),
+        rgba($color-white, 0)
+      );
       color: $color-white;
     }
   }
@@ -80,6 +89,18 @@
 .advanced-filter__chip-list {
   display: flex;
   flex-direction: column;
-  gap:16px;
-  margin-bottom:8px;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.advanced-filter__top-tier {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.advanced-filter__property-type {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  .card-select {
+    aspect-ratio: 4 / 3;
+  }
 }

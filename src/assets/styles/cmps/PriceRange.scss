@@ -1,17 +1,17 @@
 .price-range {
   position: relative;
-  width: 100%;
+
   max-width: 768px;
   padding: 20px;
   font-family: "Arial", sans-serif;
   .histogram {
-    margin:0 10px;
     display: grid;
     column-gap: 1px;
     contain: paint;
+    height: 100%;
+    grid-template-rows: 60px;
+    display: grid;
     grid-auto-flow: column;
-    height: 61.7969px;
-    align-items: flex-end;
 
     .bar {
       background-color: rgb(34, 34, 34);
@@ -20,7 +20,7 @@
       display: block;
       font-size: 14px;
       line-height: 20.02px;
-      width: em(20px);
+      // transform: translateY(23px);
     }
   }
 .price-range-slider {

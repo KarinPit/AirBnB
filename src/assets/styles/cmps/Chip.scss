@@ -17,13 +17,13 @@
   transition: all 0.2s ease;
 
   &:hover {
-    border: 1px solid #222222;
+    border: 1px solid $color-dark-gray;
   }
   &:active {
-    transform: scale3d(0.95, 0.95, 0.1);
+    transform: $scale3d-small;
   }
   &.selected {
-    background-color: #000000;
+    background-color: $color-black;
     color: white;
   }
 }

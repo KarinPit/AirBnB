@@ -11,7 +11,7 @@
 
   .slider__track {
     position: relative;
-    margin: 0 $slider-margin;
+    // margin: 0 $slider-margin;
     background-color: $color-track-background;
     width: 100%;
     height: $track-height;
@@ -34,10 +34,11 @@
 }
 
 .thumb {
+  left: 0%;
   pointer-events: none;
   position: absolute;
   height: 0;
-  width: calc(100% - #{$slider-width-adjustment});
+  width: 100%;
   outline: none;
   z-index: $zindex-thumb;
 }

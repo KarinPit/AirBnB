@@ -2,19 +2,30 @@ import { stayService } from "../../services/stay.service.local.js";
 import { store } from "../store.js";
 
 import { showErrorMsg } from "../../services/event-bus.service.js";
-import {SET_STAYS, REMOVE_STAY, SET_FILTER_BY, ADD_STAY,UPDATE_STAY,SET_IS_LOADING} from "../reducers/stay.reducer.js";
+import {
+  SET_STAYS,
+  REMOVE_STAY,
+  SET_FILTER_BY,
+  ADD_STAY,
+  UPDATE_STAY,
+  SET_IS_LOADING,
+  GET_TOTAL_STAYS_FILTERED,
+  MAX_PRICES,
+  MIN_PRICES,
+} from "../reducers/stay.reducer.js";
 
 export async function loadStays() {
-	store.dispatch({ type: SET_IS_LOADING, isLoading: true })
+  store.dispatch({ type: SET_IS_LOADING, isLoading: true });
   try {
-    const { filterBy } = store.getState().stayModule
+    const { filterBy } = store.getState().stayModule;
 
     const stays = await stayService.query(filterBy);
     store.dispatch({ type: SET_STAYS, stays });
+
   } catch (err) {
     console.error("StayActions: err in loadStays", err);
   } finally {
-		store.dispatch({ type: SET_IS_LOADING, isLoading: false })
+    store.dispatch({ type: SET_IS_LOADING, isLoading: false });
   }
 }
 
@@ -49,5 +60,23 @@ export async function loadStay(stayId) {
 }
 
 export function setFilterBy(fieldsToUpdate) {
-	store.dispatch({ type: SET_FILTER_BY, fieldsToUpdate })
+  store.dispatch({ type: SET_FILTER_BY, fieldsToUpdate });
+}
+
+export async function getTotalStaysFiltered(filterBy) {
+  const { stays } = store.getState().stayModule;
+  const filters = await stayService.applyFilters(stays, filterBy);
+  store.dispatch({ type: GET_TOTAL_STAYS_FILTERED, filters });
+}
+
+export async function getMinStaysPrices() {
+  const { stays } = store.getState().stayModule;
+  const min = Math.min(...stays.map((stay) => stay.price));
+  store.dispatch({ type: MIN_PRICES, min });
+}
+
+export async function getMaxStaysPrices() {
+  const { stays } = store.getState().stayModule;
+  const max = Math.max(...stays.map((stay) => stay.price));
+  store.dispatch({ type: MAX_PRICES, max });
 }

@@ -95,13 +95,17 @@ $scroll-arrow-width: 40px;
 $thumb-size: 30px;
 $thumb-size-firefox: 18px;
 $thumb-margin-top: 4px;
-$track-height: 1px;
+$track-height: 2px;
 $slider-margin: 10px;
 $slider-width-adjustment: 25px;
 
 // Transition
 $transition-standard: background-color 0.3s;
 
+//3D 
+$scale3d-small: scale3d(0.95, 0.95, 0.1);
+
 // Font families
 $font-family-book: "AirbnbCereal-Book", sans-serif;
 $font-family-light: "AirbnbCereal-Light", sans-serif;
+

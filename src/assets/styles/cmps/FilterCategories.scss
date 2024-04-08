@@ -50,7 +50,7 @@
     }
 
     &:active {
-      transform: scale3d(0.98, 0.98, 0.1);
+      transform: $scale3d-small;
     }
 
     &.focused {

@@ -13,7 +13,6 @@ export const dummyStays = [
     capacity: 8,
     amenities: [
       "TV",
-      "Wifi",
       "Kitchen",
       "Smoking allowed",
       "Pets allowed",
