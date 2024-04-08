@@ -5,16 +5,17 @@ import { OrderIndex } from "./pages/OrderIndex";
 import { ProfileIndex } from "./pages/ProfileIndex";
 import { RenterIndex } from "./pages/RenterIndex";
 import { TravelerIndex } from "./pages/TravelerIndex";
-import { StayIndex } from "./pages/StayIndex";
+import { StayDetails } from "./pages/StayDetails";
+import { StayIndex } from "./pages/StaysIndex";
 
 const routes = [
   {
     path: "/",
-    component: <TravelerIndex />,
+    component: <StayIndex />,
   },
   {
     path: "stay",
-    component: <StayIndex />,
+    component: <StayDetails />,
     label: "Stays",
   },
   {

@@ -47,6 +47,20 @@
       object-fit: cover;
     }
   }
+
+  //Arrow fade
+  @mixin arrow-fade($direction: left) {
+    content: "";
+    cursor: not-allowed;
+    position: absolute;
+    height: 100%;
+    width: $scroll-arrow-width;
+    background-image: linear-gradient(
+      to $direction,
+      $scroll-arrow-bg-start,
+      $scroll-arrow-bg-end $scroll-arrow-width
+    );
+  }
   
   // Mixin for removing hover efects on iphone screen
   @mixin hover-supported {    
