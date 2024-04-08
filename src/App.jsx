@@ -9,8 +9,8 @@ import { AppFooter } from "./cmps/AppFooter";
 export function RootCmp() {
   return (
     <div className="main-layout">
-      <AppHeader />
-      <main>
+      {/* <AppHeader /> */}
+      <main className="full">
         <Routes>
           {routes.map((route) => (
             <Route

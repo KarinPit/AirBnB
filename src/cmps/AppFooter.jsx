@@ -6,5 +6,6 @@ export function AppFooter() {
             <li>Idan ben abu</li>
             <li>Karin Pitlik</li>
         </ul>
+      {/* <h1>Airbnb Footer</h1> */}
     </div>
 }

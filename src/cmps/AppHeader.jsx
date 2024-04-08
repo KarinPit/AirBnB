@@ -10,7 +10,7 @@ import "../assets/styles/main.scss"
 
 export function AppHeader() {
   return (
-    <header className="app-header">
+    <header className="app-header full">
       <Link to={"/"}>
         <img className="logo" src={Logo} alt="logo" />
       </Link>

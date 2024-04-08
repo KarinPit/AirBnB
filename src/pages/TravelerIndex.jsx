@@ -1,4 +1,7 @@
 import React from 'react';
+import { useSelector } from "react-redux"
+
+import { StayList } from '../cmps/StayList';
 
 
 /*
@@ -13,9 +16,8 @@ TO DO:
 */
 
 export function TravelerIndex() {
+    const stays = useSelector((storeState) => storeState.stayModule.stays)
     return (
-        <div>
-            <h1> HomePageClient</h1>
-        </div>
+        <StayList stays={stays} />
     );
 }
