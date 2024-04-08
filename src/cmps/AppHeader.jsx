@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
-import Logo from "../assets/svg/logo.svg";
-import Language from "../assets/svg/language.svg";
+import Logo from "/svg/logo.svg";
+import Language from "/svg/language.svg";
 
 import { utilService } from "../services/util.service.js";
 import FilterStay from "./FilterStay";

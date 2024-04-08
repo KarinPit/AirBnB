@@ -13,9 +13,14 @@
     height: rem(32px);
   }
 
-  .center-row {
-    display: none;
+  .header__center {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    gap: 35px;
+    justify-content: center;
 
+    
     button {
       font-size: rem(16px);
       cursor: pointer;
