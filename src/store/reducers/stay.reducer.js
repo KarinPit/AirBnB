@@ -1,9 +1,11 @@
+import demoData from "../../demoData/index"
+
 export const SET_STAYS = "SET_STAYS";
 export const SET_STAY = "SET_STAY";
 export const REMOVE_STAY = "REMOVE_STAY";
 
 const initialState = {
-  stays: [],
+  stays: [demoData],
 };
 
 export function stayReducer(state = initialState, action) {

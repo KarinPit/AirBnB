@@ -1,0 +1,164 @@
+.stay-list {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 40px 24px;
+    margin: 24px 0 32px 0;
+
+    .stay-card {
+        position: relative;
+        cursor: pointer;
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 98%;
+            padding: 12px 12px 0 12px;
+
+            >* {
+                display: flex;
+                min-height: 24px;
+            }
+
+            .top-menu.favorite {
+                justify-content: space-between;
+
+                p {
+                    display: flex;
+                    align-items: center;
+                    font-size: 0.9rem;
+                    font-family: AirbnbCereal-Book;
+                    background-color: white;
+                    border-radius: 14px;
+                    height: 30px;
+                    margin: 0;
+                    padding: 0 10px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+
+            .top-menu {
+                justify-content: end;
+                max-height: 24px;
+
+                p {
+                    display: none;
+                }
+
+                .whishlist-icon {
+                    width: auto;
+                    height: 100%;
+                    object-fit: cover;
+                    opacity: 80%;
+                    transform-origin: center;
+
+                    &:hover {
+                        transform: translate(0, 0) scale(1.1);
+                    }
+                }
+            }
+        }
+
+        .stay-info {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            grid-template-rows: auto auto auto auto;
+            width: 100%;
+
+            p {
+                margin: 0;
+                font-size: 0.9375rem;
+            }
+
+            .location {
+                font-family: AirbnbCereal-Medium;
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .distance {
+                font-family: AirbnbCereal-Light;
+                color: #717171;
+                grid-column: 1/-1;
+                grid-row: 2;
+            }
+
+            .dates {
+                font-family: AirbnbCereal-Light;
+                color: #717171;
+                grid-column: 1/-1;
+                grid-row: 3;
+            }
+
+            .price {
+                grid-column: 1/-1;
+                grid-row: 4;
+                font-family: AirbnbCereal-Light;
+
+                span {
+                    font-family: AirbnbCereal-Medium;
+                }
+            }
+
+            .rate {
+                font-family: AirbnbCereal-Light;
+                grid-column: 2;
+                grid-row: 1;
+                display: flex;
+                align-items: center;
+
+                img {
+                    width: 14px;
+                    height: 14px;
+                }
+            }
+        }
+    }
+
+}
+
+
+@media screen and (min-width: $mobile-breakpoint) {
+    .stay-list {
+        grid-template-columns: repeat(2, minmax(230px, 1fr));
+    }
+}
+
+@media screen and (min-width: $narrow-breakpoint) {
+    .stay-list {
+        grid-template-columns: repeat(2, minmax(230px, 1fr));
+    }
+}
+
+@media screen and (min-width: $normal-breakpoint) {
+    .stay-list {
+        grid-template-columns: repeat(3, minmax(230px, 1fr));
+        // padding-inline: 40px;
+    }
+}
+
+@media screen and (min-width: $large-breakpoint) {
+    .stay-list {
+        grid-template-columns: repeat(4, minmax(230px, 1fr));
+        // padding-inline: 40px;
+    }
+}
+
+@media screen and (min-width: $xl-breakpoint) {
+    .stay-list {
+        grid-template-columns: repeat(5, minmax(230px, 1fr));
+        // padding-inline: 40px;
+    }
+}
+
+@media screen and (min-width: $xxl-breakpoint) {
+    .stay-list {
+        grid-template-columns: repeat(6, minmax(230px, 1fr));
+        // padding-inline: 40px;
+    }
+}

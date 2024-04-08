@@ -1,0 +1,87 @@
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
+
+.slides img:not(.slick-arrow) {
+    border-radius: 12px;
+    width: 100%;
+    aspect-ratio: 20 / 19;
+    object-fit: cover;
+}
+
+.slick-dots {
+    bottom: 15px;
+
+    li {
+        margin: -5px;
+    }
+
+    li button::before {
+        color: #dddddd;
+        opacity: 0.8;
+        font-size: 7px;
+    }
+
+    li.slick-active button:before {
+        color: #fff;
+        opacity: 1;
+    }
+}
+
+.slick-arrow {
+    width: 34px;
+    height: auto;
+    z-index: 5;
+    border-radius: 50%;
+    transform: translate(0, -50%);
+    transform-origin: center;
+    opacity: 0;
+
+    &:hover {
+        opacity: 1;
+        transform: translate(0, -50%) scale(1.05);
+    }
+
+    img {
+        position: relative;
+        z-index: 1;
+    }
+
+    .arrow-bg {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transform-origin: center;
+        background-color: #222222;
+        opacity: 0.5;
+        height: 80%;
+        width: 80%;
+        border-radius: 50%;
+    }
+}
+
+.slick-arrow.show-arrows {
+    opacity: 0.8;
+    transition: all 1s;
+}
+
+.slick-prev {
+    left: 25px;
+
+    &::before {
+        display: none;
+    }
+}
+
+.slick-next {
+    right: 25px;
+
+    &::before {
+        display: none;
+    }
+}
+
+.slick-disabled {
+    visibility: hidden;
+}
