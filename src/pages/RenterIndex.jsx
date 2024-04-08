@@ -1,6 +1,6 @@
 import React from "react";
 
-import HouseExample from "../assets/img/HouseExample.jpg"
+import HouseExample from "/img/HouseExample.jpg"
 
 export function RenterIndex() {
   return (
