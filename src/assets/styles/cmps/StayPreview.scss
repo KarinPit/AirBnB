@@ -2,7 +2,6 @@
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 40px 24px;
-    padding-inline: 24px;
     margin: 24px 0 32px 0;
 
     .stay-card {
@@ -139,27 +138,27 @@
 @media screen and (min-width: $normal-breakpoint) {
     .stay-list {
         grid-template-columns: repeat(3, minmax(230px, 1fr));
-        padding-inline: 40px;
+        // padding-inline: 40px;
     }
 }
 
 @media screen and (min-width: $large-breakpoint) {
     .stay-list {
         grid-template-columns: repeat(4, minmax(230px, 1fr));
-        padding-inline: 40px;
+        // padding-inline: 40px;
     }
 }
 
 @media screen and (min-width: $xl-breakpoint) {
     .stay-list {
         grid-template-columns: repeat(5, minmax(230px, 1fr));
-        padding-inline: 40px;
+        // padding-inline: 40px;
     }
 }
 
 @media screen and (min-width: $xxl-breakpoint) {
     .stay-list {
         grid-template-columns: repeat(6, minmax(230px, 1fr));
-        padding-inline: 40px;
+        // padding-inline: 40px;
     }
 }
