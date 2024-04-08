@@ -12,6 +12,7 @@ import {
   GET_TOTAL_STAYS_FILTERED,
 } from "../reducers/stay.reducer.js";
 
+
 export async function loadStays() {
   store.dispatch({ type: SET_IS_LOADING, isLoading: true });
   try {

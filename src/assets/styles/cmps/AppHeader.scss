@@ -1,22 +1,20 @@
 .app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
+  .top-row {
+    display: none;
 
-  a {
-    display: flex;
-    justify-content: center;
+    a {
+      display: flex;
+      align-items: center;
+    }
   }
 
   .logo {
-    width: rem(100px);
+    width: rem(102px);
     height: rem(32px);
   }
 
-  .header__center {
-    display: flex;
-    gap: 20px;
+  .center-row {
+    display: none;
 
     button {
       font-size: rem(16px);
@@ -24,9 +22,10 @@
     }
   }
 
-  .header__right {
+  .header-right {
     display: flex;
     align-items: center;
+    height: 80px;
 
     >* {
       padding: $padding-lg;
@@ -37,6 +36,52 @@
     img {
       width: rem(16px);
       height: rem(16px);
+    }
+  }
+
+  .filter-row {
+    display: flex;
+    padding: 20px;
+  }
+}
+
+
+@media screen and (min-width: $narrow-breakpoint) {
+  .app-header {
+    .top-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}
+
+
+@media screen and (min-width: $narrow-breakpoint) {
+  .app-header {
+    .center-row {
+      display: flex;
+      order: 3;
+      gap: 35px;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      margin: 10px;
+    }
+  }
+}
+
+@media screen and (min-width: $normal-breakpoint) {
+  .app-header {
+    .center-row {
+      order: 0;
+      width: auto;
+    }
+
+    .filter-row {
+      height: 64px;
+      margin-block-end: 16px;
     }
   }
 }
