@@ -1,16 +1,28 @@
+import { useState } from 'react';
+
 import { ImageCarousel } from "./ImageCarousel"
 
 import starIcon from "../../public/star.svg"
 import heartIcon from "../../public/heart.svg"
-import rightIcon from "../../public/next.svg"
+
 
 
 export function StayPreview({ stay }) {
+    const [showArrows, setShowArrows] = useState(false);
+
+    function handleMouseEnter() {
+        setShowArrows(true)
+    }
+
+    function handleMouseLeave() {
+        setShowArrows(false)
+    }
+
     return (
         <>
-            <ImageCarousel stay={stay} />
+            <ImageCarousel stay={stay} showArrows={showArrows} />
 
-            <div className="actions">
+            <div className="actions" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 <div className={`top-menu ${stay.isFavorite ? 'favorite' : ''}`}>
                     <p>Guest favorite</p>
                     <img className="whishlist-icon" src={heartIcon}></img>
@@ -27,7 +39,7 @@ export function StayPreview({ stay }) {
                     <img src={starIcon}></img>
                     <p>{stay.reviews[0].rate}</p>
                 </div>
-                </div>
-            </>
-            )
+            </div>
+        </>
+    )
 }

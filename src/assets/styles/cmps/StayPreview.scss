@@ -56,6 +56,11 @@
                     height: 100%;
                     object-fit: cover;
                     opacity: 80%;
+                    transform-origin: center;
+
+                    &:hover {
+                        transform: translate(0, 0) scale(1.1);
+                    }
                 }
             }
         }
@@ -133,7 +138,28 @@
 
 @media screen and (min-width: $normal-breakpoint) {
     .stay-list {
-        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        grid-template-columns: repeat(3, minmax(230px, 1fr));
+        padding-inline: 40px;
+    }
+}
+
+@media screen and (min-width: $large-breakpoint) {
+    .stay-list {
+        grid-template-columns: repeat(4, minmax(230px, 1fr));
+        padding-inline: 40px;
+    }
+}
+
+@media screen and (min-width: $xl-breakpoint) {
+    .stay-list {
+        grid-template-columns: repeat(5, minmax(230px, 1fr));
+        padding-inline: 40px;
+    }
+}
+
+@media screen and (min-width: $xxl-breakpoint) {
+    .stay-list {
+        grid-template-columns: repeat(6, minmax(230px, 1fr));
         padding-inline: 40px;
     }
 }
