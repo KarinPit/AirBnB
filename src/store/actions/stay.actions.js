@@ -10,8 +10,6 @@ import {
   UPDATE_STAY,
   SET_IS_LOADING,
   GET_TOTAL_STAYS_FILTERED,
-  MAX_PRICES,
-  MIN_PRICES,
 } from "../reducers/stay.reducer.js";
 
 export async function loadStays() {
@@ -64,19 +62,7 @@ export function setFilterBy(fieldsToUpdate) {
 }
 
 export async function getTotalStaysFiltered(filterBy) {
-  const { stays } = store.getState().stayModule;
-  const filters = await stayService.applyFilters(stays, filterBy);
-  store.dispatch({ type: GET_TOTAL_STAYS_FILTERED, filters });
+  const total = await stayService.getTotalFiltered( filterBy);
+  store.dispatch({ type: GET_TOTAL_STAYS_FILTERED, total });
 }
 
-export async function getMinStaysPrices() {
-  const { stays } = store.getState().stayModule;
-  const min = Math.min(...stays.map((stay) => stay.price));
-  store.dispatch({ type: MIN_PRICES, min });
-}
-
-export async function getMaxStaysPrices() {
-  const { stays } = store.getState().stayModule;
-  const max = Math.max(...stays.map((stay) => stay.price));
-  store.dispatch({ type: MAX_PRICES, max });
-}

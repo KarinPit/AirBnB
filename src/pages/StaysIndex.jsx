@@ -6,6 +6,7 @@ import FilterCategories from "../cmps/FilterCategories";
 import { stayService } from "../services/stay.service.local";
 import { loadStays, setFilterBy } from "../store/actions/stay.actions";
 import AdvancedFilter from "../cmps/AdvancedFilter";
+import { useEffectUpdate } from "../customHooks/useEffectUpdate";
 
 /*
 TO DO:
@@ -27,11 +28,10 @@ export function StayIndex() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    const testt = stayService.getFilterFromParams(searchParams);
     setFilterBy(stayService.getFilterFromParams(searchParams));
   }, []);
 
-  useEffect(() => {
+  useEffectUpdate(() => {
     if (Object.keys(filterBy).length !== 0) {
       const sanitizedFilter = stayService.sanitizeFilter(filterBy);
       setSearchParams(sanitizedFilter);
@@ -51,10 +51,7 @@ export function StayIndex() {
     <section>
       <h1> HomePageClient</h1>
       <div className="stays-index-category-bar">
-        <FilterCategories
-          onSetFilter={onSetFilter}
-          filterBy={{ category_tag }}
-        />
+        <FilterCategories onSetFilter={onSetFilter} filterBy={category_tag} />
         <AdvancedFilter filterBy={rest} onSetFilter={onSetFilter} />
       </div>
     </section>

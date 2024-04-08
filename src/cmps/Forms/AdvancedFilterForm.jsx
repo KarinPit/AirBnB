@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { useFormikContext } from "formik";
 
@@ -14,14 +14,9 @@ import {
 } from "../../constants";
 import { ChipList } from "../Chip/ChipList";
 import CheckboxList from "../Checkbox/CheckboxList";
-import { getTotalStaysFiltered } from "../../store/actions/stay.actions";
 
 export default function AdvancedFilterForm() {
-  const { handleSubmit, values } = useFormikContext();
-
-  useEffect(() => {
-    getTotalStaysFiltered(values);
-  }, [values]);
+  const { handleSubmit } = useFormikContext();
 
   return (
     <form

@@ -7,7 +7,6 @@ export default function FilterCategories({ onSetFilter, filterBy }) {
   const [images, setImages] = useState([]);
   const labelRefs = useRef([]);
   const scrollContainerRef = useRef(null);
-  const { category_tag } = filterBy;
 
   useEffect(() => {
     fetchImages()
@@ -19,12 +18,12 @@ export default function FilterCategories({ onSetFilter, filterBy }) {
 
   useEffect(() => {
     if (images.length > 0) {
-      setTimeout(() => scrollToFocus(category_tag), 0);
+      setTimeout(() => scrollToFocus(filterBy), 0);
     }
   }, [images]);
 
-  const scrollToFocus = (categoryTag) => {
-    const focusIndex = images.findIndex((image) => image.title === categoryTag);
+  const scrollToFocus = (filterBy) => {
+    const focusIndex = images.findIndex((image) => image.title === filterBy);
 
     if (labelRefs.current[focusIndex]) {
       const labelElement = labelRefs.current[focusIndex];
@@ -66,7 +65,7 @@ export default function FilterCategories({ onSetFilter, filterBy }) {
             key={index}
             ref={(el) => (labelRefs.current[index] = el)}
             className={`filter-categories-label ${
-              category_tag === image.title ? "focused" : ""
+              filterBy === image.title ? "focused" : ""
             }`}
             tabIndex={0}
             aria-labelledby={`input-${index}`}

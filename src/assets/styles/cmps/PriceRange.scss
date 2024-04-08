@@ -10,7 +10,7 @@
     contain: paint;
     height: 100%;
     grid-template-rows: 60px;
-    display: grid;
+    align-items: flex-end;
     grid-auto-flow: column;
 
     .bar {

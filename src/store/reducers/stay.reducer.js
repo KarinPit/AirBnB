@@ -7,15 +7,12 @@ export const REMOVE_STAY = "REMOVE_STAY";
 export const SET_FILTER_BY = "SET_FILTER_BY";
 export const SET_IS_LOADING = "SET_IS_LOADING";
 export const GET_TOTAL_STAYS_FILTERED = "GET_TOTAL_STAYS_FILTERED";
-export const MIN_PRICES = "MIN_PRICES";
-export const MAX_PRICES = "MAX_PRICES";
 
 const initialState = {
   stays: [],
   filterBy: stayService.getDefaultFilter(),
+  isLoading: true,
   totalFiltered: 0,
-  min: 0,
-  max: 0,
 };
 
 export function stayReducer(state = initialState, action) {
@@ -24,8 +21,6 @@ export function stayReducer(state = initialState, action) {
       return {
         ...state,
         stays: action.stays,
-        min:Math.min(...action.stays.map((stay) => stay.price)),
-        max:Math.max(...action.stays.map((stay) => stay.price))
       };
     case ADD_STAY:
       return { ...state, stays: action.stays };
@@ -34,7 +29,7 @@ export function stayReducer(state = initialState, action) {
       return {
         ...state,
         stays: state.stays.map((stay) =>
-          robot.id === action.stay.id ? action.stay : stay
+          stay.id === action.stay.id ? action.stay : stay
         ),
       };
 
@@ -51,18 +46,13 @@ export function stayReducer(state = initialState, action) {
     case GET_TOTAL_STAYS_FILTERED:
       return {
         ...state,
-        totalFiltered: action.filters.length,
+        totalFiltered: action.total,
       };
-    // case MIN_PRICES:
-    //   return {
-    //     ...state,
-    //     min: action.min,
-    //   };
-    // case MAX_PRICES:
-    //   return {
-    //     ...state,
-    //     max: action.max,
-    //   };
+      case SET_IS_LOADING:
+        return {
+            ...state,
+            isLoading: action.isLoading
+        }
 
     default:
       return state;

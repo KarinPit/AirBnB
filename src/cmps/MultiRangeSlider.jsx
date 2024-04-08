@@ -9,10 +9,10 @@ export function MultiRangeSlider({ min, max }) {
   const maxVal = values.price_max;
 
   // Ensure the min and max values are updated in Formik when the component mounts or the external min/max props change.
-  useEffect(() => {
-    setFieldValue("price_min", min);
-    setFieldValue("price_max", max);
-  }, [min, max, setFieldValue]);
+  // useEffect(() => {
+  //   setFieldValue("price_min", min);
+  //   setFieldValue("price_max", max);
+  // }, [min, max, setFieldValue]);
 
   const handleMinChange = (e) => {
     const newValue = Math.min(Number(e.target.value), maxVal - minDistance);

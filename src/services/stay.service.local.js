@@ -16,6 +16,10 @@ export const stayService = {
   sanitizeFilter,
   countChangedFilters,
   addstayMsg,
+  minPricesStays,
+  maxPricesStays,
+  getAllPrices,
+  getTotalFiltered
 };
 window.cs = stayService;
 
@@ -41,40 +45,48 @@ async function query(filterBy) {
 }
 
 function applyFilters(stays, filterBy) {
-  return stays.filter((stay) => {
-    // Category tag filter
-    // const categoryTagMatch =
-    //   !filterBy.category_tag ||
-    //   stay.labels.some((label) =>
-    //     new RegExp(filterBy.category_tag, "i").test(label)
-    //   );
+  // Match category tags using regex
+  const matchesCategoryTag = (stay) => {
+    if (!filterBy.category_tag) return true;
+    const regex = new RegExp(filterBy.category_tag, "i");
+    return stay.labels.some((label) => regex.test(label));
+  };
 
-    // Amenities filter
-    const amenitiesMatch =
-      !filterBy.amenities ||
-      filterBy.amenities.every((amenity) => stay.amenities.includes(amenity));
-
-    // Property type filter
-    const propertyTypeMatch =
-      !filterBy.l2_property_type_ids ||
-      filterBy.l2_property_type_ids.every((property) => stay.type === property);
-
-    // Price range filter
-    const priceMinMatch =
-      filterBy.price_min === undefined || stay.price >= filterBy.price_min;
-    const priceMaxMatch =
-      filterBy.price_max === undefined || stay.price <= filterBy.price_max;
-    const priceMatch = priceMinMatch && priceMaxMatch;
-
-    // Combine all filter checks
-    return (
-      // categoryTagMatch &&
-      amenitiesMatch && 
-      priceMatch
-      // categoryTagMatch && amenitiesMatch && propertyTypeMatch && priceMatch
+  // Match amenities through direct inclusion
+  const matchesAmenities = (stay) => {
+    if (!filterBy.amenities) return true;
+    return filterBy.amenities.every((amenity) =>
+      stay.amenities.includes(amenity)
     );
-  });
+  };
+
+  // Match property types using regex
+  const matchesPropertyType = (stay) => {
+    if (!filterBy.l2_property_type_ids) return true;
+    // Assuming the IDs do not contain special regex characters
+    const pattern = filterBy.l2_property_type_ids.join("|");
+    const regex = new RegExp(pattern, "i");
+    return regex.test(stay.type);
+  };
+
+  // Determine if stay is within the specified price range
+  const withinPriceRange = (stay) => {
+    const priceMinMatch =
+      !filterBy.price_min || stay.price >= filterBy.price_min;
+    const priceMaxMatch =
+      !filterBy.price_max || stay.price <= filterBy.price_max;
+    return priceMinMatch && priceMaxMatch;
+  };
+
+  return stays.filter(
+    (stay) =>
+      matchesCategoryTag(stay) &&
+      matchesAmenities(stay) &&
+      withinPriceRange(stay) &&
+      matchesPropertyType(stay)
+  );
 }
+
 function getById(stayId) {
   return storageService.get(STORAGE_KEY, stayId);
 }
@@ -128,8 +140,9 @@ function getDefaultFilter(
   category_tag,
   room_types = "any_type",
   amenities = [],
-  price_min,
-  price_max
+  price_min = minPricesStays(),
+  price_max = maxPricesStays(),
+  l2_property_type_ids = []
 ) {
   return {
     category_tag,
@@ -137,7 +150,18 @@ function getDefaultFilter(
     price_min,
     price_max,
     amenities,
+    l2_property_type_ids,
   };
+}
+
+function minPricesStays() {
+  let stays = utilService.loadFromStorage(STORAGE_KEY);
+  return Math.min(...stays.map((stay) => stay.price));
+}
+
+function maxPricesStays() {
+  let stays = utilService.loadFromStorage(STORAGE_KEY);
+  return Math.max(...stays.map((stay) => stay.price));
 }
 
 function sanitizeFilter(filterObject) {
@@ -166,6 +190,17 @@ function countChangedFilters(currentFilters, initialFilters) {
   }, 0);
 }
 
+function getAllPrices() {
+  let stays = utilService.loadFromStorage(STORAGE_KEY);
+  return stays.map((stay) => stay.price);
+}
+
+async function getTotalFiltered (filterBy) {
+  let stays = utilService.loadFromStorage(STORAGE_KEY);
+  const total = await applyFilters(stays, filterBy).length
+  return total
+}
+
 async function addstayMsg(stayId, txt) {
   const stay = await getById(stayId);
   if (!stay.msgs) stay.msgs = [];
@@ -180,6 +215,7 @@ async function addstayMsg(stayId, txt) {
 
   return msg;
 }
+
 function _createStays() {
   let stays = utilService.loadFromStorage(STORAGE_KEY);
   if (!stays || !stays.length) {
