@@ -77,13 +77,21 @@ function applyFilters(stays, filterBy) {
       !filterBy.price_max || stay.price <= filterBy.price_max;
     return priceMinMatch && priceMaxMatch;
   };
-
+  // Determine if stay is within the specified price range
+  const matchGuestFavorites = (stay) => {
+    // If guest_favorites filter is not set, include the stay
+    if (!filterBy.guest_favorites) return true;
+  
+    // Otherwise, include the stay only if it matches the filter condition
+    return stay.guest_favorites === filterBy.guest_favorites;
+  };
   return stays.filter(
     (stay) =>
       matchesCategoryTag(stay) &&
       matchesAmenities(stay) &&
       withinPriceRange(stay) &&
-      matchesPropertyType(stay)
+      matchesPropertyType(stay)&&
+      matchGuestFavorites(stay)
   );
 }
 

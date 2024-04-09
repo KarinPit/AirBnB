@@ -7,6 +7,7 @@ export const dummyStays = [
     "price": 80.00,
     "summary": "Fantastic duplex apartment with three bedrooms, located in the historic area of Porto, Ribeira (Cube)...",
     "capacity": 8,
+    "guest_favorites" : true,
     "amenities": [
       "TV",
       "Wifi",
@@ -53,6 +54,8 @@ export const dummyStays = [
     "price": 80.00,
     "summary": "Fantastic duplex apartment with three bedrooms, located in the historic area of Porto, Ribeira (Cube)...",
     "capacity": 8,
+    "guest_favorites" : false,
+
     "amenities": [
       "TV",
       "Wifi",
@@ -103,6 +106,7 @@ export const dummyStays = [
     "price": 80.00,
     "summary": "Fantastic duplex apartment with three bedrooms, located in the historic area of Porto, Ribeira (Cube)...",
     "capacity": 8,
+    "guest_favorites" : false,
     "amenities": [
       "TV",
       "Wifi",
@@ -153,6 +157,7 @@ export const dummyStays = [
     "price": 80.00,
     "summary": "Fantastic duplex apartment with three bedrooms, located in the historic area of Porto, Ribeira (Cube)...",
     "capacity": 8,
+    "guest_favorites" : false,
     "amenities": [
       "TV",
       "Wifi",
@@ -203,6 +208,7 @@ export const dummyStays = [
     "price": 80.00,
     "summary": "Fantastic duplex apartment with three bedrooms, located in the historic area of Porto, Ribeira (Cube)...",
     "capacity": 8,
+    "guest_favorites" : false,
     "amenities": [
       "TV",
       "Wifi",
@@ -253,6 +259,7 @@ export const dummyStays = [
     "price": 80.00,
     "summary": "Fantastic duplex apartment with three bedrooms, located in the historic area of Porto, Ribeira (Cube)...",
     "capacity": 8,
+    "guest_favorites" : true,
     "amenities": [
       "TV",
       "Wifi",
@@ -303,6 +310,7 @@ export const dummyStays = [
     "price": 80.00,
     "summary": "Fantastic duplex apartment with three bedrooms, located in the historic area of Porto, Ribeira (Cube)...",
     "capacity": 8,
+    "guest_favorites" : false,
     "amenities": [
       "TV",
       "Wifi",
@@ -353,6 +361,7 @@ export const dummyStays = [
     "price": 80.00,
     "summary": "Fantastic duplex apartment with three bedrooms, located in the historic area of Porto, Ribeira (Cube)...",
     "capacity": 8,
+    "guest_favorites" : false,
     "amenities": [
       "TV",
       "Wifi",
@@ -403,6 +412,7 @@ export const dummyStays = [
     "price": 80.00,
     "summary": "Fantastic duplex apartment with three bedrooms, located in the historic area of Porto, Ribeira (Cube)...",
     "capacity": 8,
+    "guest_favorites" : false,
     "amenities": [
       "TV",
       "Wifi",
@@ -453,6 +463,7 @@ export const dummyStays = [
     "price": 80.00,
     "summary": "Fantastic duplex apartment with three bedrooms, located in the historic area of Porto, Ribeira (Cube)...",
     "capacity": 8,
+    "guest_favorites" : false,
     "amenities": [
       "TV",
       "Wifi",
