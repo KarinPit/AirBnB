@@ -1,6 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
+
+import DatePicker from 'react-datepicker';
 import GuestPicker from './GuestPicker'; // Import the new component
 
+
+import 'react-datepicker/dist/react-datepicker.css';
 import '../assets/styles/main.scss';
 
 const FilterStay = ({ onSearch }) => {
@@ -20,10 +24,12 @@ const FilterStay = ({ onSearch }) => {
     }));
   };
   const [recentSearches] = useState([
-    { label: 'Europe', query: 'Europe', date: 'Month in Jun' },
-    // Add more recent searches as needed
+    { label: 'Europe'
+    , query: 'Europe'
+    , date: 'Month in Jun'
+    , icon : "/svg/watch-list.svg"},
   ]);
-  // Combined state for search parameters, removed redundant states
+
   const [searchParams, setSearchParams] = useState({
     query: '',
     checkIn: '',
@@ -39,6 +45,10 @@ const FilterStay = ({ onSearch }) => {
   const [showRegionPicker, setShowRegionPicker] = useState(false);
   const [showGuestPicker, setShowGuestPicker] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState('');
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [dates, setDates] = useState([null, null]);
+  const [focusedField, setFocusedField] = useState(null);
 
  // Refs
  const wrapperRef = useRef(null);
@@ -47,7 +57,25 @@ const FilterStay = ({ onSearch }) => {
  const handleRegionSelect = (region) => {
    setSearchParams(prev => ({ ...prev, query: region }));
    setShowRegionPicker(false);
- };
+ };  
+
+ const handleStartDateChange = (date) => {
+  setStartDate(date);
+  // If startDate is after endDate, reset endDate
+  if (date && endDate && date >= endDate) {
+    setEndDate(null);
+  }
+};
+
+  const handleEndDateChange = (date) => {
+    setEndDate(date);
+    // If endDate is before startDate, move startDate to the day before endDate
+    if (startDate && date && startDate >= date) {
+      setStartDate(new Date(date.getTime() - 86400000));
+    }
+  };
+
+
 
  const handleInputChange = (e) => {
    setSearchParams(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -91,35 +119,65 @@ const FilterStay = ({ onSearch }) => {
       <form className="search-form" onSubmit={handleSubmit}>
         <div className="input-group">
           <div className={`input-container ${showRegionPicker ? 'active' : ''}`}>
+          <label htmlFor="location-search" className='input-label'>Where</label>
           <input
+            id='location-search'
             className='location-search'
             type="text"
             name="query"
-            placeholder="Where"
+            placeholder="Search destinations"
             value={searchParams.query}
             onChange={handleInputChange}
             onFocus={() => handleFocus('query')}
           />
           </div>
-          <input
-            className='check-in'
-            type="date"
-            name="checkIn"
-            value={searchParams.checkIn}
-            onChange={handleInputChange}
-          />
-          <input
-            className='check-out'
-            type="date"
-            name="checkOut"
-            value={searchParams.checkOut}
-            onChange={handleInputChange}
-          />
+          <div className={`date-picker-container ${focusedField === 'checkIn' ? 'focused' : ''}`}>
+            <div className='input-container'>
+              <label htmlFor="start-date-picker" className='input-label'>Check in</label>
+              <DatePicker
+                id='start-date-picker'
+                selected={startDate}
+                onChange={handleStartDateChange}
+                selectsStart
+                startDate={startDate}
+                endDate={endDate}
+                isClearable={true}
+                placeholderText="Add dates"
+                onFocus={() => {
+                  setFocusedField('checkIn');
+                  setShowRegionPicker(false); // Hide region picker when date picker is focused
+                }}                
+                onBlur={() => setFocusedField(null)}
+                // more props as required
+              />
+            </div>
+            <div className='input-container'>
+              <label htmlFor="end-date-picker" className='input-label'>Check out</label>
+              <DatePicker
+                id='end-date-picker'
+                selected={endDate}
+                onChange={handleEndDateChange}
+                selectsEnd
+                startDate={startDate}
+                endDate={endDate}
+                minDate={startDate}
+                isClearable={true}
+                placeholderText="Add dates"
+                onFocus={() =>  {
+                  setFocusedField('checkOut');
+                 setShowRegionPicker(false);
+                 }}
+                onBlur={() => setFocusedField(null)}
+              />
+            </div>
+          </div>
           <div
             className={`guest-input-container ${showGuestPicker ? 'active' : ''}`}
             onClick={toggleGuestPicker}
           >
+            <label htmlFor="add-guests" className='input-label'>Who</label>
             <input
+              id='add-guests'
               className='add-guests'
               type="text"
               readOnly
@@ -181,7 +239,9 @@ const FilterStay = ({ onSearch }) => {
                     handleRegionSelect(search.query);
                     setShowRegionPicker(false);
                   }}
-                >
+                  className="recent-search-item"
+                >        
+                <img src={search.icon} alt={`${search.label} icon`} className="recent-search-icon" />
                   {search.label} - {search.date}
                 </button>
               ))}

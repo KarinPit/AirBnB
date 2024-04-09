@@ -1,0 +1,130 @@
+// Style for the region picker dropdown
+.region-picker {
+    display: flex;
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 20px);
+    background: white;
+    box-shadow: 0 8px 16px rgba(14, 13, 13, 0.1);
+    border-radius: 24px;
+    padding: 20px;
+    z-index: 999;
+  }
+
+  .region-picker.active {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 848px;
+    height: 409px;
+    max-width: 1000px;
+    background: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 24px;
+    padding: 20px;
+    z-index: 999;
+  }
+  // Styles for recent searches and search by region
+  .recent-searches, .search-by-region {
+    flex-basis: 50%;
+    flex:1;
+  }
+  .recent-searches h2{
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .recent-searches {
+    .recent-search-item {
+      display: flex;
+      align-items: center;
+      margin: 10px 0; // Add some space between buttons
+      padding: 5px; // Padding inside the button
+      border: none; // Remove border
+      background: none; // Remove background
+      cursor: pointer; // Change cursor on hover
+      text-align: left; // Align text to the left
+  
+      .recent-search-icon {
+        margin-right: 10px; // Space between icon and text
+        width: 20px; // Icon width
+        height: 20px; // Icon height
+      }
+    }
+  }
+  .recent-searches h2, .search-by-region h2 {
+    margin-bottom: 20px; // This adds space below the h2 elements
+  }
+  .recent-search-list button {
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  .search-by-region {
+    line-height: 20.02px;
+    font-size: 10px;
+  }
+
+  .region-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr); // Or adjust to your desired size
+    gap: 20px;
+  }
+
+  .region-item {
+    position: relative;
+    width: 130px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+  
+  
+    img {
+      width: 100%;
+      height: calc(100% - 40px);
+      object-fit: cover;
+      transition: opacity 0.3s ease-in-out;
+    }
+  
+    .region-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding:10px;
+      background-color:white;
+      font-size:14px;
+      color: #333; // Text color
+      text-align: left;
+      transition: background-color 0.3s ease-in-out, padding 0.3s ease-in-out;
+    }
+
+    &:hover, &.selected {
+      background-color: #ffffff; // Change background color on hover
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); // Keep the shadow effect on hover
+  
+      .region-label {
+        background-color: #dddddd; // Match the label background with the item on hover
+        color: #333; // You can change the text color on hover if needed
+      }
+    }
+  }
+  // Example of how you might label the images
+  .region-item .region-label {
+    bottom: 0;
+    left: 0;
+    color: #333;
+    text-align: left;
+  }
+
+  .region-item:hover .region-label,
+  .region-item.selected .region-label {
+    display: block;
+  }

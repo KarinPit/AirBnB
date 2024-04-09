@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-import Logo from "/svg/logo.svg"
-import Language from "/svg/language.svg"
+
+import Logo from "/svg/logo.svg";
+import Language from "/svg/language.svg";
 
 import { utilService } from "../services/util.service.js";
-import FilterStay from "./FilterStay"
+import FilterStay from "./FilterStay";
 
 import "../assets/styles/main.scss"
 
@@ -12,20 +13,14 @@ export function AppHeader() {
   return (
     <header className="app-header full">
       <div className="top-row">
-        <Link to={"/"}>
+        <NavLink to={"/"}>
           <img className="logo" src={Logo} alt="logo" />
-        </Link>
+        </NavLink>
 
         <div className="center-row">
-          <Link to={"/stay"}>
-            <button>Stays</button>
-          </Link>
-          <Link to={"/experience"}>
-            <button>Experiences</button>
-          </Link>
-          <Link to={"/online-experience"}>
-            <button>Online Experiences</button>
-          </Link>
+          <NavLink to="/stay" className={({ isActive }) => isActive ? 'active-link' : ''}>Stays</NavLink>
+          <NavLink to="/experience" className={({ isActive }) => isActive ? 'active-link' : ''}>Experiences</NavLink>
+          <NavLink to="/online-experience" className={({ isActive }) => isActive ? 'active-link' : ''}>Online Experiences</NavLink>
         </div>
 
         <div className="header-right">
