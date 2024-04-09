@@ -49,7 +49,7 @@ export default function CheckboxList({ options, fieldName }) {
         onClick={() => setIsShowMore((prev) => !prev)}
         type="button"
       >
-        <span>Show more</span>
+        <span>{isShowMore ? "Show less" : "Show more"}</span>
       </button>
     </div>
   );
