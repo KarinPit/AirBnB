@@ -4,6 +4,14 @@
     grid-template-rows: auto 1fr minmax(80px, auto);
     padding-inline: 20px;
 
+    &.compact-layout {
+        grid-template-columns: minmax(80px, auto) minmax(auto, 1120px) minmax(80px, auto);
+        padding-inline: 0;
+        main {
+            padding-block-start: 24px;
+        }
+    }
+
     >* {
         grid-column: 2;
 
@@ -25,12 +33,22 @@
     }
 
     @include for-narrow-layout {
+        &.compact-layout {
+            grid-template-columns: minmax(20px, auto) minmax(auto, 1280px) minmax(20px, auto);
+
+        }
+
         padding-inline: 20px;
         // grid-template-columns:
         //     minmax(20px, 1fr) minmax(auto, $mobile-breakpoint) minmax(20px, 1fr);
     }
 
     @include for-normal-layout {
+        &.compact-layout {
+            grid-template-columns: minmax(0, auto) minmax(auto, 1280px) minmax(0, auto);
+
+        }
+
         padding-inline: 40px;
         // grid-template-columns:
         //     minmax(20px, 1fr) minmax(auto, $narrow-breakpoint) minmax(20px, 1fr);

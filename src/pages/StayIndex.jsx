@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link, useParams } from "react-router-dom"
 
+import { StayDetails } from '../cmps/StayDetails'
 /*
 TO DO:
   // StayEdit - make it super easy to add Stay for development
@@ -9,11 +11,11 @@ TO DO:
 */
 
 export function StayIndex() {
+    const { stayId } = useParams()
+
     return (
         <div>
-            {/* Render the property details using the id prop */}
-            <h1>Stay Details</h1>
-            {/* Add more property details rendering here */}
+            <StayDetails stayId={stayId}/>
         </div>
     )
 }

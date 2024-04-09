@@ -1,4 +1,6 @@
 .app-header {
+  padding-block-end: 24px;
+
   .top-row {
     display: none;
 
@@ -13,21 +15,18 @@
     height: rem(32px);
   }
 
-  .header__center {
-    grid-column: 2;
-    grid-row: 1;
-    display: flex;
-    gap: 35px;
-    justify-content: center;
+  .center-row {
+    &.hide-center {
+      display: none;
+    }
 
-    
     button {
       font-size: rem(16px);
       cursor: pointer;
     }
   }
 
-  .header-right {
+  .right-row {
     display: flex;
     align-items: center;
     height: 80px;
@@ -47,6 +46,37 @@
   .filter-row {
     display: flex;
     padding: 20px;
+
+    &.hide-filter {
+      display: none;
+    }
+
+    &.minimized-filter {
+      max-width: 350px;
+
+      .search-container {
+        height: 46px;
+
+        .check-in {
+          margin: 0;
+        }
+
+        .check-out {
+          display: none;
+        }
+
+        .search-button {
+          padding: 10px;
+          width: 100%;
+
+          svg {
+            margin: auto;
+            height: 12px !important;
+            width: 12px !important;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -58,6 +88,13 @@
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
+
+    }
+
+    &.compact-header {
+      .top-row {
+        flex-wrap: nowrap;
+      }
     }
   }
 }

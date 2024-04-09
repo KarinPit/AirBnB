@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router";
+import { useLocation } from "react-router-dom"
 
 import routes from "./routes";
 
@@ -7,10 +8,12 @@ import { AppHeader } from "./cmps/AppHeader";
 import { AppFooter } from "./cmps/AppFooter";
 
 export function RootCmp() {
+  const location = useLocation().pathname
+
   return (
-    <div className="main-layout">
-      <AppHeader />
-      <main className="full">
+    <div className={`main-layout ${location === '/' ? '' : 'compact-layout'}`}>
+      <AppHeader location={location} />
+      <main className={`${location === '/' ? 'full' : ''}`}>
         <Routes>
           {routes.map((route) => (
             <Route
@@ -22,7 +25,7 @@ export function RootCmp() {
           ))}
         </Routes>
       </main>
-      <AppFooter />
+      <AppFooter location={location}/>
     </div>
   );
 }

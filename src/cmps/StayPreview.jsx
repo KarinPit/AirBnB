@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link} from "react-router-dom"
 
 import { ImageCarousel } from "./ImageCarousel"
 
@@ -22,12 +23,14 @@ export function StayPreview({ stay }) {
         <>
             <ImageCarousel stay={stay} showArrows={showArrows} />
 
-            <div className="actions" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                <div className={`top-menu ${stay.isFavorite ? 'favorite' : ''}`}>
-                    <p>Guest favorite</p>
-                    <img className="whishlist-icon" src={heartIcon}></img>
+            <Link to={`/stay/${stay._id}`}>
+                <div className="actions" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                    <div className={`top-menu ${stay.isFavorite ? 'favorite' : ''}`}>
+                        <p>Guest favorite</p>
+                        <img className="whishlist-icon" src={heartIcon}></img>
+                    </div>
                 </div>
-            </div>
+            </Link>
 
             <div className="stay-info">
                 <p className="location">{stay.loc.city}, {stay.loc.country}</p>

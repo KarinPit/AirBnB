@@ -14,8 +14,12 @@ const routes = [
   },
   {
     path: "stay",
-    component: <StayIndex />,
+    component: "",
     label: "Stays",
+  },
+  {
+    path: "stay/:stayId",
+    component: <StayIndex />,
   },
   {
     path: "experience",
