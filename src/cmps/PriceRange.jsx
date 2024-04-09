@@ -7,15 +7,16 @@ import { stayService } from "../services/stay.service.local";
 
 export function PriceRange() {
   const { setFieldValue, values } = useFormikContext();
-  const stayPrices = stayService.getAllPrices();
-  const [priceHistogram, setPriceHistogram] = useState([]);
-  const [priceBounds] = useState({
-    min: stayService.minPricesStays(),
-    max: stayService.maxPricesStays(),
-  });
-
   const initialMinPrice = stayService.minPricesStays();
   const initialMaxPrice = stayService.maxPricesStays();
+  const stayPrices = stayService.getAllPrices();
+
+  const [priceHistogram, setPriceHistogram] = useState([]);
+  const [priceBounds] = useState({
+    min: initialMinPrice,
+    max: initialMaxPrice,
+  });
+  console.log({ priceBounds });
 
   useEffect(() => {
     const histogram = calculatePriceHistogram(initialMinPrice, initialMaxPrice);

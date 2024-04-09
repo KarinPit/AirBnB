@@ -77,13 +77,15 @@ function applyFilters(stays, filterBy) {
       !filterBy.price_max || stay.price <= filterBy.price_max;
     return priceMinMatch && priceMaxMatch;
   };
-  // Determine if stay is within the specified price range
+  // Determine if stay is within the specified guest favorite
   const matchGuestFavorites = (stay) => {
-    // If guest_favorites filter is not set, include the stay
-    if (!filterBy.guest_favorites) return true;
+    if (filterBy.guest_favorite === undefined) return true;
   
-    // Otherwise, include the stay only if it matches the filter condition
-    return stay.guest_favorites === filterBy.guest_favorites;
+    if (filterBy.guest_favorite === true) {
+      return stay.guest_favorite === true;
+    }
+    
+    return true;
   };
   return stays.filter(
     (stay) =>
@@ -150,7 +152,8 @@ function getDefaultFilter(
   amenities = [],
   price_min = minPricesStays(),
   price_max = maxPricesStays(),
-  l2_property_type_ids = []
+  l2_property_type_ids = [],
+  guest_favorite=false,
 ) {
   return {
     category_tag,
@@ -159,6 +162,7 @@ function getDefaultFilter(
     price_max,
     amenities,
     l2_property_type_ids,
+    guest_favorite
   };
 }
 
