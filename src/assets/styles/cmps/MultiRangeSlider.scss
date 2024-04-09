@@ -1,0 +1,72 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-container-background;
+  height: $track-height;
+}
+
+.slider {
+  position: relative;
+
+  .slider__track {
+    position: relative;
+    // margin: 0 $slider-margin;
+    background-color: $color-track-background;
+    width: 100%;
+    height: $track-height;
+    z-index: $zindex-track;
+  }
+
+  .slider__highlight {
+    position: absolute;
+    height: $track-height;
+    bottom: 0;
+    z-index: $zindex-highlight;
+    background-color: $color-dark-gray;
+  }
+}
+
+.thumb,
+.thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.thumb {
+  left: 0%;
+  pointer-events: none;
+  position: absolute;
+  height: 0;
+  width: 100%;
+  outline: none;
+  z-index: $zindex-thumb;
+}
+
+/* For Chrome browsers */
+.thumb::-webkit-slider-thumb {
+  background: $color-thumb-background;
+  border: none;
+  border-radius: 50%;
+  border: 1px solid $color-thumb-border;
+  cursor: pointer;
+  width: $thumb-size;
+  height: $thumb-size;
+  margin-top: $thumb-margin-top;
+  pointer-events: all;
+  position: relative;
+}
+
+/* For Firefox browsers */
+.thumb::-moz-range-thumb {
+  background-color: $color-thumb-firefox-background;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 0 1px 1px $color-thumb-firefox-shadow;
+  cursor: pointer;
+  height: $thumb-size-firefox;
+  width: $thumb-size-firefox;
+  margin-top: $thumb-margin-top;
+  pointer-events: all;
+  position: relative;
+}

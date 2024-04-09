@@ -1,4 +1,35 @@
 // Base colors
+$color-white: #ffffff;
+$color-black: #000000;
+$color-dark-gray: #222222;
+$color-gray: #717171;
+$color-light-gray: #dddddd;
+$color-ultra-light-gray: #ebebeb;
+$color-background: #f7f7f7; // Also used for $background-color
+$color-track-background: $color-light-gray; // Same as rgb(221, 221, 221)
+$color-thumb-background: $color-white;
+$color-thumb-firefox-background: #f1f5f7;
+$color-thumb-firefox-shadow: #ced4da;
+$color-container-background: $color-dark-gray;
+$color-thumb-border: $color-dark-gray;
+
+// Accent and semantic colors
+$color-primary: #c13515;
+$color-secondary: #b32505;
+$color-tertiary: #428bff;
+$color-orange: #e07912;
+$color-green: #008a05;
+$color-light-red: #ff385c;
+$color-dark-pink: #92174d;
+$color-purple: #460479;
+
+// Background and overlay colors
+$background-color-hover: #f7f7f7;
+$background-color-active: $color-dark-gray;
+$color-overlay-light: rgba(0, 0, 0, 0.04);
+$color-overlay-medium: rgba(0, 0, 0, 0.08);
+$color-overlay-dark: rgba(0, 0, 0, 0.12);
+$color-overlay-intense: rgba(0, 0, 0, 0.6);
 $color-white: #FFFFFF;
 ;
 $color-black: #000000;
@@ -41,19 +72,35 @@ $color-shadow-light: rgba(0, 0, 0, 0.135);
 $color-shadow-medium: rgba(0, 0, 0, 0.18);
 $color-shadow-dark: rgba(0, 0, 0, 0.20);
 $color-shadow-intense: rgba(0, 0, 0, 0.28);
-$color-overlay-intense: rgba(0, 0, 0, 0.60);
 
+// Text colors
+$color-text-dark: #333;
+$color-text-light: $color-white;
 //Spacing
-$spacing-xs: 4px;
-$spacing-sm: 8px;
-$spacing-md: 12px;
-$spacing-lg: 16px;
-$spacing-xl: 20px;
 
-//Borders
-$border-thin: 1px solid rgba(0, 0, 0, 0.04);
-$border-thick: 1px solid rgba(0, 0, 0, 0.08);
 
+// Padding and Spacing
+$padding-xs: 4px;  
+$padding-sm: 8px;  
+$padding-md: 12px; 
+$padding-lg: 16px; 
+$padding-xl: 20px; 
+$padding-xxl: 24px; 
+$padding-xxxl: 32px; 
+
+// Height and Line Height
+$height-standard: 64px;
+$line-height-standard: 1.125rem;
+$line-height-large: 20.02px;
+$line-height-extra-large: 28.8px;
+
+// Font sizes and weights
+$font-size-small: 14px;
+$font-size-medium: 16px;
+$font-size-large: 18px;
+$font-size-xl: 22px;
+$font-weight-normal: normal;
+$font-weight-bold: 600;
 //Base 
 $font-size-base: 16px;
 $font-weight-normal: normal;
@@ -63,6 +110,17 @@ $font-weight-bold: 600;
 $gradient-primary: linear-gradient(to right, #E61E4D 0%, #E31C5F 50%, #D70466 100%);
 $gradient-secondary: radial-gradient(circle at center, #FF385C 0%, #E61E4D 27.5%, #E31C5F 40%, #D70466 57.5%, #BD1E59 75%, #BD1E59 100%);
 
+// Borders
+$border-color: rgba(0, 0, 0, 0.14);
+$border-radius: 12px;
+$border-thin: 1px solid $color-overlay-light;
+$border-thick: 1px solid $color-overlay-medium;
+
+// Gradients
+$gradient-primary: linear-gradient(to right, #e61e4d 0%, #e31c5f 50%, #d70466 100%);
+$gradient-secondary: radial-gradient(circle at center, #ff385c 0%, #e61e4d 27.5%, #e31c5f 40%, #d70466 57.5%, #bd1e59 75%, #bd1e59 100%);
+
+// Additional gradients and radial gradients removed to avoid duplication
 
 // Breakpoints
 $mobile-breakpoint: 550px;
@@ -71,3 +129,33 @@ $normal-breakpoint: 950px;
 $large-breakpoint: 1128px;
 $xl-breakpoint: 1640px;
 $xxl-breakpoint: 1880px;
+
+// Z-index
+$zindex-track: 1;
+$zindex-highlight: 2;
+$zindex-thumb: 3;
+$z-index-high: 1; // Consider renaming for consistency
+
+// Scroll Arrows
+$scroll-arrow-bg-start: rgba(255, 255, 255, 0);
+$scroll-arrow-bg-end: $color-white;
+$scroll-arrow-width: 40px;
+
+// Thumb and Slider
+$thumb-size: 30px;
+$thumb-size-firefox: 18px;
+$thumb-margin-top: 4px;
+$track-height: 2px;
+$slider-margin: 10px;
+$slider-width-adjustment: 25px;
+
+// Transition
+$transition-standard: background-color 0.3s;
+
+//3D 
+$scale3d-small: scale3d(0.95, 0.95, 0.1);
+
+// Font families
+$font-family-book: "AirbnbCereal-Book", sans-serif;
+$font-family-light: "AirbnbCereal-Light", sans-serif;
+

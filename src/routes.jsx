@@ -4,21 +4,17 @@ import { OnlineExperienceIndex } from "./pages/OnlineExperienceIndex";
 import { OrderIndex } from "./pages/OrderIndex";
 import { ProfileIndex } from "./pages/ProfileIndex";
 import { RenterIndex } from "./pages/RenterIndex";
-import { TravelerIndex } from "./pages/TravelerIndex";
 import { StayIndex } from "./pages/StayIndex";
+import { StaysIndex } from "./pages/StaysIndex";
 
 const routes = [
   {
     path: "/",
-    component: <TravelerIndex />,
+    component: <StaysIndex />,
+    label: "Stays"
   },
   {
-    path: "stay",
-    component: "",
-    label: "Stays",
-  },
-  {
-    path: "stay/:stayId",
+    path: "/:stayId",
     component: <StayIndex />,
   },
   {

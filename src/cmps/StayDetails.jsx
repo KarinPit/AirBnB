@@ -1,14 +1,29 @@
-import { useSelector } from "react-redux"
+import { useEffect, useState } from "react"
 import { OrderSideBar } from "./OrderSideBar"
 
-export function StayDetails({ stayId }) {
-    const stays = useSelector((storeState) => storeState.stayModule.stays)
-    const currentStay = stays[0].filter(currStay => currStay._id === stayId)[0]
+import { stayService } from "../services/stay.service.local"
 
+export function StayDetails({ stayId }) {
+    const [stay, setStay] = useState(null)
+
+    useEffect(() => {
+        if (stayId) loadStay()
+    }, [])
+
+    async function loadStay() {
+        try {
+            const stay = await stayService.getById(stayId)
+            setStay(stay)
+        } catch (err) {
+            console.log('Had issues loading the stay', err)
+        }
+    }
+
+    if (!stay) return <div>Loading..</div>
     return (
         <>
             <div className="stay-header">
-                <h1>{currentStay.name}</h1>
+                <h1>{stay.name}</h1>
                 <div className="stay-header-actions">
                     <p>Share</p>
                     <p>Save</p>
@@ -16,7 +31,7 @@ export function StayDetails({ stayId }) {
             </div>
 
             <div className="stay-img-gallery">
-                {currentStay.imgUrls.map((img, idx) => {
+                {stay.imgUrls.map((img, idx) => {
                     if (idx <= 5) {
                         return (
                             <img
@@ -33,14 +48,14 @@ export function StayDetails({ stayId }) {
             </div>
 
             <div className="stay-desc">
-                <h2>{currentStay.type} in {currentStay.loc.city}, {currentStay.loc.country}</h2>
-                <p>{currentStay.capacity} guests &middot; {currentStay.amenities[0]} &middot; {currentStay.amenities[1]}</p>
-                <p>{currentStay.reviews.length} review</p>
-                <p>Hosted by {currentStay.host.fullname}</p>
+                <h2>{stay.type} in {stay.loc.city}, {stay.loc.country}</h2>
+                <p>{stay.capacity} guests &middot; {stay.amenities[0]} &middot; {stay.amenities[1]}</p>
+                <p>{stay.reviews.length} review</p>
+                <p>Hosted by {stay.host.fullname}</p>
                 <p>Free cancellation for 48 hours</p>
                 <p>Self check-in</p>
                 <p>Great communication</p>
-                <p>{currentStay.summary}</p>
+                <p>{stay.summary}</p>
                 <OrderSideBar />
             </div>
         </>

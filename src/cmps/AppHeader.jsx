@@ -16,7 +16,7 @@ export function AppHeader({ location }) {
         </NavLink>
 
         <div className={`center-row ${location === '/' ? '' : 'hide-center'}`}>
-          <NavLink to="/stay" className={({ isActive }) => isActive ? 'active-link' : ''}>Stays</NavLink>
+          <NavLink to="/" className={({ isActive }) => isActive ? 'active-link' : ''}>Stays</NavLink>
           <NavLink to="/experience" className={({ isActive }) => isActive ? 'active-link' : ''}>Experiences</NavLink>
           <NavLink to="/online-experience" className={({ isActive }) => isActive ? 'active-link' : ''}>Online Experiences</NavLink>
         </div>

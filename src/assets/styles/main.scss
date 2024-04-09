@@ -18,6 +18,7 @@
 @import "views/CarIndex";
 @import "views/ReviewIndex";
 @import "views/UserDetails";
+@import "views/StaysIndex";
 
 // Components
 @import "cmps/AppHeader";
@@ -28,6 +29,20 @@
 @import "cmps/GuestPicker";
 @import "cmps/RegionFilter";
 @import "cmps/DatePicker";
+@import "cmps/FilterCategories";
+@import "cmps/ScrollMenu";
+@import "cmps/AdvancedFilter";
+@import "cmps/ModalContainer";
+@import "cmps/AdvancedFilterForm.scss";
+@import "cmps/PriceRange.scss";
+@import "cmps/MultiRangeSlider.scss";
+@import "cmps/MultiRangeInputs.scss";
+@import "cmps/ChipList.scss";
+@import "cmps/Chip.scss";
+@import "cmps/CardSelect.scss";
+@import "cmps/Checkbox.scss";
+@import "cmps/CheckboxList.scss";
+@import "cmps/FilterStay.scss";
 @import "cmps/StayPreview.scss";
 @import "cmps/StayDetails.scss";
 @import "cmps/ImageCarousel.scss";

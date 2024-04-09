@@ -23,7 +23,7 @@ export function StayPreview({ stay }) {
         <>
             <ImageCarousel stay={stay} showArrows={showArrows} />
 
-            <Link to={`/stay/${stay._id}`}>
+            <Link to={`/${stay._id}`}>
                 <div className="actions" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     <div className={`top-menu ${stay.isFavorite ? 'favorite' : ''}`}>
                         <p>Guest favorite</p>

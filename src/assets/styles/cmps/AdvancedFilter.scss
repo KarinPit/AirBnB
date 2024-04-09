@@ -1,0 +1,65 @@
+.advanced-filter {
+  .advanced-filter--filters-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 12px;
+    height: 48px;
+    min-width: 48px;
+    cursor: pointer;
+    &:hover {
+      border: 1px solid black;
+      background-color: rgb(247, 247, 247);
+    }
+    span {
+      display: grid;
+      grid-auto-flow: column;
+      gap: 8px;
+      align-items: center;
+      padding-right: em(16px);
+      padding-left: em(16px);
+      padding-top: em(2px);
+      svg {
+        height: 16px;
+        width: 16px;
+        line-height: 20px;
+        stroke-width: 3;
+      }
+    }
+    .advanced-filter--count-filters {
+      min-width: 20px;
+      position: absolute;
+      height: 20px;
+      top: 0;
+      line-height: rem(16px);
+      background: #222222;
+      transform: translateX(5px) translateY(-6px);
+      padding-inline: 4px;
+      font-size: rem(11px);
+      border: 2px solid #ffffff;
+      border-radius: 16px;
+      text-align: center;
+      right: 0;
+      color: white;
+      display: revert;
+    }
+  }
+  .advanced-filter-footer-content {
+    padding: 16px 24px 16px 24px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .advanced-filter-clear-button {
+    font-size: rem(15px);
+  }
+  button[type="submit"] {
+    padding: 14px 24px;
+    background-color: $color-dark-gray;
+    color: $color-white;
+    min-width: em(112px);
+    border-radius: 8px;
+    font-size: rem(16px);
+  }
+}

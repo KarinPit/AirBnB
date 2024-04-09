@@ -1,0 +1,29 @@
+.chip-wrapper {
+  padding-bottom: 4px;
+  padding-top: 4px;
+  padding-right: 10px;
+  display: inline-block;
+  white-space: nowrap;
+}
+.chip {
+  border: 1px solid #dddddd;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 0.75rem;
+  margin: 0;
+  min-width: 59px;
+  white-space: no-wrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border: 1px solid $color-dark-gray;
+  }
+  &:active {
+    transform: $scale3d-small;
+  }
+  &.selected {
+    background-color: $color-black;
+    color: white;
+  }
+}
