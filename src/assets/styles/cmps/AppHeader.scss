@@ -15,16 +15,24 @@
     height: rem(32px);
   }
 
-  .center-row {
-    &.hide-center {
-      display: none;
+.center-row {
+  a {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 16px;
+    text-decoration: none; // Optional: removes the underline from links
+    transition: background-color 0.3s, color 0.3s; // Smooth transition for background and text color
+    color: gray;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
     }
 
-    button {
-      font-size: rem(16px);
-      cursor: pointer;
+    &.active-link {
+      color: black;
     }
   }
+}
+
 
   .right-row {
     display: flex;

@@ -7,12 +7,7 @@ export function AppFooter({ location }) {
       <p>Privacy</p>
       <p>Your Privacy Choices</p>
       <div>
-        <p>Authors: Asaf Erdman, Idan Ben Abu, Karin Pitlik</p>
-        {/* <ul>
-          <li>Asaf Erdman</li>
-          <li>Idan ben abu</li>
-          <li>Karin Pitlik</li>
-        </ul> */}
+        <p>Authors:</p>
         {/* <h1>Airbnb Footer</h1> */}
       </div>
     </div>

@@ -1,31 +1,24 @@
-import { Link, useLocation } from "react-router-dom"
+import { NavLink, useLocation } from "react-router-dom";
+
+import Logo from "/svg/logo.svg";
+import Language from "/svg/language.svg";
 
 import { utilService } from "../services/util.service.js";
-import FilterStay from "./FilterStay"
-
-import "../assets/styles/main.scss"
-import Logo from "/svg/logo.svg"
-import Language from "/svg/language.svg"
+import FilterStay from "./FilterStay";
 
 
 export function AppHeader({ location }) {
   return (
     <header className={`app-header ${location === '/' ? 'full' : 'compact-header'}`}>
       <div className="top-row">
-        <Link to={"/"}>
+        <NavLink to={"/"}>
           <img className="logo" src={Logo} alt="logo" />
-        </Link>
+        </NavLink>
 
         <div className={`center-row ${location === '/' ? '' : 'hide-center'}`}>
-          <Link to={"/stay"}>
-            <button>Stays</button>
-          </Link>
-          <Link to={"/experience"}>
-            <button>Experiences</button>
-          </Link>
-          <Link to={"/online-experience"}>
-            <button>Online Experiences</button>
-          </Link>
+          <NavLink to="/stay" className={({ isActive }) => isActive ? 'active-link' : ''}>Stays</NavLink>
+          <NavLink to="/experience" className={({ isActive }) => isActive ? 'active-link' : ''}>Experiences</NavLink>
+          <NavLink to="/online-experience" className={({ isActive }) => isActive ? 'active-link' : ''}>Online Experiences</NavLink>
         </div>
 
         <div className={`filter-row ${location === '/' ? 'hide-filter' : 'minimized-filter'}`}>
@@ -50,6 +43,6 @@ export function AppHeader({ location }) {
       <div className={`filter-row ${location === '/' ? '' : 'hide-filter'}`}>
         <FilterStay />
       </div>
-    </header>
+    </header >
   )
 }

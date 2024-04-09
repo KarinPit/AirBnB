@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux"
-
-import { OrderSideBar } from "../cmps/OrderSideBar"
+import { OrderSideBar } from "./OrderSideBar"
 
 export function StayDetails({ stayId }) {
     const stays = useSelector((storeState) => storeState.stayModule.stays)
