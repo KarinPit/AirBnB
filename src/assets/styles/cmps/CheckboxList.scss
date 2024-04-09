@@ -7,9 +7,25 @@
   .checkbox-list-items {
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
-    @include for-narrow-layout {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: row;
+    direction: rtl;
+    label {
+      font-family: AirbnbCereal-Light;
+      grid-auto-flow: dense;
+      justify-content: space-between;
+      span {
+        font-size: rem(16px);
+
+      }
     }
+    @include for-normal-layout {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      direction: ltr;
+      label {
+  
+        justify-content: start;
+      }
+     }
   }
   .checkbox-show-more {
     text-decoration: underline;

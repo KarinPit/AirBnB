@@ -46,8 +46,8 @@
 }
 
 .advanced-filter__type-places {
-  padding-inline-end: em(48px);
-  padding-inline-start: em(48px);
+  // padding-inline-end: em(48px);
+  // padding-inline-start: em(48px);
   display: flex;
   justify-content: space-between;
   height: $height-standard;
@@ -85,6 +85,10 @@
       color: $color-white;
     }
   }
+  @include for-normal-layout {
+   padding-inline-end: em(48px);
+  padding-inline-start: em(48px);
+  }
 }
 .advanced-filter__chip-list {
   display: flex;
@@ -94,13 +98,21 @@
 }
 .advanced-filter__top-tier {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  @include for-normal-layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  
 }
 .advanced-filter__property-type {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
   .card-select {
     aspect-ratio: 4 / 3;
   }
+  @include for-normal-layout {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  
 }
