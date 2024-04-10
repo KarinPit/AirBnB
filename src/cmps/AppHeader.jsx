@@ -1,37 +1,46 @@
+import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import Logo from "/svg/logo.svg";
 import Language from "/svg/language.svg";
 
-import { utilService } from "../services/util.service.js";
-import FilterStay from "./FilterStay";
+import FilterStay from "./FilterStay.jsx";
 
+export function AppHeader() {
+  const location = useLocation();
 
-export function AppHeader({ location }) {
   return (
-    <header className={`app-header ${location === '/' ? 'full' : 'compact-header'}`}>
+    <header className={`app-header`}>
       <div className="top-row">
         <NavLink to={"/"}>
-          <img className="logo" src={Logo} alt="logo" />
+          <img className="logo" src={Logo} alt="Airbnb Logo" />
         </NavLink>
 
-        <div className={`center-row ${location === '/' ? '' : 'hide-center'}`}>
-          <NavLink to="/" className={({ isActive }) => isActive ? 'active-link' : ''}>Stays</NavLink>
-          <NavLink to="/experience" className={({ isActive }) => isActive ? 'active-link' : ''}>Experiences</NavLink>
-          <NavLink to="/online-experience" className={({ isActive }) => isActive ? 'active-link' : ''}>Online Experiences</NavLink>
+        <div
+          className={`center-row ${
+            location.pathname === "/" ? "" : "hide-center"
+          }`}
+        >
+          <NavLink to="/">Stays</NavLink>
+          <NavLink to="/experience">Experiences</NavLink>
+          <NavLink to="/online-experience">Online Experiences</NavLink>
         </div>
 
-        <div className={`filter-row ${location === '/' ? 'hide-filter' : 'minimized-filter'}`}>
+        <div
+          className={`filter-row ${
+            location.pathname === "/" ? "hide-filter" : "minimized-filter"
+          }`}
+        >
           <FilterStay />
         </div>
 
         <div className="right-row">
-          <a>
+          <a href="#">
             <button className="btn-dark">Airbnb your home</button>
           </a>
 
           <div>
-            <img src={Language}></img>
+            <img src={Language} alt="Language" />
           </div>
 
           <div>
@@ -40,9 +49,13 @@ export function AppHeader({ location }) {
         </div>
       </div>
 
-      <div className={`filter-row ${location === '/' ? '' : 'hide-filter'}`}>
+      <div
+        className={`filter-row ${
+          location.pathname === "/" ? "" : "hide-filter"
+        }`}
+      >
         <FilterStay />
       </div>
-    </header >
-  )
+    </header>
+  );
 }

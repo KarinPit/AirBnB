@@ -1,6 +1,10 @@
-export function AppFooter({ location }) {
+import React from "react";
+import { useLocation } from "react-router";
+
+export function AppFooter() {
+  const location = useLocation();
   return (
-    <div className={`app-footer full ${location === '/' ? '' : 'bottom-footer'}`}>
+    <div className={`app-footer `}>
       <p>© 2024 Airbnb, Inc</p>
       <p>Terms</p>
       <p>Sitemap</p>
@@ -11,5 +15,5 @@ export function AppFooter({ location }) {
         {/* <h1>Airbnb Footer</h1> */}
       </div>
     </div>
-  )
+  );
 }

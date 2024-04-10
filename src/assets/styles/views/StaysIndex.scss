@@ -1,6 +1,8 @@
 .stays-index-category-bar {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
     padding-block-start :12px;
     gap: 16px;
     align-items: center;
+    grid-auto-flow: column;
 }

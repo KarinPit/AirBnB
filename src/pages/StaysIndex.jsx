@@ -6,7 +6,7 @@ import FilterCategories from "../cmps/FilterCategories";
 import { stayService } from "../services/stay.service.local";
 import { loadStays, setFilterBy } from "../store/actions/stay.actions";
 import AdvancedFilter from "../cmps/AdvancedFilter";
-import { StayList } from "../cmps/StayList"
+import { StayList } from "../cmps/StayList";
 import { useEffectUpdate } from "../customHooks/useEffectUpdate";
 
 /*
@@ -52,9 +52,10 @@ export function StaysIndex() {
     <section>
       <div className="stays-index-category-bar">
         <FilterCategories onSetFilter={onSetFilter} filterBy={category_tag} />
+
         <AdvancedFilter filterBy={rest} onSetFilter={onSetFilter} />
       </div>
-        <StayList stays={stays} />
+      <StayList stays={stays} />
     </section>
   );
 }

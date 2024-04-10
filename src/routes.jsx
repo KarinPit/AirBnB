@@ -1,48 +1,58 @@
+import React, { Suspense } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { ContactRenterIndex } from "./pages/ContactRenterIndex";
 import { ExperienceIndex } from "./pages/ExperienceIndex";
 import { OnlineExperienceIndex } from "./pages/OnlineExperienceIndex";
 import { OrderIndex } from "./pages/OrderIndex";
 import { ProfileIndex } from "./pages/ProfileIndex";
-import { RenterIndex } from "./pages/RenterIndex";
-import { StayIndex } from "./pages/StayIndex";
 import { StaysIndex } from "./pages/StaysIndex";
+import MainLayout from "./layouts/MainLayout";
+import StayIndex from "./pages/StayIndex";
+import RenterIndex from "./pages/RenterIndex";
 
 const routes = [
   {
     path: "/",
-    component: <StaysIndex />,
-    label: "Stays"
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/",
+        element: <StaysIndex />,
+      },
+      {
+        path: "/stay/:stayId", // Assuming you have a route for individual stays
+        element: <StayIndex />,
+      },
+    ],
   },
   {
-    path: "/:stayId",
-    component: <StayIndex />,
+    path: "/host",
+    element: <MainLayout />,
+    children: [
+      {
+        path: "homes",
+        element: <RenterIndex />,
+      },
+    ],
   },
-  {
-    path: "experience",
-    component: <ExperienceIndex />,
-    label: "Experiences",
-  },
-  {
-    path: "online-experience",
-    component: <OnlineExperienceIndex />,
-    label: "Online Experiences",
-  },
-  {
-    path: "profile",
-    component: <ProfileIndex />,
-  },
-  {
-    path: "order",
-    component: <OrderIndex />,
-  },
-  {
-    path: "contact-renter",
-    component: <ContactRenterIndex />,
-  },
-  {
-    path: "renter-home",
-    component: <RenterIndex />,
-  },
+  { path: "*", element: <Navigate to="/" replace /> },
 ];
 
-export default routes;
+export const createRouting = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <Routes>
+      {routes.map((route, index) => (
+        <Route key={index} path={route.path} element={route.element}>
+          {route.children &&
+            route.children.map((childRoute, childIndex) => (
+              <Route
+                key={childIndex}
+                path={childRoute.path}
+                element={childRoute.element}
+              />
+            ))}
+        </Route>
+      ))}
+    </Routes>
+  </Suspense>
+);
