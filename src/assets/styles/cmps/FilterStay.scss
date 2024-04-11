@@ -1,29 +1,32 @@
 .search-container {
-    position: relative;
-    display: flex;
-    width: 100%;
-    max-width: 848px;
-    height: 60px;
-    background-color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 32px;
-    justify-content: space-between;
-    align-items: center;
-    margin: auto;
-    z-index: 1000;
-    padding: 5px;
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 848px;
+  height: 64px;
+  background-color: white;
+  border: 1px solid #dddddd;
+  box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.08);
+  border-radius: 32px;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto;
+  z-index: 1000;
+  padding: 32px 8px 32px 20px;
 
   .search-container div:hover {
     background: hsl(0 0% 94%);
   }
-  
+
   .search-form {
     width: 100%;
     display: flex;
+
     .input-group {
       display: flex;
       width: 100%;
       justify-content: space-between;
+      align-items: center;
       background: white;
       border-radius: 32px;
 
@@ -33,22 +36,25 @@
           border-color: #ff385c;
         }
       }
+
       .input-label {
         position: absolute;
         background: white;
         color: black;
         font-size: 12px;
       }
+
       input {
         border: none;
         outline: none;
-        
+
         &:focus {
           border-color: #f9f9f9;
         }
 
         &[type='number'] {
           -moz-appearance: textfield;
+
           &::-webkit-inner-spin-button,
           &::-webkit-outer-spin-button {
             -webkit-appearance: none;
@@ -57,14 +63,20 @@
       }
 
       .search-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 48px;
+        height: 48px;
         background-color: #ff385c;
-        padding: 20px;
         border-radius: 50%;
         color: white;
         cursor: pointer;
+
         &:hover {
           background-color: darken(#ff385c, 20%);
         }
+
         svg {
           display: block;
           height: 100%;
@@ -73,6 +85,7 @@
       }
     }
   }
+
   .input-container {
     position: relative;
     display: flex;
@@ -88,13 +101,13 @@
       font-size: 12px;
       font-weight: bold;
       line-height: 16px;
-      text-align: start;// Adjust this value as needed
+      text-align: start; // Adjust this value as needed
       color: #757575; // Use Airbnb's color or choose your own
       pointer-events: none;
       transition: all 0.2s ease-in-out;
       z-index: 2;
     }
-  
+
     .location-search {
       width: 100%;
       padding: 28px 12px 12px; // Increase padding-top to make space for the label
@@ -105,26 +118,27 @@
       height: 60px;
       font-size: 14px; // Adjust this value as needed
       line-height: 18px;
-      &:focus + .input-label,
-      &:not(:placeholder-shown) + .input-label {
+
+      &:focus+.input-label,
+      &:not(:placeholder-shown)+.input-label {
         top: 4px; // Move label up when input is focused or filled
         font-size: 14px; // Optional: reduce font size if desired
       }
     }
   }
-  
+
   .date-picker-container {
     display: flex;
     position: relative;
     width: 25%;
     align-items: center;
     justify-content: space-between;
-    
-  
+
+
     .input-container {
       flex: 1; // This will make each date picker take half of the container width
       position: relative;
-      
+
       .input-label {
         position: absolute;
         top: 8px;
@@ -138,24 +152,24 @@
         background-color: white;
         padding: 0 5px;
       }
-  
+
       // React Datepicker styles
       .react-datepicker-wrapper {
         width: 100%;
-        
+
         input {
           width: 100%;
           padding: 28px 12px 12px; // Space for the floating label
           border-radius: 32px;
           font-size: 14px;
           outline: none;
-          
+
           &:focus {
             border-color: #ff385c;
           }
-          
-          &:focus + .input-label,
-          &:not(:placeholder-shown) + .input-label {
+
+          &:focus+.input-label,
+          &:not(:placeholder-shown)+.input-label {
             top: -20px; // Position the label above the input
             font-size: 10px; // Reduce the font size
             color: #ff385c; // Label color when input is focused
@@ -164,11 +178,12 @@
       }
     }
   }
+
   .guest-input-container {
     position: relative;
     flex-grow: 1;
     padding: 0 5px;
-  
+
     &:focus-within .input-label,
     &:not(:placeholder-shown) .input-label {
       top: 19px; // Move label above the input
@@ -177,9 +192,9 @@
       padding: 0 5px;
       font-size: 12px;
       transition: top 0.2s ease, font-size 0.2s ease;
-      z-index: 2; 
+      z-index: 2;
     }
-  
+
     .add-guests {
       padding: 28px 12px 12px; // Space for the floating label
       border-radius: 32px;
@@ -187,20 +202,20 @@
       font-size: 14px;
       outline: none;
       background: transparent;
-  
+
       &:focus {
         border-color: #ff385c;
       }
-      
+
       // Style for when input has value or is focused
-      &:focus + .input-label,
-      &:not(:placeholder-shown) + .input-label {
+      &:focus+.input-label,
+      &:not(:placeholder-shown)+.input-label {
         top: -11px; // Adjust as needed for your design
         font-size: 12px; // Match the size of other labels
         color: #826e6e; // Adjust the color as needed
       }
     }
-  
+
     // Label starts out inside the input
     .input-label {
       position: relative;
@@ -212,7 +227,7 @@
       transition: top 0.2s ease, font-size 0.2s ease;
       background-color: transparent; // No background to start with
     }
-  
+
     // Styles for the dropdown
     .guest-picker-dropdown {
       position: relative;
@@ -221,6 +236,5 @@
       transform: translateX(-50%);
       z-index: 3;
     }
-  }  
+  }
 }
-
