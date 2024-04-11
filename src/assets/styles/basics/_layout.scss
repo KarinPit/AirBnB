@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: minmax(80px, auto) 1fr minmax(80px, auto);
     grid-template-rows: auto 1fr minmax(80px, auto);
-    padding-inline: 20px;
+    // padding-inline: 20px;
 
     &.compact-layout {
         grid-template-columns: minmax(80px, auto) minmax(auto, 1120px) minmax(80px, auto);
@@ -55,7 +55,7 @@
     }
 
     @include for-wide-layout {
-        // padding-inline: 80px;
+        padding-inline: 80px;
         // grid-template-columns:
         //     minmax(40px, 1fr) minmax(auto, 2400px) minmax(40px, 1fr);
     }
