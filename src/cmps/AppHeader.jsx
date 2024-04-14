@@ -2,6 +2,7 @@ import { NavLink, useLocation } from "react-router-dom";
 
 import Logo from "/svg/logo.svg";
 import Language from "/svg/language.svg";
+import LineMenu from "/menu.svg";
 
 import { utilService } from "../services/util.service.js";
 import FilterStay from "./FilterStay";
@@ -17,8 +18,6 @@ export function AppHeader({ location }) {
 
         <div className={`center-row ${location === '/' ? '' : 'hide-center'}`}>
           <NavLink to="/" className={({ isActive }) => isActive ? 'active-link' : ''}>Stays</NavLink>
-          {/* <NavLink to="/experience" className={({ isActive }) => isActive ? 'active-link' : ''}>Experiences</NavLink>
-          <NavLink to="/online-experience" className={({ isActive }) => isActive ? 'active-link' : ''}>Online Experiences</NavLink> */}
         </div>
 
         <div className={`filter-row ${location === '/' ? 'hide-filter' : 'minimized-filter'}`}>
@@ -26,16 +25,20 @@ export function AppHeader({ location }) {
         </div>
 
         <div className="right-row">
-          <a>
-            <button className="btn-dark">Airbnb your home</button>
-          </a>
-
           <div>
-            <img src={Language}></img>
+            <a>
+              <button className="btn-dark">Airbnb your home</button>
+            </a>
+            <a>
+              <img className="language" src={Language}></img>
+            </a>
           </div>
 
-          <div>
-            <h5>Account</h5>
+          <div className="side-menu">
+            <img src={LineMenu}></img>
+            <div className="logged-acc">
+              <p>K</p>
+            </div>
           </div>
         </div>
       </div>
