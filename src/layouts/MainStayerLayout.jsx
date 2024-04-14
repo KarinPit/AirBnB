@@ -1,14 +1,14 @@
 import React from "react";
 import { AppFooter } from "../cmps/AppFooter";
-import { AppHeader } from "../cmps/AppHeader";
 
 import { Outlet } from "react-router-dom";
+import StayerHeader from "../cmps/Header/StayerHeader";
 
-const MainLayout = () => (
+const MainStayerLayout = () => (
   <div className="main-layout">
-    <AppHeader />
+    <StayerHeader />
     <Outlet />
     <AppFooter />
   </div>
 );
-export default MainLayout;
+export default MainStayerLayout;

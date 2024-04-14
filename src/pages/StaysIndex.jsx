@@ -20,7 +20,7 @@ TO DO:
 // stayService.query({type: 'House'})
 */
 
-export function StaysIndex() {
+const StaysIndex = () => {
   const stays = useSelector((storeState) => storeState.stayModule.stays);
   const filterBy = useSelector((storeState) => storeState.stayModule.filterBy);
   const isLoading = useSelector(
@@ -58,4 +58,5 @@ export function StaysIndex() {
       <StayList stays={stays} />
     </section>
   );
-}
+};
+export default StaysIndex;

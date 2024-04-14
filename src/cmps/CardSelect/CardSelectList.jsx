@@ -1,38 +1,57 @@
+import React from "react";
 import { useFormikContext } from "formik";
-
 import { CardSelect } from "./CardSelect";
 
-export default function CardSelectList({ options, name }) {
+function flattenOptions(options) {
+  return options.reduce((acc, optionGroup) => {
+    if (optionGroup.items && Array.isArray(optionGroup.items)) {
+      const items = optionGroup.items.map((item) => ({
+        ...item,
+        category: optionGroup.title || optionGroup.category,
+      }));
+      return [...acc, ...items];
+    }
+    return [...acc, optionGroup];
+  }, []);
+}
+
+export default function CardSelectList({
+  options,
+  name,
+  multiSelect = false,
+  className = "",
+}) {
   const { values, setFieldValue } = useFormikContext();
 
-  const handleSelect = (selectedOption) => {
-    if (name === "guest_favorite") {
-      setFieldValue(name, !values[name]);
-    } else if (name === "l2_property_type_ids") {
-      const currentValues = values[name] || [];
-      if (currentValues.includes(selectedOption.title)) {
+  // Flatten options for either scenario
+  const flatOptions = flattenOptions(options);
+  const handleSelect = (option) => {
+    const fieldPath = multiSelect ? `${name}` : name;
+    const currentValues = values[fieldPath] || [];
+
+    if (multiSelect) {
+      if (currentValues.includes(option.title)) {
         setFieldValue(
-          name,
-          currentValues.filter((item) => item !== selectedOption.title)
+          fieldPath,
+          currentValues.filter((value) => value !== option.title)
         );
       } else {
-        setFieldValue(name, [...currentValues, selectedOption.title]);
+        setFieldValue(fieldPath, [...currentValues, option.title]);
       }
     } else {
-      const newValue =
-        selectedOption.title === values[name] ? null : selectedOption.title;
-      setFieldValue(name, newValue);
+      setFieldValue(name, option.title === values[name] ? null : option.title);
     }
   };
 
-  return options.map((option) => (
+  return flatOptions.map((option) => (
     <CardSelect
+      className={className}
       key={option.title}
       option={option}
       isSelected={
-        name === "guest_favorite"
-          ? values[name]
-          : (values[name] || []).includes(option.title)
+        multiSelect
+          ? (values[name] || []).includes(option.title)
+          : values[name] === option.title
       }
       onSelect={() => handleSelect(option)}
     />

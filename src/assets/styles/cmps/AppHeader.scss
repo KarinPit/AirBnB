@@ -1,53 +1,51 @@
 .app-header {
   padding-block-end: 24px;
-
-  .top-row {
-    display: none;
-
-    a {
-      display: flex;
-      align-items: center;
-    }
-  }
-
-  .logo {
-    width: rem(102px);
-    height: rem(32px);
-  }
-
-.center-row {
-  a {
-    display: inline-block;
-    padding: 8px 16px;
-    border-radius: 16px;
-    text-decoration: none; // Optional: removes the underline from links
-    transition: background-color 0.3s, color 0.3s; // Smooth transition for background and text color
-    color: gray;
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-
-    &.active-link {
-      color: black;
-    }
-  }
-}
-
-
-  .right-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 168px;
+  .app-header-navigation {
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     height: 80px;
-
-    >* {
-      padding: $padding-lg;
-      display: flex;
-      align-items: center;
+    width: 100%;
+    .logo {
+      width: rem(102px);
+      height: rem(32px);
     }
 
-    img {
-      width: rem(16px);
-      height: rem(16px);
+    .tabs {
+      display: flex;
+      flex-direction: row;
+      justify-self: center;
+      a {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 16px;
+        text-decoration: none;
+        transition: background-color 0.3s, color 0.3s; 
+        color: gray;
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        &.active-link {
+          color: black;
+        }
+      }
+    }
+
+    .menus {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 20px;
+      img {
+        width: rem(16px);
+        height: rem(16px);
+      }
     }
   }
 
@@ -88,7 +86,6 @@
   }
 }
 
-
 @media screen and (min-width: $narrow-breakpoint) {
   .app-header {
     .top-row {
@@ -96,7 +93,6 @@
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-
     }
 
     &.compact-header {
@@ -106,7 +102,6 @@
     }
   }
 }
-
 
 @media screen and (min-width: $narrow-breakpoint) {
   .app-header {

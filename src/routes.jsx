@@ -1,58 +1,87 @@
-import React, { Suspense } from "react";
+import React, { Fragment, Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { ContactRenterIndex } from "./pages/ContactRenterIndex";
-import { ExperienceIndex } from "./pages/ExperienceIndex";
-import { OnlineExperienceIndex } from "./pages/OnlineExperienceIndex";
-import { OrderIndex } from "./pages/OrderIndex";
-import { ProfileIndex } from "./pages/ProfileIndex";
-import { StaysIndex } from "./pages/StaysIndex";
-import MainLayout from "./layouts/MainLayout";
-import StayIndex from "./pages/StayIndex";
-import RenterIndex from "./pages/RenterIndex";
+
+import { AuthGuard } from "./guards/AuthGuard";
+import MainStayerLayout from "./layouts/MainStayerLayout";
+import MainRenterLayout from "./layouts/MainRenterLayout";
+import { CreateHostLayout } from "./layouts/CreateHostLayout";
+
+const StaysIndex = React.lazy(() => import("./pages/StaysIndex"));
+const StayIndex = React.lazy(() => import("./pages/StayIndex"));
+const RenterIndex = React.lazy(() => import("./pages/RenterIndex"));
+const CreateHostIndex = React.lazy(() => import("./pages/CreateHostIndex"));
 
 const routes = [
   {
     path: "/",
-    element: <MainLayout />,
+    element: <MainStayerLayout />,
+    guard: AuthGuard,
     children: [
       {
-        path: "/",
+        key: "stay-index",
+        index: true,
         element: <StaysIndex />,
       },
       {
-        path: "/stay/:stayId", // Assuming you have a route for individual stays
+        key: "stay-id",
+        path: "/stay/:stayId",
         element: <StayIndex />,
       },
     ],
+    key: "home",
   },
   {
     path: "/host",
-    element: <MainLayout />,
+    element: <MainRenterLayout />,
     children: [
       {
+        key: "homes",
+
         path: "homes",
         element: <RenterIndex />,
       },
     ],
+    key: "renter",
   },
-  { path: "*", element: <Navigate to="/" replace /> },
+  {
+    path: "/become-a-host",
+    element: <CreateHostLayout />,
+    children: [
+      {
+        key: "create-host",
+
+        index: true,
+        element: <CreateHostIndex />,
+      },
+    ],
+    key: "become-host",
+  },
+  { path: "*", element: <Navigate to="/" replace />, key: "404" }, // Added key for the 404 route
 ];
 
-export const createRouting = () => (
-  <Suspense fallback={<div>Loading...</div>}>
-    <Routes>
-      {routes.map((route, index) => (
-        <Route key={index} path={route.path} element={route.element}>
-          {route.children &&
-            route.children.map((childRoute, childIndex) => (
-              <Route
-                key={childIndex}
-                path={childRoute.path}
-                element={childRoute.element}
-              />
-            ))}
-        </Route>
-      ))}
-    </Routes>
-  </Suspense>
-);
+export const createRouting = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        {routes.map((route) => {
+          const Guard = route.guard || Fragment;
+          const renderRoute = (currentRoute) => (
+            <Route
+              index={currentRoute.index}
+              key={currentRoute.key}
+              path={currentRoute.path}
+              element={<Guard>{currentRoute.element}</Guard>}
+            >
+              {currentRoute.children &&
+                currentRoute.children.map((childRoute) =>
+                  renderRoute(childRoute)
+                )}
+            </Route>
+          );
+
+          return renderRoute(route);
+        })}
+      </Routes>
+    </Suspense>
+  );
+};
