@@ -10,9 +10,12 @@ const MainStayerLayout = () => {
   // className={`${location === '/' ? 'full' : ''}`}
   return (
     <div className={`main-layout ${location === "/" ? "" : "compact-layout"}`}>
+      <hr></hr>
       {/* <StayerHeader /> */}
       <AppHeader location={location} />
-      <Outlet />
+      <main className={`${location === "/" ? "full" : ""}`}>
+        <Outlet />
+      </main>
       <AppFooter />
     </div>
   );
