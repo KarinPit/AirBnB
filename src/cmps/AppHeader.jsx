@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import Logo from "/svg/logo.svg";
@@ -9,6 +8,7 @@ import { utilService } from "../services/util.service.js";
 import FilterStay from "./FilterStay";
 
 export function AppHeader({ location }) {
+  console.log(location);
   return (
     <header
       className={`app-header ${location === "/" ? "full" : "compact-header"}`}
