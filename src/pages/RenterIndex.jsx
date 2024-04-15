@@ -1,11 +1,8 @@
 import React from "react";
 
-import HouseExample from "/img/HouseExample.jpg"
+import HouseExample from "/img/HouseExample.jpg";
 
-export function RenterIndex() {
-  return (
-    <section>
-      <img src={HouseExample}></img>
-    </section>
-  );
-}
+const RenterIndex = () => {
+  return <section>{/* <img src={HouseExample}></img> */}</section>;
+};
+export default RenterIndex;

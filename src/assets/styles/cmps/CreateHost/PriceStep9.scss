@@ -1,0 +1,60 @@
+
+.price-step-9 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 900px; 
+    padding: 0 $padding-lg; 
+    max-width: 440px;
+    margin: auto;
+    > div:first-of-type {
+        min-height: 85%;
+        margin: 0 $padding-lg;
+    }
+  
+    .head {
+      margin-bottom: em(32px); 
+      h1 {
+        font-size: rem(32px);
+        margin-block-end: rem(8px);
+      }
+      span {
+        font-size: rem(16px);
+        font-family: $font-family-light;
+        color: $color-gray; 
+      }
+    }
+  
+    .price {
+        height: 250px; 
+        display: flex;
+        align-items: center;
+        gap: $padding-sm;
+        justify-content: center;
+        outline-width: 0;
+        margin-left: em(190px);
+        padding-bottom: 20px;
+
+    }
+  
+    .custom-price {
+        display: flex;
+        align-items: baseline;
+        gap: $padding-xs; 
+    }
+  
+    .custom-price span[contenteditable="true"] {
+        outline-width: 0;
+        min-width: 100px; 
+        display: inline-block;
+        font-family: $font-family-extra-bold; 
+    }
+  
+    .hidden-input {
+        opacity: 0;
+        position: absolute;
+        pointer-events: none; 
+        height: 0;
+        width: 0;
+    }
+}

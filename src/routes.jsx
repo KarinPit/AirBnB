@@ -1,48 +1,87 @@
-import { ContactRenterIndex } from "./pages/ContactRenterIndex";
-import { ExperienceIndex } from "./pages/ExperienceIndex";
-import { OnlineExperienceIndex } from "./pages/OnlineExperienceIndex";
-import { OrderIndex } from "./pages/OrderIndex";
-import { ProfileIndex } from "./pages/ProfileIndex";
-import { RenterIndex } from "./pages/RenterIndex";
-import { StayIndex } from "./pages/StayIndex";
-import { StaysIndex } from "./pages/StaysIndex";
+import React, { Fragment, Suspense } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+
+import { AuthGuard } from "./guards/AuthGuard";
+import MainStayerLayout from "./layouts/MainStayerLayout";
+import MainRenterLayout from "./layouts/MainRenterLayout";
+import { CreateHostLayout } from "./layouts/CreateHostLayout";
+
+const StaysIndex = React.lazy(() => import("./pages/StaysIndex"));
+const StayIndex = React.lazy(() => import("./pages/StayIndex"));
+const RenterIndex = React.lazy(() => import("./pages/RenterIndex"));
+const CreateHostIndex = React.lazy(() => import("./pages/CreateHostIndex"));
 
 const routes = [
   {
     path: "/",
-    component: <StaysIndex />,
-    label: "Stays"
+    element: <MainStayerLayout />,
+    guard: AuthGuard,
+    children: [
+      {
+        key: "stay-index",
+        index: true,
+        element: <StaysIndex />,
+      },
+      {
+        key: "stay-id",
+        path: "/stay/:stayId",
+        element: <StayIndex />,
+      },
+    ],
+    key: "home",
   },
   {
-    path: "/:stayId",
-    component: <StayIndex />,
+    path: "/host",
+    element: <CreateHostLayout />,
+    children: [
+      {
+        key: "homes",
+
+        path: "homes",
+        element: <CreateHostIndex />,
+      },
+    ],
+    key: "renter",
   },
   {
-    path: "experience",
-    component: <ExperienceIndex />,
-    label: "Experiences",
+    path: "/become-a-host",
+    element: <CreateHostLayout />,
+    children: [
+      {
+        key: "create-host",
+
+        index: true,
+        element: <CreateHostIndex />,
+      },
+    ],
+    key: "become-host",
   },
-  {
-    path: "online-experience",
-    component: <OnlineExperienceIndex />,
-    label: "Online Experiences",
-  },
-  {
-    path: "profile",
-    component: <ProfileIndex />,
-  },
-  {
-    path: "order",
-    component: <OrderIndex />,
-  },
-  {
-    path: "contact-renter",
-    component: <ContactRenterIndex />,
-  },
-  {
-    path: "renter-home",
-    component: <RenterIndex />,
-  },
+  { path: "*", element: <Navigate to="/" replace />, key: "404" }, // Added key for the 404 route
 ];
 
-export default routes;
+export const createRouting = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        {routes.map((route) => {
+          const Guard = route.guard || Fragment;
+          const renderRoute = (currentRoute) => (
+            <Route
+              index={currentRoute.index}
+              key={currentRoute.key}
+              path={currentRoute.path}
+              element={<Guard>{currentRoute.element}</Guard>}
+            >
+              {currentRoute.children &&
+                currentRoute.children.map((childRoute) =>
+                  renderRoute(childRoute)
+                )}
+            </Route>
+          );
+
+          return renderRoute(route);
+        })}
+      </Routes>
+    </Suspense>
+  );
+};

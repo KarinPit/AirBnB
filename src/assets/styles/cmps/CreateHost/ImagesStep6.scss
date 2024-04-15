@@ -1,0 +1,19 @@
+
+.images-step-6 {
+  max-width: 750px;
+  padding: 0 $padding-lg;
+  margin: $margin-xxxl auto; 
+
+  .images-step-6-head {
+    margin-bottom: em(32px); 
+    h1 {
+      font-size: $font-size-xl; 
+      margin-block-end: rem(8px); 
+    }
+    span {
+      font-size: rem(16px); 
+      font-family: $font-family-light; 
+      color: $color-gray; 
+    }
+  }
+}

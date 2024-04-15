@@ -16,7 +16,6 @@ export function PriceRange() {
     min: initialMinPrice,
     max: initialMaxPrice,
   });
-  console.log({ priceBounds });
 
   useEffect(() => {
     const histogram = calculatePriceHistogram(initialMinPrice, initialMaxPrice);

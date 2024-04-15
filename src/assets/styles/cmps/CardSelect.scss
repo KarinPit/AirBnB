@@ -19,7 +19,7 @@
     border-color: $color-dark-gray;
   }
 
-  &--selected {
+  &.selected {
     border-color: $color-dark-gray;
   }
 
@@ -28,6 +28,10 @@
     margin-right: em(16px);
     height: em(32px);
     width: em(32px);
+  }
+  .card-select__information {
+    display: flex;
+    flex-direction: column;
   }
   .card-select__title {
     font-size: rem(16px);
