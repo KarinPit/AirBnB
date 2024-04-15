@@ -5,6 +5,12 @@ import { stayService } from "../services/stay.service.local"
 
 import saveIcon from "../../public/heart-b&w.svg"
 import shareIcon from "../../public/share.svg"
+import StarIcon from "../../public/star.svg"
+import profileImg from "../../public/Albert.jpg"
+import doorIcon from "../../public/door.svg"
+import medalIcon from "../../public/medal.svg"
+import pawIcon from "../../public/paw.svg"
+import rightArrow from "../../public/arrow-right-black.svg"
 
 
 export function StayDetails({ stayId }) {
@@ -57,18 +63,80 @@ export function StayDetails({ stayId }) {
                 <div className="overlay"></div>
             </div>
 
-            <div className="stay-desc">
-                <h2>{stay.type} in {stay.loc.city}, {stay.loc.country}</h2>
-                <div>
-                    <p>{stay.capacity} guests &middot; {stay.amenities[0]} &middot; {stay.amenities[1]}</p>
-                    <p>{stay.reviews.length} review</p>
+            <div className="main-desc">
+                <div className="stay-desc">
+                    <h2>{stay.type} in {stay.loc.city}, {stay.loc.country}</h2>
+                    <div>
+                        <p>{stay.capacity} guests &middot; {stay.amenities[0]} &middot; {stay.amenities[1]}</p>
+                        <div className="review-summary">
+                            <div>
+                                <img src={StarIcon}></img>
+                                <p>{stay.reviews[0].rate}</p>
+                            </div>
+                            <p>&middot; </p>
+                            <p className="review-score">{stay.reviews.length} {stay.reviews.length === 1 ? 'review' : 'reviews'}</p>
+                        </div>
+                    </div>
+
+                    <div className="stay-summary">
+                        <div className="host-info">
+                            <img src={profileImg}></img>
+                            <div>
+                                <h3 className="hosted-by">Hosted by {stay.host.fullname}</h3>
+                                <p className="host-experience">Superhost &middot; 7 years hosting</p>
+                            </div>
+                        </div>
+
+                        <div className="more-info">
+                            <div className="main-amenities">
+                                <div className="amenity">
+                                    <div className="amenity-img">
+                                        <img src={pawIcon}></img>
+                                    </div>
+
+                                    <div className="amenity-info">
+                                        <h3>Furry friends welcome</h3>
+                                        <p>Bring your pets along for the stay.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="amenity">
+                                    <div className="amenity-img">
+                                        <img src={doorIcon}></img>
+                                    </div>
+
+                                    <div className="amenity-info">
+                                        <h3>Self check-in</h3>
+                                        <p>Check yourself in with the keypad.</p>
+                                    </div>
+                                </div>
+
+                                <div className="amenity">
+                                    <div className="amenity-img">
+                                        <img src={medalIcon}></img>
+                                    </div>
+
+                                    <div className="amenity-info">
+                                        <h3>{stay.host.fullname} is a Superhost</h3>
+                                        <p>Superhosts are experienced, highly rated Hosts.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="full-desc">
+                                <p>{stay.summary}</p>
+                                <button>
+                                    <p>Show more</p>
+                                    <img src={rightArrow}></img>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <p>Hosted by {stay.host.fullname}</p>
-                <p>Free cancellation for 48 hours</p>
-                <p>Self check-in</p>
-                <p>Great communication</p>
-                <p>{stay.summary}</p>
-                <OrderSideBar />
+                <div className="order-stay">
+                    <OrderSideBar price={stay.price} />
+                </div>
             </div>
         </>
     )
