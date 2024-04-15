@@ -7,9 +7,9 @@ import { AppHeader } from "../cmps/AppHeader";
 
 const MainStayerLayout = () => {
   const location = useLocation().pathname;
-
+  // className={`${location === '/' ? 'full' : ''}`}
   return (
-    <div className="main-layout">
+    <div className={`main-layout ${location === "/" ? "" : "compact-layout"}`}>
       {/* <StayerHeader /> */}
       <AppHeader location={location} />
       <Outlet />
