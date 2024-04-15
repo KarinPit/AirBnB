@@ -7,20 +7,30 @@ import LineMenu from "/menu.svg";
 import { utilService } from "../services/util.service.js";
 import FilterStay from "./FilterStay";
 
-
 export function AppHeader({ location }) {
   return (
-    <header className={`app-header ${location === '/' ? 'full' : 'compact-header'}`}>
+    <header
+      className={`app-header ${location === "/" ? "full" : "compact-header"}`}
+    >
       <div className="top-row">
         <NavLink to={"/"}>
           <img className="logo" src={Logo} alt="logo" />
         </NavLink>
 
-        <div className={`center-row ${location === '/' ? '' : 'hide-center'}`}>
-          <NavLink to="/" className={({ isActive }) => isActive ? 'active-link' : ''}>Stays</NavLink>
+        <div className={`center-row ${location === "/" ? "" : "hide-center"}`}>
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "active-link" : "")}
+          >
+            Stays
+          </NavLink>
         </div>
 
-        <div className={`filter-row ${location === '/' ? 'hide-filter' : 'minimized-filter'}`}>
+        <div
+          className={`filter-row ${
+            location === "/" ? "hide-filter" : "minimized-filter"
+          }`}
+        >
           <FilterStay />
         </div>
 
@@ -43,9 +53,9 @@ export function AppHeader({ location }) {
         </div>
       </div>
 
-      <div className={`filter-row ${location === '/' ? '' : 'hide-filter'}`}>
+      <div className={`filter-row ${location === "/" ? "" : "hide-filter"}`}>
         <FilterStay />
       </div>
-    </header >
-  )
+    </header>
+  );
 }
