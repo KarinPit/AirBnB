@@ -12,11 +12,7 @@ TO DO:
 
 const StayIndex = () => {
   const { stayId } = useParams();
-
-  return (
-    <div>
-      <StayDetails stayId={stayId} />
-    </div>
-  );
+  console.log(stayId);
+  return <StayDetails stayId={stayId} />;
 };
 export default StayIndex;

@@ -43,8 +43,8 @@ async function query(filterBy) {
   }
   return stays;
 }
-
 function applyFilters(stays, filterBy) {
+  // console.log(filterBy)
   // Match category tags using regex
   const matchesCategoryTag = (stay) => {
     if (!filterBy.category_tag) return true;

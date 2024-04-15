@@ -1,7 +1,7 @@
 .filter-categories-wrapper {
   display: grid;
   grid-auto-flow: column;
-  gap: rem(44px);
+  gap: rem(56px);
 
   &::-webkit-scrollbar {
     display: none;
@@ -13,7 +13,7 @@
     scroll-snap-stop: normal;
     text-size-adjust: 100%;
     gap: rem(9px);
-    height: rem(78px);
+    height: rem(48px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,6 +23,8 @@
     opacity: 0.642534;
     color: #000;
     transition: background-color 0.3s ease;
+    padding: 4px 0;
+    margin: 12px 0;
 
     img {
       width: rem(23.75px);

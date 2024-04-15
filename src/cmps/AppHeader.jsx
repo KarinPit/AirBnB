@@ -3,81 +3,60 @@ import { NavLink, useLocation } from "react-router-dom";
 
 import Logo from "/svg/logo.svg";
 import Language from "/svg/language.svg";
+import LineMenu from "/menu.svg";
 
-import FilterStay from "./FilterStay.jsx";
-import { changeUserType } from "../store/actions/system.actions.js";
-import { useSelector } from "react-redux";
+import { utilService } from "../services/util.service.js";
+import FilterStay from "./FilterStay";
 
-export function AppHeader() {
-  const userType = useSelector(
-    (storeState) => storeState.systemModule.userType
-  );
+export function AppHeader({ location }) {
+  return (
+    <header
+      className={`app-header ${location === "/" ? "full" : "compact-header"}`}
+    >
+      <div className="top-row">
+        <NavLink to={"/"}>
+          <img className="logo" src={Logo} alt="logo" />
+        </NavLink>
 
-  const location = useLocation();
-  function onChangeUserType() {
-    changeUserType(userType === "RENTER" ? "STAYER" : "RENTER");
-  }
-  function renderMainHeader() {
-    return (
-      <>
-        <div className="top-row">
-          {/* <NavLink> */}
-          <img className="logo" src={Logo} alt="Airbnb Logo" />
-          {/* </NavLink> */}
-
-          {userType === "STAYER" && (
-            <div
-              className={`center-row ${
-                location.pathname === "/" ? "" : "hide-center"
-              }`}
-            >
-              <NavLink to="/">Stays</NavLink>
-              <NavLink to="/experience">Experiences</NavLink>
-              <NavLink to="/online-experience">Online Experiences</NavLink>
-            </div>
-          )}
-
-          {userType === "STAYER" && (
-            <div
-              className={`filter-row ${
-                location.pathname === "/" ? "hide-filter" : "minimized-filter"
-              }`}
-            >
-              <FilterStay />
-            </div>
-          )}
-
-          <div className="right-row">
-            <NavLink to={userType === "STAYER" ? "/" : "/host/homes"}>
-              <button onClick={onChangeUserType} className="btn-dark">
-                Airbnb your home
-              </button>
-            </NavLink>
-
-            <img src={Language} alt="Language" />
-
-            <h5>Account</h5>
-          </div>
+        <div className={`center-row ${location === "/" ? "" : "hide-center"}`}>
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "active-link" : "")}
+          >
+            Stays
+          </NavLink>
         </div>
 
         <div
           className={`filter-row ${
-            location.pathname === "/" ? "" : "hide-filter"
+            location === "/" ? "hide-filter" : "minimized-filter"
           }`}
         >
           <FilterStay />
         </div>
-      </>
-    );
-  }
 
-  function renderChildHeader() {
-    return <></>;
-  }
-  return (
-    <header className={`app-header`}>
-      {renderMainHeader()}
-      {/* {isMain ? renderMainHeader() : renderChildHeader()} */}
+        <div className="right-row">
+          <div>
+            <a>
+              <button className="btn-dark">Airbnb your home</button>
+            </a>
+            <a>
+              <img className="language" src={Language}></img>
+            </a>
+          </div>
+
+          <div className="side-menu">
+            <img src={LineMenu}></img>
+            <div className="logged-acc">
+              <p>K</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={`filter-row ${location === "/" ? "" : "hide-filter"}`}>
+        <FilterStay />
+      </div>
     </header>
   );
 }

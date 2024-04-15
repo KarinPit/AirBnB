@@ -22,7 +22,7 @@ export function StayPreview({ stay }) {
     <>
       <ImageCarousel stay={stay} showArrows={showArrows} />
 
-      <Link to={`/${stay._id}`}>
+      <Link to={`/stay/${stay._id}`}>
         <div
           className="actions"
           onMouseEnter={handleMouseEnter}
@@ -37,7 +37,7 @@ export function StayPreview({ stay }) {
 
       <div className="stay-info">
         <p className="location">
-          {stay.loc.city}, {stay.loc.country}
+          {stay.loc?.city ? `${stay.loc.city}, ${stay.loc.country}` : stay.name}
         </p>
         <p className="distance">2,123 kilometers away</p>
         <p className="dates">May 3-8</p>
@@ -46,8 +46,8 @@ export function StayPreview({ stay }) {
         </p>
 
         <div className="rate">
-          {/* <img src={starIcon}></img> */}
-          <p>{stay?.reviews?.[0]?.rate}</p>
+          <img src={starIcon}></img>
+          <p>{stay.reviews?.[0].rate.toFixed(1)}</p>
         </div>
       </div>
     </>

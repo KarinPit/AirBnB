@@ -6,7 +6,7 @@ import GuestPicker from "./GuestPicker"; // Import the new component
 import "react-datepicker/dist/react-datepicker.css";
 import "../assets/styles/main.scss";
 
-const FilterStay = () => {
+const FilterStay = ({ onSearch }) => {
   const regions = [
     { name: "Asia", imageName: "/img/locations/asia.png" },
     { name: "Europe", imageName: "/img/locations/europe.png" },
@@ -83,19 +83,22 @@ const FilterStay = () => {
   const handleFocus = (inputName) => {
     if (inputName === "query") {
       setShowRegionPicker(true);
+      setFocusedField(inputName);
     }
   };
+
   const toggleGuestPicker = (e) => {
     e.stopPropagation();
     setShowGuestPicker((prev) => !prev);
   };
+
   const stopPropagation = (e) => {
     e.stopPropagation();
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //  onSearch?.(searchParams);
+    onSearch?.(searchParams);
   };
 
   const handleClickOutside = (event) => {
@@ -112,14 +115,25 @@ const FilterStay = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
+  console.log(focusedField);
   return (
-    <div className="search-container" ref={wrapperRef}>
+    <div
+      className={`search-container ${!!focusedField ? "searchFocoused" : ""}`}
+      ref={wrapperRef}
+    >
+      {/* <div className='mooving-bg'></div> */}
       <form className="search-form" onSubmit={handleSubmit}>
         <div className="input-group">
-          <div
-            className={`input-container ${showRegionPicker ? "active" : ""}`}
-          >
+          <div className="input-container">
+            <div
+              className={`test ${
+                focusedField === "query"
+                  ? "focused"
+                  : focusedField != null
+                  ? "unfocused"
+                  : ""
+              }`}
+            ></div>
             <label htmlFor="location-search" className="input-label">
               Where
             </label>
@@ -132,75 +146,96 @@ const FilterStay = () => {
               value={searchParams.query}
               onChange={handleInputChange}
               onFocus={() => handleFocus("query")}
+              onBlur={() => setFocusedField(null)}
             />
           </div>
-          <div
-            className={`date-picker-container ${
-              focusedField === "checkIn" ? "focused" : ""
-            }`}
-          >
-            <div className="input-container">
-              <label htmlFor="start-date-picker" className="input-label">
-                Check in
-              </label>
-              <DatePicker
-                id="start-date-picker"
-                selected={startDate}
-                onChange={handleStartDateChange}
-                selectsStart
-                startDate={startDate}
-                endDate={endDate}
-                isClearable={true}
-                placeholderText="Add dates"
-                onFocus={() => {
-                  setFocusedField("checkIn");
-                  setShowRegionPicker(false); // Hide region picker when date picker is focused
-                }}
-                onBlur={() => setFocusedField(null)}
-                // more props as required
-              />
-            </div>
-            <div className="input-container">
-              <label htmlFor="end-date-picker" className="input-label">
-                Check out
-              </label>
-              <DatePicker
-                id="end-date-picker"
-                selected={endDate}
-                onChange={handleEndDateChange}
-                selectsEnd
-                startDate={startDate}
-                endDate={endDate}
-                minDate={startDate}
-                isClearable={true}
-                placeholderText="Add dates"
-                onFocus={() => {
-                  setFocusedField("checkOut");
-                  setShowRegionPicker(false);
-                }}
-                onBlur={() => setFocusedField(null)}
-              />
-            </div>
-          </div>
-          <div
-            className={`guest-input-container ${
-              showGuestPicker ? "active" : ""
-            }`}
-            onClick={toggleGuestPicker}
-          >
-            <label htmlFor="add-guests" className="input-label">
-              Who
+
+          <div className={`input-container`}>
+            <div
+              className={`test ${
+                focusedField === "checkIn"
+                  ? "focused"
+                  : focusedField != null
+                  ? "unfocused"
+                  : ""
+              }`}
+            ></div>
+
+            <label htmlFor="start-date-picker" className="input-label">
+              Check in
             </label>
-            <input
-              id="add-guests"
-              className="add-guests"
-              type="text"
-              readOnly
-              value={`${
-                guestCounts.adults + guestCounts.children + guestCounts.infants
-              } guests`}
+            <DatePicker
+              className="date-picker-container"
+              id="start-date-picker"
+              selected={startDate}
+              onChange={handleStartDateChange}
+              selectsStart
+              startDate={startDate}
+              endDate={endDate}
+              isClearable={true}
+              placeholderText="Add dates"
+              onFocus={() => {
+                setFocusedField("checkIn");
+                setShowRegionPicker(false);
+              }}
+              onBlur={() => setFocusedField(null)}
             />
-            {/* Guest Picker Dropdown */}
+          </div>
+          <div className="input-container">
+            <div
+              className={`test ${
+                focusedField === "checkOut"
+                  ? "focused"
+                  : focusedField != null
+                  ? "unfocused"
+                  : ""
+              }`}
+            ></div>
+            <label htmlFor="end-date-picker" className="input-label">
+              Check out
+            </label>
+            <DatePicker
+              // className="date-picker-container"
+              selected={endDate}
+              onChange={handleEndDateChange}
+              selectsEnd
+              startDate={startDate}
+              endDate={endDate}
+              minDate={startDate}
+              isClearable={true}
+              placeholderText="Add dates"
+              onFocus={() => {
+                setFocusedField("checkOut");
+                setShowRegionPicker(false);
+              }}
+              onBlur={() => setFocusedField(null)}
+            />
+          </div>
+          <div
+            className={`guest-input-container `}
+            onClick={toggleGuestPicker}
+            onFocus={() => {
+              setFocusedField("guest-input");
+              setShowRegionPicker(false);
+            }}
+            onBlur={() => setFocusedField(null)}
+          >
+            <div className="add-guests-container">
+              <label htmlFor="add-guests" className="input-label">
+                Who
+              </label>
+              <input
+                id="add-guests"
+                className="add-guests"
+                type="text"
+                readOnly
+                value={`${
+                  guestCounts.adults +
+                  guestCounts.children +
+                  guestCounts.infants
+                } guests`}
+              />
+            </div>
             {showGuestPicker && (
               <div
                 className="guest-picker-dropdown"
@@ -213,7 +248,6 @@ const FilterStay = () => {
                   zIndex: 1001,
                 }}
               >
-                {/* Adults */}
                 <GuestPicker
                   label="Adults"
                   count={guestCounts.adults}
@@ -242,29 +276,29 @@ const FilterStay = () => {
                 />
               </div>
             )}
+            <button type="submit" className="search-button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 32 32"
+                aria-hidden="true"
+                role="presentation"
+                focusable="false"
+                style={{
+                  display: "block",
+                  fill: "none",
+                  height: "16px",
+                  width: "16px",
+                  stroke: "currentColor",
+                  strokeWidth: 4,
+                }}
+              >
+                <path
+                  fill="none"
+                  d="M13 24a11 11 0 1 0 0-22 11 11 0 0 0 0 22zm8-3 9 9"
+                ></path>
+              </svg>
+            </button>
           </div>
-          <button type="submit" className="search-button">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 32 32"
-              aria-hidden="true"
-              role="presentation"
-              focusable="false"
-              style={{
-                display: "block",
-                fill: "none",
-                height: "16px",
-                width: "16px",
-                stroke: "currentColor",
-                strokeWidth: 4,
-              }}
-            >
-              <path
-                fill="none"
-                d="M13 24a11 11 0 1 0 0-22 11 11 0 0 0 0 22zm8-3 9 9"
-              ></path>
-            </svg>
-          </button>
         </div>
       </form>
 

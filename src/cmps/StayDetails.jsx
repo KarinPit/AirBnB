@@ -4,21 +4,24 @@ import { OrderSideBar } from "./OrderSideBar";
 
 import { stayService } from "../services/stay.service.local";
 
-export function StayDetails() {
+import saveIcon from "../../public/heart-b&w.svg";
+import shareIcon from "../../public/share.svg";
+
+export function StayDetails({ stayId }) {
   const [stay, setStay] = useState(null);
 
-  // useEffect(() => {
-  //     if (stayId) loadStay()
-  // }, [])
+  useEffect(() => {
+    if (stayId) loadStay();
+  }, []);
 
-  // async function loadStay() {
-  //     try {
-  //         const stay = await stayService.getById(stayId)
-  //         setStay(stay)
-  //     } catch (err) {
-  //         console.log('Had issues loading the stay', err)
-  //     }
-  // }
+  async function loadStay() {
+    try {
+      const stay = await stayService.getById(stayId);
+      setStay(stay);
+    } catch (err) {
+      console.log("Had issues loading the stay", err);
+    }
+  }
 
   if (!stay) return <div>Loading..</div>;
   return (
@@ -26,8 +29,14 @@ export function StayDetails() {
       <div className="stay-header">
         <h1>{stay.name}</h1>
         <div className="stay-header-actions">
-          <p>Share</p>
-          <p>Save</p>
+          <a>
+            <img src={shareIcon}></img>
+            <p>Share</p>
+          </a>
+          <a>
+            <img src={saveIcon}></img>
+            <p>Save</p>
+          </a>
         </div>
       </div>
 
@@ -52,11 +61,13 @@ export function StayDetails() {
         <h2>
           {stay.type} in {stay.loc.city}, {stay.loc.country}
         </h2>
-        <p>
-          {stay.capacity} guests &middot; {stay.amenities[0]} &middot;{" "}
-          {stay.amenities[1]}
-        </p>
-        <p>{stay.reviews.length} review</p>
+        <div>
+          <p>
+            {stay.capacity} guests &middot; {stay.amenities[0]} &middot;{" "}
+            {stay.amenities[1]}
+          </p>
+          <p>{stay.reviews.length} review</p>
+        </div>
         <p>Hosted by {stay.host.fullname}</p>
         <p>Free cancellation for 48 hours</p>
         <p>Self check-in</p>
