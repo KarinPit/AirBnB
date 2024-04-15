@@ -47,7 +47,7 @@ export function StayPreview({ stay }) {
 
         <div className="rate">
           {/* <img src={starIcon}></img> */}
-          <p>{stay.reviews[0].rate}</p>
+          <p>{stay?.reviews?.[0]?.rate}</p>
         </div>
       </div>
     </>

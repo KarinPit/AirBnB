@@ -14,7 +14,8 @@ import ImagesStep6 from "../cmps/CreateHost/ImagesStep6";
 import TitleStep7 from "../cmps/CreateHost/TitleStep7";
 import SummaryStep8 from "../cmps/CreateHost/SummaryStep8";
 import PriceStep9 from "../cmps/CreateHost/PriceStep9";
-
+import { saveStay } from "../store/actions/stay.actions";
+import { useNavigate } from "react-router-dom";
 const validationSchema = Yup.object({
   name: Yup.string().max(32, "Title must not exceed 32 characters"),
   summary: Yup.string().max(
@@ -85,8 +86,29 @@ const steps = [
 ];
 export default function CreateHostIndex() {
   const [activeStep, setActiveStep] = useState(0);
+  const navigate = useNavigate();
+  async function handleSubmit(values) {
+    console.log("values", values);
+    try {
+      const payload = {
+        ...values,
+        imgUrls: values.imgUrls
+          .map((img) => img?.imgUrl)
+          .filter((notUndefined) => notUndefined),
+        labels: values.propertyType,
+      };
 
-  const handleNext = (isValid, dirty, submitForm) => {
+      saveStay(payload);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+    // if (response) {
+    //   console.log(res);
+    // }
+  }
+
+  const onNext = (isValid, dirty, submitForm) => {
     console.log({ isValid });
     if (!isValid) return;
     const allSteps = steps.flatMap((step) => step.section.components);
@@ -96,7 +118,7 @@ export default function CreateHostIndex() {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
   };
-  const handleBack = () => {
+  const onBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
   const initialValues = {
@@ -114,17 +136,17 @@ export default function CreateHostIndex() {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={(values, actions) => {
-          console.log(values);
-          actions.setSubmitting(false);
+        onSubmit={(values) => {
+          console.log({ values });
+          handleSubmit(values);
         }}
       >
         {({ isValid, dirty, submitForm }) => (
           <Steppers
             steps={steps}
             activeStep={activeStep}
-            handleNext={() => handleNext(isValid, dirty, submitForm)}
-            handleBack={handleBack}
+            handleNext={() => onNext(isValid, dirty, submitForm)}
+            handleBack={onBack}
             isValid={isValid}
             dirty={dirty}
           />

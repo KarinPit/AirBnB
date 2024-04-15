@@ -12,6 +12,7 @@ export default function DescribeStep2({ formik }) {
         // Map the images right after fetching
         const mappedOptions = imgs.map((image) => ({
           title: image.title,
+          value: image.value,
           icon: `/assets/img/filter-category/${image.src}`,
         }));
         setOptions(mappedOptions);

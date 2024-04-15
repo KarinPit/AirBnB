@@ -23,25 +23,24 @@ export default function CardSelectList({
 }) {
   const { values, setFieldValue } = useFormikContext();
 
-  // Flatten options for either scenario
   const flatOptions = flattenOptions(options);
   const handleSelect = (option) => {
-    const fieldPath = multiSelect ? `${name}` : name;
-    const currentValues = values[fieldPath] || [];
+    const currentValues = values[name] || [];
 
     if (multiSelect) {
-      if (currentValues.includes(option.title)) {
+      if (currentValues.includes(option.value)) {
         setFieldValue(
-          fieldPath,
-          currentValues.filter((value) => value !== option.title)
+          name,
+          currentValues.filter((value) => value !== option.value)
         );
       } else {
-        setFieldValue(fieldPath, [...currentValues, option.title]);
+        setFieldValue(name, [...currentValues, option.value]);
       }
     } else {
-      setFieldValue(name, option.title === values[name] ? null : option.title);
+      setFieldValue(name, option.value === values[name] ? null : option.value);
     }
   };
+  console.log(values);
 
   return flatOptions.map((option) => (
     <CardSelect
@@ -50,8 +49,8 @@ export default function CardSelectList({
       option={option}
       isSelected={
         multiSelect
-          ? (values[name] || []).includes(option.title)
-          : values[name] === option.title
+          ? (values[name] || []).includes(option.value)
+          : values[name] === option.value
       }
       onSelect={() => handleSelect(option)}
     />
