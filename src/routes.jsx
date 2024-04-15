@@ -32,13 +32,13 @@ const routes = [
   },
   {
     path: "/host",
-    element: <MainRenterLayout />,
+    element: <CreateHostLayout />,
     children: [
       {
         key: "homes",
 
         path: "homes",
-        element: <RenterIndex />,
+        element: <CreateHostIndex />,
       },
     ],
     key: "renter",

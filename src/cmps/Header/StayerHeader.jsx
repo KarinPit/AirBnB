@@ -20,7 +20,7 @@ export default function StayerHeader() {
         </div>
 
         <div className="menus">
-          <NavLink to={"/become-a-host"}>
+          <NavLink to={"/host/homes"}>
             <button className="btn-dark">Airbnb your home</button>
           </NavLink>
 

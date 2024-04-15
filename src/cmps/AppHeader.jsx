@@ -37,9 +37,10 @@ export function AppHeader({ location }) {
 
         <div className="right-row">
           <div>
-            <a>
+            <NavLink to={"/host/homes"}>
               <button className="btn-dark">Airbnb your home</button>
-            </a>
+            </NavLink>
+
             <a>
               <img className="language" src={Language}></img>
             </a>
