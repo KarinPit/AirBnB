@@ -13,6 +13,7 @@ export function RootCmp() {
   return (
     <div className={`main-layout ${location === '/' ? '' : 'compact-layout'}`}>
       <AppHeader location={location} />
+      <hr></hr>
       <main className={`${location === '/' ? 'full' : ''}`}>
         <Routes>
           {routes.map((route) => (

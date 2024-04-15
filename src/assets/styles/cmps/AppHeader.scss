@@ -1,4 +1,5 @@
 .app-header {
+  position: relative;
   padding-block-end: 24px;
 
   .top-row {
@@ -15,45 +16,124 @@
     height: rem(32px);
   }
 
-.center-row {
-  a {
-    display: inline-block;
-    padding: 8px 16px;
-    border-radius: 16px;
-    text-decoration: none; // Optional: removes the underline from links
-    transition: background-color 0.3s, color 0.3s; // Smooth transition for background and text color
-    color: gray;
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
+  .center-row {
 
-    &.active-link {
-      color: black;
+    a {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 32px;
+      font-size: 1rem;
+      font-family: AirbnbCereal-Book;
+      text-decoration: none; // Optional: removes the underline from links
+      transition: background-color 0.3s, color 0.3s; // Smooth transition for background and text color
+      color: #6A6A6A;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      &.active-link {
+        color: black;
+        font-weight: 700;
+      }
     }
   }
-}
 
 
   .right-row {
     display: flex;
     align-items: center;
     height: 80px;
+    gap: 5px;
 
     >* {
       padding: $padding-lg;
       display: flex;
       align-items: center;
+      padding-inline-end: 0;
     }
 
-    img {
-      width: rem(16px);
-      height: rem(16px);
+    a {
+      padding: 0;
+      text-decoration: none;
+    }
+
+    .language {
+      padding: 10px 16px;
+
+      &:hover {
+        border-radius: 32px;
+        background-color: #f7f7f7;
+      }
+
+    }
+
+    button {
+      display: inline-block;
+      padding: 16px 10px;
+      border-radius: 32px;
+      font-size: 0.875rem;
+      font-family: AirbnbCereal-Book;
+      text-decoration: none; // Optional: removes the underline from links
+      transition: background-color 0.3s, color 0.3s; // Smooth transition for background and text color
+      color: #1e1e1e;
+
+      &:hover {
+        background-color: #f7f7f7;
+      }
+
+      &.active-link {
+        color: black;
+        font-weight: 700;
+      }
+    }
+
+    .side-menu {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      border: 1px solid rgb(221, 221, 221);
+      border-radius: 32px;
+      padding: 8px 8px 8px 10px;
+
+      &:hover {
+        transition: box-shadow 0.2s;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+      }
+
+      img {
+        width: 18px;
+        height: 16px;
+      }
+
+      .logged-acc {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        background-color: #262626;
+        border-radius: 50%;
+
+        p {
+          margin: 0;
+          color: #ffff;
+          font-size: 9px;
+        }
+      }
+    }
+
+    &.compact-header {
+      .right-row {
+        background-color: red;
+      }
     }
   }
 
+
   .filter-row {
     display: flex;
-    padding: 20px;
 
     &.hide-filter {
       display: none;
@@ -86,6 +166,66 @@
       }
     }
   }
+
+  &.compact-header {
+    position: relative;
+    .center-row {
+      a {
+        display: none;
+      }
+    }
+
+    .filter-row {
+      position: relative;
+      max-width: 400px;
+      margin: 0;
+
+      .location-search-container {
+        input {
+          position: absolute;
+          opacity: 0;
+        }
+      }
+
+      .start-date {
+        width: 100px;
+
+        .react-datepicker-wrapper {
+          position: absolute;
+          opacity: 0;
+        }
+      }
+
+      .end-date {
+        display: none;
+      }
+
+      .guest-input-container {
+        .add-guests-container {
+          width: 100px;
+
+          input {
+            position: absolute;
+            opacity: 0;
+          }
+        }
+
+        .search-button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 32px;
+          height: 32px;
+
+          svg {
+            width: 24px;
+            height: 24px;
+          }
+        }
+      }
+    }
+  }
+
 }
 
 
@@ -97,12 +237,6 @@
       justify-content: space-between;
       align-items: center;
 
-    }
-
-    &.compact-header {
-      .top-row {
-        flex-wrap: nowrap;
-      }
     }
   }
 }
