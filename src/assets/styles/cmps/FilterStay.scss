@@ -10,6 +10,7 @@
   border-radius: 32px;
   justify-content: space-between;
   align-items: center;
+  align-self: center;
   margin: auto;
   z-index: 1000;
 
@@ -26,9 +27,16 @@
     height: 100%;
     display: flex;
 
+
+    .search-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
     .input-group {
       display: grid;
-      grid-template-columns: 280px 150px 150px 1fr;
+      grid-template-columns: 280px 150px 150px 280px;
       width: 100%;
       justify-content: space-between;
       align-items: center;
@@ -40,15 +48,12 @@
         }
       }
 
-      .input-label {
-        color: black;
-        font-size: 12px;
-      }
-
       input {
         border: none;
         outline: none;
         cursor: pointer;
+        color: #717171;
+
 
         &:focus {
           border-color: #f9f9f9;
@@ -68,21 +73,33 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 48px;
+        width: auto;
+        padding: 8px 16px;
         height: 48px;
         background-color: #ff385c;
-        border-radius: 50%;
+        border-radius: 50px;
+        margin-left: 36px;
         color: white;
         cursor: pointer;
-
+        border: none;
+        outline: none;
+        transition: background-color 0.2s ease;
         &:hover {
           background-color: darken(#ff385c, 20%);
         }
-
+        &:focus {
+          background-color: #e12e55;
+        }
+      
         svg {
           display: block;
-          height: 100%;
-          width: 100%;
+          height: 24px;
+          width: 24px;
+        }
+        .search-label {
+          display: block;
+          font-size: 16px;
+          font-weight: bold;
         }
       }
     }
@@ -90,6 +107,9 @@
   .test {
     position: absolute;
     border-radius: 37px;
+    &:hover {
+      border-color: #f9f9f9;
+    }
   }
   .focused {
     width: 100%;
@@ -109,24 +129,56 @@
     left: 0;
     &:hover {
       z-index: 10000 !important;
-      background-color: red;
+      background-color: rgb(241, 238, 238);
     }
   }
-
+  .check-out-container,
+  .guest-box-container,
+  .check-in-container {
+    position: relative;
+  }
+  
+  .check-out-container::before,
+  .guest-box-container::before,
+  .check-in-container::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 25%; /* Adjust to position vertically */
+    height: 50%; /* Adjust to change the border height */
+    width: 1px;
+    background-color: rgb(221, 221, 221);
+  }
   .input-container {
     position: relative;
     height: 100%;
+    width: 100%;
     padding: 0 32px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
 
-    .inner-input-container {
-      height: 100%;
+
+    .checkIn-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
+
+    .checkOut-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    
     .input-label {
+      //this is the label
       transition: all 0.2s ease;
-      color: #717171;
+      // color: #717171;
       padding-block-end: 2px;
+      margin-bottom: 4px;
       font-size: 12px;
-      font-family: AirbnbCereal-Light;
       font-weight: 600;
       line-height: 16px;
       text-align: start;
@@ -142,27 +194,6 @@
     .react-datepicker-wrapper {
       line-height: 16px;
     }
-
-    // &:hover:not(.focused)::before {
-    //   content: "";
-    //   position: absolute;
-    //   top: 0;
-    //   left: -3px;
-    //   right: -3px;
-    //   bottom: 0;
-    //   background-color: lightgreen;
-    //   z-index: -1;
-    //   border-radius: 32px;
-    // }
-
-    // &.unfocused {
-    //   background-color: transparent;
-
-    //   &:hover {
-    //     background-color: rgba(0, 128, 0, 0.1);
-    //     /* Slight background color on hover */
-    //   }
-    // }
 
     .location-search {
       width: 100%;
@@ -193,87 +224,30 @@
       border-left: 1px solid rgb(221, 221, 221);
     }
 
-    // .input-container {
-    //   position: relative;
-    //   width: 100%;
-    //   max-width: 140.5px;
-    //   padding: 0 24px;
-
-    //   &.focused {
-    //     background-color: #ffff;
-    //     padding: 15px 32px;
-    //     border-radius: 32px;
-    //   }
-
-    //   &.unfocused {
-    //     padding: 14px 32px;
-    //   }
-
-    //   .input-label {
-    //     font-size: 12px;
-    //     color: black;
-    //     background-color: transparent;
-    //     font-weight: bold;
-    //     transition: all 0.2s ease-in-out;
-    //     pointer-events: none;
-    //     padding-block-end: 2px;
-    //   }
-
-    //   .react-datepicker-wrapper {
-    //     width: 100%;
-    //     font-size: 0.5rem;
-    //     line-height: 16px;
-
-    //     input {
-    //       width: 100%;
-    //       border-radius: 32px;
-    //       font-size: 14px;
-    //       outline: none;
-    //       padding: 0;
-    //       background-color: transparent;
-
-    //       &:focus {
-    //         border-color: #ff385c;
-    //       }
-
-    //       &:focus + .input-label,
-    //       &:not(:placeholder-shown) + .input-label {
-    //         top: -20px;
-    //         font-size: 10px;
-    //         color: #ff385c;
-    //       }
-    //     }
-    //   }
-    // }
-  }
-
+ }
+  .guest-box{
+    display: flex;
+    align-items: center;
+    align-self: center;
+    margin-right: auto;
+  } 
   .guest-input-container {
     display: flex;
-    flex-grow: 1;
-    justify-content: space-between;
-    border-left: 1px solid rgb(221, 221, 221);
-    padding: 0 10px 0 24px;
+    // border-left: 1px solid rgb(221, 221, 221);
+    flex-direction: column;
 
     &.focused {
       background-color: #ffff;
-      padding: 8px 10px 8px 24px;
-      // border-radius: 32px;
+      // padding: 8px 10px 8px 24px;
+      border-radius: 37px;
     }
 
     &.unfocused {
-      // background-color: red;
+      background-color: red;
     }
 
-    // &:focus-within .input-label,
-    // &:not(:placeholder-shown) .input-label {
-    //   background: white;
-    //   font-size: 12px;
-    //   transition: top 0.2s ease, font-size 0.2s ease;
-    //   z-index: 2;
-    // }
-
     .add-guests {
-      border-radius: 32px;
+      border-radius: 4px;
       border: 1px solid #ddd;
       font-size: 14px;
       outline: none;
@@ -283,31 +257,24 @@
       &:focus {
         border-color: #ff385c;
       }
-
-      // &:focus+.input-label,
-      // &:not(:placeholder-shown)+.input-label {
-      //   top: -11px;
-      //   font-size: 12px;
-      //   color: #826e6e;
-      //   line-height: 16px;
-      // }
     }
 
     .add-guests-container {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      padding: 0 32px 0 0;
+      // justify-content: center;
     }
 
-    .input-label {
-      line-height: 16px;
-      font-family: AirbnbCereal-Light;
-      font-weight: 600;
-      font-size: 14px;
-      pointer-events: none;
-      transition: top 0.2s ease, font-size 0.2s ease;
-      background-color: transparent;
-    }
+    // .input-label {
+    //   line-height: 16px;
+    //   font-family: AirbnbCereal-Light;
+    //   font-weight: bold;
+    //   font-size: 12px;
+    //   pointer-events: none;
+    //   transition: top 0.2s ease, font-size 0.2s ease;
+    //   background-color: transparent;
+    // }
 
     .guest-picker-dropdown {
       position: relative;

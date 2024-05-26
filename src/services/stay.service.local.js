@@ -19,7 +19,9 @@ export const stayService = {
   minPricesStays,
   maxPricesStays,
   getAllPrices,
-  getTotalFiltered
+  getTotalFiltered,
+  convertToServerDateFormat,
+  convertFromServerDateFormat
 };
 window.cs = stayService;
 
@@ -45,9 +47,13 @@ async function query(filterBy) {
 }
 function applyFilters(stays, filterBy) {
   // console.log(filterBy)
+
+
   // Match category tags using regex
   const matchesCategoryTag = (stay) => {
-    if (!filterBy.category_tag) return true;
+    if (!filterBy.category_tag) {
+      return true;
+    }
     const regex = new RegExp(filterBy.category_tag, "i");
     return stay.labels.some((label) => regex.test(label));
   };
@@ -87,14 +93,35 @@ function applyFilters(stays, filterBy) {
     
     return true;
   };
+
+  if (!filterBy.startDate || !filterBy.endDate) {
+    return stays; // Return all stays if no date filter is set
+  }
+  const filterStaysByExactDates = (stays, startDateStr, endDateStr) => {
+    // if stays dont have filterd yet , return all stays
+    
+    return stays.availabilityPeriods.some(period => {
+        const matchesStartDate = period.startDate === startDateStr;
+        const matchesEndDate = period.endDate === endDateStr;
+        return matchesStartDate && matchesEndDate;
+    });
+};
+  const isWithinGuestLimit = (stay) => {
+    return filterBy.guestCount ? filterStaysByGuestCount(stay, filterBy.guestCount) : true;
+  };
   return stays.filter(
     (stay) =>
       matchesCategoryTag(stay) &&
       matchesAmenities(stay) &&
       withinPriceRange(stay) &&
       matchesPropertyType(stay)&&
-      matchGuestFavorites(stay)
-  );
+      matchGuestFavorites(stay)&&
+      filterStaysByExactDates(stay, filterBy.startDate, filterBy.endDate)&&
+      isWithinGuestLimit(stay)
+    );
+}
+function filterStaysByGuestCount(stay, guestCount) {
+  return stay.capacity >= guestCount;
 }
 
 function getById(stayId) {
@@ -142,7 +169,10 @@ function getFilterFromParams(searchParams) {
       filterBy[field] = value;
     }
   });
-
+    // Include guest count in the filter if specified
+    // if (searchParams.has('guestCount')) {
+    //   filterBy.guestCount = parseInt(searchParams.get('guestCount'), 10);
+    // }
   return filterBy;
 }
 
@@ -167,8 +197,10 @@ function getDefaultFilter(
 }
 
 function minPricesStays() {
-  let stays = utilService.loadFromStorage(STORAGE_KEY);
-  return Math.min(...stays.map((stay) => stay.price));
+  let stays = utilService.loadFromStorage(STORAGE_KEY) || []; 
+  if (!stays.length) return null;
+
+  return Math.min(...stays.map(stay => stay.price));
 }
 
 function maxPricesStays() {
@@ -234,4 +266,20 @@ function _createStays() {
     stays = dummyStays;
     utilService.saveToStorage(STORAGE_KEY, stays);
   }
+}
+export function convertToServerDateFormat(date) {
+  return [
+    date.getDate().toString().padStart(2, '0'),
+    (date.getMonth() + 1).toString().padStart(2, '0'),
+    date.getFullYear(),
+  ].join('/');
+  }
+  export function convertFromServerDateFormat(dateStr) {
+    // Converts DD/MM/YYYY to JavaScript Date object
+    const parts = dateStr.split('/');
+    if (parts.length === 3) {
+        // Note: Month is 0-indexed in JavaScript Date
+        return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
+    }
+    return null; // or return new Date(); if you prefer current date on failure
 }
