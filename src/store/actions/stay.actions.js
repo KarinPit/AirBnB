@@ -59,7 +59,6 @@ export async function loadStay(stayId) {
 }
 
 export function setFilterBy(fieldsToUpdate) {
-  console.log("fieldsToUpdate", fieldsToUpdate);
   store.dispatch({ type: SET_FILTER_BY, fieldsToUpdate });
 }
 

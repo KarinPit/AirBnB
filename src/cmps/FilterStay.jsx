@@ -12,7 +12,7 @@ import {stayService} from "../services/stay.service.local"
 import 'react-datepicker/dist/react-datepicker.css';
 import '../assets/styles/main.scss';
 
-const FilterStay = ({ onSearch }) => {
+const FilterStay = ({ isMinimize }) => {
   const regions = [
     { name: 'Asia', imageName: '/img/locations/asia.png' },
     { name: 'Europe', imageName: '/img/locations/europe.png' },

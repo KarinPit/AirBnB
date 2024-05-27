@@ -1,0 +1,77 @@
+// Variables
+$primary-color: #FF385C;
+$text-color: #333;
+$border-color: #ddd;
+$border-radius: 32px;
+
+.minimized-filter-container {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  padding: 8px 12px 8px 12px;
+  width:352.188;
+  height: 48px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .minimized-search {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    &__input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      font-family: Circular, -apple-system, "system-ui", Roboto, "Helvetica Neue", sans-serif;
+      color: $text-color;
+        
+      &::placeholder {
+        color: $border-color;
+      }
+      
+    }
+
+    .option-box {
+        border-left: 1px solid rgb(221, 221, 221);
+    }
+
+    &__button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background-color: $primary-color;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 14px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+    //   &:hover {
+    //     background-color: darken($primary-color, 10%);
+    //   }
+    }
+
+    &__option {
+      margin: 0 8px;
+      font-size: 14px;
+      color: $text-color;
+      cursor: pointer;
+    
+    //   &:hover {
+    //     color: $primary-color;
+    //   }
+    }
+  }
+
+  .minimized-filter-content {
+    width: 100%;
+  }
+}

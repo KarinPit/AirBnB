@@ -169,10 +169,6 @@ function getFilterFromParams(searchParams) {
       filterBy[field] = value;
     }
   });
-    // Include guest count in the filter if specified
-    // if (searchParams.has('guestCount')) {
-    //   filterBy.guestCount = parseInt(searchParams.get('guestCount'), 10);
-    // }
   return filterBy;
 }
 
@@ -281,5 +277,5 @@ export function convertToServerDateFormat(date) {
         // Note: Month is 0-indexed in JavaScript Date
         return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
     }
-    return null; // or return new Date(); if you prefer current date on failure
+    return null;
 }
