@@ -1,12 +1,11 @@
-.search-container {
-  position: relative;
-  display: flex;
+.filter-container {
   width: 100%;
   max-width: 850px;
   height: 66px;
-  background-color: #ffff;
+  margin: auto;
   border: 1px solid #dddddd;
   box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.08);
+  background-color: #ffff;
   border-radius: 32px;
   justify-content: space-between;
   align-items: center;
@@ -14,18 +13,17 @@
   margin: auto;
   z-index: 1000;
 
-  &.searchFocoused {
-    background-color: #ebebeb;
+
+  &.focused {
+    background-color: rgb(215, 215, 215);
+
   }
 
-  .search-container div:hover {
-    background: hsl(0 0% 94%);
-  }
-
-  .search-form {
-    width: 100%;
-    height: 100%;
+  form {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
 
 
     .search-box {
@@ -55,19 +53,16 @@
         color: #717171;
 
 
-        &:focus {
-          border-color: #f9f9f9;
+        &:before {
+          width: 100px;
+          height: 16px;
+          content: "";
+          background-color: red;
         }
 
-        &[type="number"] {
-          -moz-appearance: textfield;
-
-          &::-webkit-inner-spin-button,
-          &::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-          }
+        &.location-input {
+          border-radius: 32px 0 0 32px;
         }
-      }
 
       .search-button {
         display: flex;
@@ -187,12 +182,16 @@
       z-index: 2;
     }
 
-    input {
-      background-color: transparent;
+    &>div:not(.location-input) {
+      padding-inline-start: 16px;
     }
 
-    .react-datepicker-wrapper {
-      line-height: 16px;
+    label {
+      font-family: AirbnbCereal-Book;
+      font-size: rem(12px);
+      font-weight: 600;
+      padding-block-end: 2px;
+      color: #4e4e4e;
     }
 
     .location-search {
@@ -200,28 +199,16 @@
       max-width: 284px;
       padding: 0;
       border: none;
-      box-shadow: none;
-      font-size: 14px;
-      line-height: 16px;
+      padding: 0;
+      background-color: transparent;
 
-      &:focus + .input-label,
-      &:not(:placeholder-shown) + .input-label {
-        top: 4px;
-        font-size: 14px;
+      &::placeholder {
+        color: rgb(147, 145, 145);
       }
-    }
-  }
 
-  .date-picker-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-    width: 100%;
-
-    & > * {
-      border-left: 1px solid rgb(221, 221, 221);
+      &:focus {
+        outline: none;
+      }
     }
 
  }
@@ -253,9 +240,48 @@
       outline: none;
       background: transparent;
       padding: 0;
+    select {
+      appearance: none;
+      color: rgb(147, 145, 145);
+      width: 100% !important;
+    }
 
-      &:focus {
-        border-color: #ff385c;
+    .location-input,
+    .guest-input {
+      flex: 2;
+    }
+
+    .checkin-input,
+    .checkout-input {
+      flex: 1;
+      padding-inline-start: 22px !important;
+
+      input {
+        max-width: 90.5px;
+      }
+    }
+
+    .location-input {
+      padding-inline-end: 10px !important;
+    }
+
+    .checkin-input {
+      border-left: 1px solid #dddddd;
+    }
+
+    .checkout-input {
+      border-left: 1px solid #dddddd;
+    }
+
+    .guest-input {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 1px solid #dddddd;
+
+      &>* {
+        line-height: 18px;
       }
     }
 
@@ -276,12 +302,16 @@
     //   background-color: transparent;
     // }
 
-    .guest-picker-dropdown {
-      position: relative;
-      top: calc(100% + 10px);
-      left: 25%;
-      transform: translateX(-50%);
-      z-index: 3;
+
+        svg {
+          display: block;
+          fill: none;
+          height: 16px;
+          width: 16px;
+          stroke: #ffff;
+          stroke-width: 4;
+        }
+      }
     }
   }
 }
