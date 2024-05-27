@@ -34,9 +34,13 @@ const FilterStay = ({ onSearch }) => {
         case 'guest':
             setShowGuestPicker(true);
             setShowRegionPicker(false);
-            // setFocusedField(null);
+            setFocusedField(null);
             break;
-        case 'date':
+        case 'checkIn':
+            setShowGuestPicker(false);
+            setShowRegionPicker(false);
+            break;
+        case 'checkOut':
             setShowGuestPicker(false);
             setShowRegionPicker(false);
             break;
@@ -265,6 +269,7 @@ const handleSubmit = async (e) => {
                 placeholderText="Add dates"
                 onFocus={() => {
                   setFocusedField('checkIn')
+                  setShowRegionPicker(false)
                 }}  
                 onBlur={() => setFocusedField(null)}
               />
@@ -285,7 +290,7 @@ const handleSubmit = async (e) => {
                 Check out
               </label>
               <DatePicker
-                // className="date-picker-container"
+                className="date-picker-container"
                 ref={endDatePickerRef}
                   id="end-date-picker"
                 selected={endDate}
@@ -304,7 +309,7 @@ const handleSubmit = async (e) => {
               />
             </div>
           </div>
-        <div className="input-container">
+        <div className="input-container guest-box-container">
           <div className='guest-box'>
           <div
             className={`test ${
