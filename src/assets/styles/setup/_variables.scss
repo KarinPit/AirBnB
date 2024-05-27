@@ -19,7 +19,7 @@ $color-secondary: #b32505;
 $color-tertiary: #428bff;
 $color-orange: #e07912;
 $color-green: #008a05;
-$color-light-red: #ff385c;
+$color-light-red: #FFF8F6 ;
 $color-dark-pink: #92174d;
 $color-purple: #460479;
 
@@ -45,11 +45,6 @@ $color-secondary: #B32505;
 $color-tertiary: #428BFF;
 $color-orange: #E07912;
 $color-green: #008A05;
-
-// Additional colors
-$color-light-red: #FF385C;
-$color-dark-pink: #92174D;
-$color-purple: #460479;
 
 // Background gradient variables
 $gradient-primary: linear-gradient(to right, #E61E4D 0%, #E31C5F 50%, #D70466 100%);
@@ -88,6 +83,15 @@ $padding-xl: 20px;
 $padding-xxl: 24px; 
 $padding-xxxl: 32px; 
 
+// Margins
+$margin-xs: 4px;  
+$margin-sm: 8px;  
+$margin-md: 12px; 
+$margin-lg: 16px; 
+$margin-xl: 20px; 
+$margin-xxl: 24px; 
+$margin-xxxl: 42px; 
+
 // Height and Line Height
 $height-standard: 64px;
 $line-height-standard: 1.125rem;
@@ -115,6 +119,7 @@ $border-color: rgba(0, 0, 0, 0.14);
 $border-radius: 12px;
 $border-thin: 1px solid $color-overlay-light;
 $border-thick: 1px solid $color-overlay-medium;
+$border-less-thick: 2px solid $color-overlay-medium;
 
 // Gradients
 $gradient-primary: linear-gradient(to right, #e61e4d 0%, #e31c5f 50%, #d70466 100%);
@@ -157,5 +162,6 @@ $scale3d-small: scale3d(0.95, 0.95, 0.1);
 
 // Font families
 $font-family-book: "AirbnbCereal-Book", sans-serif;
-$font-family-light: "AirbnbCereal-Light", sans-serif;
+$font-family-light: "AirbnbCereal-Light";
+$font-family-extra-bold: "AirbnbCereal-ExtraBold", sans-serif;
 

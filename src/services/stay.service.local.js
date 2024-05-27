@@ -43,8 +43,8 @@ async function query(filterBy) {
   }
   return stays;
 }
-
 function applyFilters(stays, filterBy) {
+  // console.log(filterBy)
   // Match category tags using regex
   const matchesCategoryTag = (stay) => {
     if (!filterBy.category_tag) return true;
@@ -112,7 +112,7 @@ async function save(stay) {
     savedstay = await storageService.put(STORAGE_KEY, stay);
   } else {
     // Later, owner is set by the backend
-    stay.owner = userService.getLoggedinUser();
+    // stay.owner = userService.getLoggedinUser();
     savedstay = await storageService.post(STORAGE_KEY, stay);
   }
   return savedstay;

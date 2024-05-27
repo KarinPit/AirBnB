@@ -1,0 +1,38 @@
+
+.describe-step-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  h1 {
+    font-size: rem(32px);
+    margin-bottom: 30px;
+  }
+
+  .describe-step-2-list {
+    padding-bottom: $padding-xl;
+    padding-top: $padding-xs; 
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: $padding-xl;
+
+    max-width: 640px;
+    gap: $padding-md;
+
+    .card {
+      border-width:2px;
+
+      flex: 0 1 calc(33% - $padding-sm);
+      .card-select__icon-wrapper {
+        margin-bottom: 0; 
+      }
+      &.selected {
+        background-color: rgb(247, 247, 247) !important;
+        border-width:2px;
+      }
+      &:active {
+        transform: unset;
+      }
+    }
+  }
+}

@@ -99,7 +99,7 @@ export default function AdvancedFilterForm() {
             Amenities
           </h2>
           <div className="">
-            <CheckboxList fieldName="amenities" options={Amenities} />
+            <CheckboxList fieldName="amenities" options={Amenities.filter} />
           </div>
         </div>
       </section>

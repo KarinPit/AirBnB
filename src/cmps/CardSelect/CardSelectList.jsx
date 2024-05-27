@@ -1,38 +1,56 @@
+import React from "react";
 import { useFormikContext } from "formik";
-
 import { CardSelect } from "./CardSelect";
 
-export default function CardSelectList({ options, name }) {
+function flattenOptions(options) {
+  return options.reduce((acc, optionGroup) => {
+    if (optionGroup.items && Array.isArray(optionGroup.items)) {
+      const items = optionGroup.items.map((item) => ({
+        ...item,
+        category: optionGroup.title || optionGroup.category,
+      }));
+      return [...acc, ...items];
+    }
+    return [...acc, optionGroup];
+  }, []);
+}
+
+export default function CardSelectList({
+  options,
+  name,
+  multiSelect = false,
+  className = "",
+}) {
   const { values, setFieldValue } = useFormikContext();
 
-  const handleSelect = (selectedOption) => {
-    if (name === "guest_favorite") {
-      setFieldValue(name, !values[name]);
-    } else if (name === "l2_property_type_ids") {
-      const currentValues = values[name] || [];
-      if (currentValues.includes(selectedOption.title)) {
+  const flatOptions = flattenOptions(options);
+  const handleSelect = (option) => {
+    const currentValues = values[name] || [];
+
+    if (multiSelect) {
+      if (currentValues.includes(option.value)) {
         setFieldValue(
           name,
-          currentValues.filter((item) => item !== selectedOption.title)
+          currentValues.filter((value) => value !== option.value)
         );
       } else {
-        setFieldValue(name, [...currentValues, selectedOption.title]);
+        setFieldValue(name, [...currentValues, option.value]);
       }
     } else {
-      const newValue =
-        selectedOption.title === values[name] ? null : selectedOption.title;
-      setFieldValue(name, newValue);
+      setFieldValue(name, option.value === values[name] ? null : option.value);
     }
   };
+  console.log(values);
 
-  return options.map((option) => (
+  return flatOptions.map((option) => (
     <CardSelect
+      className={className}
       key={option.title}
       option={option}
       isSelected={
-        name === "guest_favorite"
-          ? values[name]
-          : (values[name] || []).includes(option.title)
+        multiSelect
+          ? (values[name] || []).includes(option.value)
+          : values[name] === option.value
       }
       onSelect={() => handleSelect(option)}
     />

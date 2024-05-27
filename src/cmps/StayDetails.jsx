@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useRef, useState } from "react"
 
 import { stayService } from "../services/stay.service.local"
@@ -151,6 +152,75 @@ export function StayDetails({ stayId }) {
             console.log('Had issues loading the stay', err)
         }
     }
+  }
+
+  if (!stay) return <div>Loading..</div>;
+  return (
+    <>
+      <div className="stay-header">
+        <h1>{stay.name}</h1>
+        <div className="stay-header-actions">
+          <a>
+            <img src={shareIcon}></img>
+            <p>Share</p>
+          </a>
+          <a>
+            <img src={saveIcon}></img>
+            <p>Save</p>
+          </a>
+        </div>
+      </div>
+
+      <div className="stay-img-gallery">
+        {stay.imgUrls.map((img, idx) => {
+          if (idx <= 5) {
+            return (
+              <img
+                key={idx}
+                src={img}
+                className={idx === 0 ? "main-img" : ""}
+                alt={`Description ${idx + 1}`}
+              />
+            );
+          }
+          return null;
+        })}
+        <div className="overlay"></div>
+      </div>
+
+      <div className="main-desc">
+        <div className="stay-desc">
+          <h2>
+            {stay.type} in {stay.loc.city}, {stay.loc.country}
+          </h2>
+          <div>
+            <p>
+              {stay.capacity} guests &middot; {stay.amenities[0]} &middot;{" "}
+              {stay.amenities[1]}
+            </p>
+            <div className="review-summary">
+              <div>
+                <img src={StarIcon}></img>
+                <p>{stay.reviews[0].rate}</p>
+              </div>
+              <p>&middot; </p>
+              <p className="review-score">
+                {stay.reviews.length}{" "}
+                {stay.reviews.length === 1 ? "review" : "reviews"}
+              </p>
+            </div>
+          </div>
+
+          <div className="stay-summary">
+            <div className="host-info">
+              <img src={profileImg}></img>
+              <div>
+                <h3 className="hosted-by">Hosted by {stay.host.fullname}</h3>
+                <p className="host-experience">
+                  Superhost &middot; 7 years hosting
+                </p>
+              </div>
+            </div>
 
     function handleScroll() {
         const stickyElement = stickyRef.current;
@@ -182,24 +252,11 @@ export function StayDetails({ stayId }) {
                         <p>Save</p>
                     </a>
                 </div>
-            </div>
 
-            <div className="stay-img-gallery">
-                {stay.imgUrls.map((img, idx) => {
-                    if (idx <= 5) {
-                        return (
-                            <img
-                                key={idx}
-                                src={img}
-                                className={idx === 0 ? "main-img" : ""}
-                                alt={`Description ${idx + 1}`}
-                            />
-                        )
-                    }
-                    return null
-                })}
-                <div className="overlay"></div>
-            </div>
+                <div className="amenity">
+                  <div className="amenity-img">
+                    <img src={doorIcon}></img>
+                  </div>
 
             <div className="main-desc">
                 <div className="stay-desc">
@@ -470,8 +527,16 @@ export function StayDetails({ stayId }) {
                         <a href="#">{thingsToKnow.cancellationPolicy.linkText}</a>
                     </div>
                 </div>
-            </div>
+              </div>
 
+              <div className="full-desc">
+                <p>{stay.summary}</p>
+                <button>
+                  <p>Show more</p>
+                  <img src={rightArrow}></img>
+                </button>
+              </div>
+            </div>
         </>
     )
 }
