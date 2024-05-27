@@ -3,9 +3,9 @@ import { NavLink, useLocation } from "react-router-dom";
 import Logo from "/svg/logo.svg";
 import Language from "/svg/language.svg";
 import LineMenu from "/menu.svg";
-
 import { utilService } from "../services/util.service.js";
 import FilterStay from "./FilterStay";
+import MinimizedFilterStay from "./MinimizeFilterStay.jsx";
 
 export function AppHeader({ location }) {
   console.log(location);
@@ -32,7 +32,7 @@ export function AppHeader({ location }) {
             location === "/" ? "hide-filter" : "minimized-filter"
           }`}
         >
-          <FilterStay />
+          <MinimizedFilterStay />
         </div>
 
         <div className="right-row">
