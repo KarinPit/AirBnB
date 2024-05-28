@@ -3,7 +3,7 @@ import { userService } from '../services/user.service'
 import { ImageUploader } from './ImageUploader'
 
 export function LoginSignup(props) {
-    const [credentials, setCredentials] = useState({ username: '', password: '', fullname: '' })
+    const [credentials, setCredentials] = useState({ username: '', password: '', fullname: '', userType: '' })
     const [isSignup, setIsSignup] = useState(false)
     const [users, setUsers] = useState([])
 
@@ -17,7 +17,7 @@ export function LoginSignup(props) {
     }
 
     function clearState() {
-        setCredentials({ username: '', password: '', fullname: '', imgUrl: '' })
+        setCredentials({ username: '', password: '', fullname: '', userType: 'buyer', imgUrl: '' })
         setIsSignup(false)
     }
 
@@ -36,7 +36,7 @@ export function LoginSignup(props) {
 
     function onSignup(ev = null) {
         if (ev) ev.preventDefault()
-        if (!credentials.username || !credentials.password || !credentials.fullname) return
+        if (!credentials.username || !credentials.password || !credentials.fullname || !credentials.userType) return
         props.onSignup(credentials)
         clearState()
     }
@@ -90,6 +90,15 @@ export function LoginSignup(props) {
                         onChange={handleChange}
                         required
                     />
+                    <select
+                        name="userType"
+                        value={credentials.userType}
+                        onChange={handleChange}
+                    >
+                        <option value="">Select User Type</option>
+                        <option value="buyer">Buyer</option>
+                        <option value="seller">Seller</option>
+                    </select>
                     {/* <ImageUploader onUploaded={onUploaded} /> */}
                     <button >Signup</button>
                 </form>}
