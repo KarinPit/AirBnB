@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import ScrollMenu from "./ScrollMenu";
-import { LeftArrowIcon, RightArrowIcon } from "../services/svg.service";
-import { fetchImages } from "../services/data.service";
+import ScrollMenu from "../Stay/ScrollMenu";
+import { LeftArrowIcon, RightArrowIcon } from "../../services/svg.service";
+import { fetchImages } from "../../services/data.service";
 
 export default function FilterCategories({ onSetFilter, filterBy }) {
   const [images, setImages] = useState([]);

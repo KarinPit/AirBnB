@@ -1,8 +1,8 @@
 import React from "react";
 import Slider from "react-slick";
 
-import NextArrow from "../../public/arrow-right.svg";
-import PrevArrow from "../../public/arrow-left.svg";
+import NextArrow from "../../../public/svg/arrow-right.svg";
+import PrevArrow from "../../../public/svg/arrow-left.svg";
 
 export function ImageCarousel({ stay, showArrows }) {
   function SampleNextArrow(props) {

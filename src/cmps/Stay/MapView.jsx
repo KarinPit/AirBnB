@@ -1,7 +1,7 @@
 import React from 'react';
 import GoogleMapReact from 'google-map-react';
 
-import MapMarker from "../../public/MapMarker.svg";
+import MapMarker from "../../../public/svg/MapMarker.svg";
 
 
 const AnyReactComponent = ({ text }) =>

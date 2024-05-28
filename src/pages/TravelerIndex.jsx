@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from "react-redux"
 
-import { StayList } from '../cmps/StayList';
+import { StayList } from '../cmps/Stay/StayList';
 
 
 /*

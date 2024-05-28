@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import FilterStay from "../../cmps/FilterStay";
+import FilterStay from "../../cmps/Header/FilterStay";
 import Logo from "/svg/logo.svg";
 import Language from "/svg/language.svg";
 

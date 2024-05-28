@@ -2,7 +2,7 @@ const apiKey = "AIzaSyAo00XuaGr2OWB--LgTPyCAUxA7krfvbYg";
 import React, { useState, useEffect } from "react";
 import GoogleMapReact from "google-map-react";
 import { useFormikContext } from "formik";
-import { CurrentLocationIcon } from "../services/svg.service";
+import { CurrentLocationIcon } from "../../services/svg.service";
 
 const AnyReactComponent = () => (
   <div

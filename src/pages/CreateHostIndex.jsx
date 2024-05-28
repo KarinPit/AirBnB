@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-import { Steppers } from "../cmps/Steppers";
+import { Steppers } from "../cmps/Stay/Steppers";
 import IntroStep1 from "../cmps/CreateHost/IntroStep1";
 import CreateHostHeader from "../cmps/Header/CreateHostHeader";
 import DescribeStep2 from "../cmps/CreateHost/DescribeStep2";

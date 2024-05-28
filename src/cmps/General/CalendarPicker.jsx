@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { addMonths, subMonths, format, startOfDay, startOfWeek, addDays, isSameDay, isBefore, isWithinInterval, endOfDay, isAfter } from 'date-fns';
 
-import RightArrowIcon from "../../public/arrow-right-black.svg";
-import leftArrowIcon from "../../public/arrow-left-black.svg"
+import RightArrowIcon from "../../../public/svg/arrow-right-black.svg";
+import leftArrowIcon from "../../../public/svg/arrow-left-black.svg"
 
 export function CalendarPicker() {
   const [currentDate, setCurrentDate] = useState(new Date());

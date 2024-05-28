@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
-import FilterCategories from "../cmps/FilterCategories";
+import FilterCategories from "../cmps/Filters/FilterCategories";
 import { stayService } from "../services/stay.service.local";
 import { loadStays, setFilterBy } from "../store/actions/stay.actions";
-import AdvancedFilter from "../cmps/AdvancedFilter";
-import { StayList } from "../cmps/StayList";
+import AdvancedFilter from "../cmps/Filters/AdvancedFilter";
+import { StayList } from "../cmps/Stay/StayList";
 import { useEffectUpdate } from "../customHooks/useEffectUpdate";
 
 /*

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 
-import { StayDetails } from "../cmps/StayDetails";
+import { StayDetails } from "../cmps/Stay/StayDetails";
 /*
 TO DO:
   // StayEdit - make it super easy to add Stay for development

@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormikContext } from "formik";
-import { ImgUploader } from "../../cmps/ImgUploader";
+import { ImgUploader } from "../General/ImgUploader";
 
 export default function ImagesStep6() {
   const { values, setFieldValue } = useFormikContext();

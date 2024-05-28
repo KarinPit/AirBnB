@@ -1,6 +1,6 @@
 import React from "react";
 
-import Map from "../../cmps/Map";
+import Map from "../General/Map";
 
 export default function LocationStep4() {
   return (
