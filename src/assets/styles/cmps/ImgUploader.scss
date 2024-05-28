@@ -1,0 +1,50 @@
+.upload-preview {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .upload-item {
+    border-radius: 12px;
+    margin: 5px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+  
+  .upload-button {
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    border: 1px dashed rgb(106, 106, 106);
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: rem(14px);
+    color: #999;
+    cursor: pointer;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+    span {
+      margin-top: em(10px);
+    }
+  }
+  
+  .upload-button:hover {
+    border: 2px solid rgb(106, 106, 106);
+  }
+  
+  .upload-image {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+  }
+  
+  .first-upload {
+    grid-column: 1 / 3;
+    img {
+    width: 100%;
+    height: 420px;
+    object-fit: contain;
+  }
+}
