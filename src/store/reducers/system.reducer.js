@@ -1,18 +1,16 @@
-export const SET_IS_LOADING = "SET_IS_LOADING";
-export const SET_USER_TYPE = "SET_USER_TYPE";
+export const LOADING_START = 'LOADING_START'
+export const LOADING_DONE = 'LOADING_DONE'
 
 const initialState = {
-  isLoading: false,
-  userType: "STAYER",
+  isLoading: false
 };
 
 export function systemReducer(state = initialState, action = {}) {
   switch (action.type) {
-    case SET_IS_LOADING:
-      return { ...state, isLoading: action.isLoading };
-    case SET_USER_TYPE:
-      return { ...state, userType: action.userType };
-    default:
-      return state;
+    case LOADING_START:
+      return { ...state, isLoading: true }
+    case LOADING_DONE:
+      return { ...state, isLoading: false }
+    default: return state
   }
 }
