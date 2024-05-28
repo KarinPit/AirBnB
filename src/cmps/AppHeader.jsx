@@ -7,6 +7,7 @@ import { login, logout, signup } from '../store/actions/user.actions.js'
 import { LoginSignup } from './LoginSignup.jsx'
 import { utilService } from "../services/util.service.js"
 import FilterStay from "./FilterStay"
+import MinimizedFilterStay from "./MinimizeFilterStay"
 
 import Logo from "/svg/logo.svg"
 import Language from "/svg/language.svg"
