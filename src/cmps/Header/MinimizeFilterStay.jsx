@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../assets/styles/main.scss';
+import '../../assets/styles/main.scss';
 
 
 export default function MinimizedFilterStay() {

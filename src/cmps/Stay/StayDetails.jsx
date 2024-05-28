@@ -1,24 +1,24 @@
 import { useEffect, useRef, useState } from "react"
 
-import { stayService } from "../services/stay.service.local"
-import { OrderSideBar } from "./OrderSideBar"
-import { CalendarPicker } from "./CalendarPicker"
-import { MapView } from "./MapView"
+import { stayService } from "../../services/stay.service.local"
+import { OrderSideBar } from "../Stay/OrderSideBar"
+import { CalendarPicker } from "../General/CalendarPicker"
+import { MapView } from "../Stay/MapView"
 
-import saveIcon from "../../public/heart-b&w.svg"
-import shareIcon from "../../public/share.svg"
-import StarIcon from "../../public/star.svg"
-import profileImg from "../../public/Albert.jpg"
-import doorIcon from "../../public/door.svg"
-import medalIcon from "../../public/medal.svg"
-import pawIcon from "../../public/paw.svg"
-import rightArrow from "../../public/arrow-right-black.svg"
-import chatBoxIcon from "../../public/chat-box.svg"
-import CheckCircleIcon from "../../public/check-circle.svg"
-import KeyIcon from "../../public/key.svg"
-import mapIcon from "../../public/map.svg"
-import priceTagIcon from "../../public/price-tag.svg"
-import sprayerIcon from "../../public/sprayer.svg"
+import profileImg from "../../../public/Albert.jpg"
+import saveIcon from "../../../public/svg/heart-b&w.svg"
+import shareIcon from "../../../public/svg/share.svg"
+import StarIcon from "../../../public/svg/star.svg"
+import doorIcon from "../../../public/svg/door.svg"
+import medalIcon from "../../../public/svg/medal.svg"
+import pawIcon from "../../../public/svg/paw.svg"
+import rightArrow from "../../../public/svg/arrow-right-black.svg"
+import chatBoxIcon from "../../../public/svg/chat-box.svg"
+import CheckCircleIcon from "../../../public/svg/check-circle.svg"
+import KeyIcon from "../../../public/svg/key.svg"
+import mapIcon from "../../../public/svg/map.svg"
+import priceTagIcon from "../../../public/svg/price-tag.svg"
+import sprayerIcon from "../../../public/svg/sprayer.svg"
 
 
 export function StayDetails({ stayId }) {
@@ -28,20 +28,20 @@ export function StayDetails({ stayId }) {
 
     const stayAmenities = {
         amenities: [
-            { name: 'Garden view', icon: "../../public/flower.svg"},
-            { name: 'Shared beach access – Beachfront', icon: "../../public/sunset.svg"},
-            { name: 'Wifi', icon: "../../public/wifi.svg" },
-            { name: 'Free parking on premises', icon: "../../public/car.svg" },
-            { name: 'Carbon monoxide alarm', icon: "../../public/paw.svg", strike: true },
-            { name: 'Sea view', icon: "../../public/sunset.svg" },
-            { name: 'Kitchen', icon: "../../public/kitchen-utensil.svg" },
-            { name: 'Dedicated workspace', icon: "../../public/paw.svg" },
-            { name: 'TV', icon: "../../public/tv.svg" },
-            { name: 'Smoking allowed', icon: "../../public/smoking.svg" },
-            { name: 'Pets allowed', icon: "../../public/paw.svg" },
-            { name: 'Cooking basics', icon: "../../public/kitchen-utensil.svg" },
-            { name: 'Private hot tub - available all year', icon: "../../public/paw.svg" },
-            { name: 'Smoke alarm', icon: "../../public/paw.svg", strike: true },
+            { name: 'Garden view', icon: "../../../public/svg/flower.svg"},
+            { name: 'Shared beach access – Beachfront', icon: "../../../public/svg/sunset.svg"},
+            { name: 'Wifi', icon: "../../../public/svg/wifi.svg" },
+            { name: 'Free parking on premises', icon: "../../../public/svg/car.svg" },
+            { name: 'Carbon monoxide alarm', icon: "../../../public/svg/paw.svg", strike: true },
+            { name: 'Sea view', icon: "../../../public/svg/sunset.svg" },
+            { name: 'Kitchen', icon: "../../../public/svg/kitchen-utensil.svg" },
+            { name: 'Dedicated workspace', icon: "../../../public/svg/paw.svg" },
+            { name: 'TV', icon: "../../../public/svg/tv.svg" },
+            { name: 'Smoking allowed', icon: "../../../public/svg/smoking.svg" },
+            { name: 'Pets allowed', icon: "../../../public/svg/paw.svg" },
+            { name: 'Cooking basics', icon: "../../../public/svg/kitchen-utensil.svg" },
+            { name: 'Private hot tub - available all year', icon: "../../../public/svg/paw.svg" },
+            { name: 'Smoke alarm', icon: "../../../public/svg/paw.svg", strike: true },
         ]
     }
 

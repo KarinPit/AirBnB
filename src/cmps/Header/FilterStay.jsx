@@ -1,16 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { setFilterBy, loadStays } from '../store/actions/stay.actions';
-import { useEffectUpdate } from '../customHooks/useEffectUpdate';
+import { setFilterBy, loadStays } from '../../store/actions/stay.actions';
+import { useEffectUpdate } from '../../customHooks/useEffectUpdate';
 
 
 import DatePicker from 'react-datepicker';
-import GuestPicker from './GuestPicker'; // Import the new component
+import GuestPicker from '../Header/GuestPicker'; // Import the new component
 
-import {stayService} from "../services/stay.service.local"
+import {stayService} from "../../services/stay.service.local"
 
 import 'react-datepicker/dist/react-datepicker.css';
-import '../assets/styles/main.scss';
+import '../../assets/styles/main.scss';
 
 const FilterStay = ({ isMinimize }) => {
   const regions = [

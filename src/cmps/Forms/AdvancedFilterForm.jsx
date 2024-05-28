@@ -2,8 +2,8 @@ import React from "react";
 
 import { useFormikContext } from "formik";
 
-import { PriceRange } from "../PriceRange";
-import ButtonGroup from "../ButtonsGroup";
+import { PriceRange } from "../Stay/PriceRange";
+import ButtonGroup from "../General/ButtonsGroup";
 import CardSelectList from "../CardSelect/CardSelectList";
 import {
   Amenities,

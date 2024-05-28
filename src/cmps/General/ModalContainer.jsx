@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CloseIcon } from "../services/svg.service";
+import { CloseIcon } from "../../services/svg.service";
 
 export default function ModalContainer({
   children,

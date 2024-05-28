@@ -3,7 +3,7 @@ import { useFormikContext } from "formik";
 
 import { MultiRangeSlider } from "./MultiRangeSlider";
 import MultiRangeInputs from "./MultiRangeInputs";
-import { stayService } from "../services/stay.service.local";
+import { stayService } from "../../services/stay.service.local";
 
 export function PriceRange() {
   const { setFieldValue, values } = useFormikContext();

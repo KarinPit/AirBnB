@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 import { ImageCarousel } from "./ImageCarousel";
 
-import starIcon from "../../public/star.svg";
-import heartIcon from "../../public/heart.svg";
+import starIcon from "../../../public/svg/star.svg";
+import heartIcon from "../../../public/svg/heart.svg";
 
 export function StayPreview({ stay }) {
   const [showArrows, setShowArrows] = useState(false);

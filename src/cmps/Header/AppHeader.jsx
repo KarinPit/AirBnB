@@ -2,17 +2,17 @@ import { useState, useEffect, useRef } from "react"
 import { NavLink, useLocation } from "react-router-dom"
 import { useSelector } from 'react-redux'
 
-import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
-import { login, logout, signup } from '../store/actions/user.actions.js'
+import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service.js'
+import { login, logout, signup } from '../../store/actions/user.actions.js'
 import { LoginSignup } from './LoginSignup.jsx'
-import { utilService } from "../services/util.service.js"
-import FilterStay from "./FilterStay"
-import MinimizedFilterStay from "./MinimizeFilterStay"
+import { utilService } from "../../services/util.service.js"
+import FilterStay from "./FilterStay.jsx"
+import MinimizedFilterStay from "./MinimizeFilterStay.jsx"
 
 import Logo from "/svg/logo.svg"
 import Language from "/svg/language.svg"
-import LineMenu from "/menu.svg"
-import ProfileIcon from "/profile.svg"
+import LineMenu from "/svg/menu.svg"
+import ProfileIcon from "/svg/profile.svg"
 
 export function AppHeader({ location }) {
   const [showAccMenu, setshowAccMenu] = useState(false)
@@ -84,9 +84,8 @@ export function AppHeader({ location }) {
         </div>
 
         <div
-          className={`filter-row ${
-            location === "/" ? "hide-filter" : "minimized-filter"
-          }`}
+          className={`filter-row ${location === "/" ? "hide-filter" : "minimized-filter"
+            }`}
         >
           <MinimizedFilterStay />
         </div>
