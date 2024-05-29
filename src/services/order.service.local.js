@@ -2,6 +2,7 @@
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
+import { dummyStays, dummyorders } from "../demoData/index.js";
 
 const STORAGE_KEY = 'order'
 
@@ -10,20 +11,21 @@ export const orderService = {
     getById,
     save,
     remove,
-    addorderMsg
+    addorderMsg,
 }
 window.cs = orderService
 
+_createOrders()
 
-async function query(filterBy = { txt: '', price: 0 }) {
+async function query() {
     var orders = await storageService.query(STORAGE_KEY)
-    if (filterBy.txt) {
-        const regex = new RegExp(filterBy.txt, 'i')
-        orders = orders.filter(order => regex.test(order.vendor) || regex.test(order.description))
-    }
-    if (filterBy.price) {
-        orders = orders.filter(order => order.price <= filterBy.price)
-    }
+    // if (filterBy.txt) {
+    //     const regex = new RegExp(filterBy.txt, 'i')
+    //     orders = orders.filter(order => regex.test(order.vendor) || regex.test(order.description))
+    // }
+    // if (filterBy.price) {
+    //     orders = orders.filter(order => order.price <= filterBy.price)
+    // }
     return orders
 }
 
@@ -62,6 +64,14 @@ async function addorderMsg(orderId, txt) {
     await storageService.put(STORAGE_KEY, order)
 
     return msg
+}
+
+function _createOrders() {
+    let orders = utilService.loadFromStorage(STORAGE_KEY);
+    if (!orders || !orders.length) {
+        orders = dummyorders;
+        utilService.saveToStorage(STORAGE_KEY, orders);
+    }
 }
 
 

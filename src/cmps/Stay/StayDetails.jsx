@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadStay } from '../../store/actions/stay.actions';
 
 import { stayService } from "../../services/stay.service.local"
-import { OrderSideBar } from "../Stay/OrderSideBar"
+import { OrderSideBar } from "./OrderSideBar"
 import { CalendarPicker } from "../General/CalendarPicker"
-import { MapView } from "../Stay/MapView"
+import { MapView } from "./MapView"
 
 import profileImg from "../../../public/Albert.jpg"
 import saveIcon from "../../../public/svg/heart-b&w.svg"
@@ -20,30 +22,10 @@ import mapIcon from "../../../public/svg/map.svg"
 import priceTagIcon from "../../../public/svg/price-tag.svg"
 import sprayerIcon from "../../../public/svg/sprayer.svg"
 
-
 export function StayDetails({ stayId }) {
-    const [stay, setStay] = useState(null)
-    const stickyRef = useRef(null)
-    const stopPointRef = useRef(null)
-
-    const stayAmenities = {
-        amenities: [
-            { name: 'Garden view', icon: "../../../public/svg/flower.svg"},
-            { name: 'Shared beach access – Beachfront', icon: "../../../public/svg/sunset.svg"},
-            { name: 'Wifi', icon: "../../../public/svg/wifi.svg" },
-            { name: 'Free parking on premises', icon: "../../../public/svg/car.svg" },
-            { name: 'Carbon monoxide alarm', icon: "../../../public/svg/paw.svg", strike: true },
-            { name: 'Sea view', icon: "../../../public/svg/sunset.svg" },
-            { name: 'Kitchen', icon: "../../../public/svg/kitchen-utensil.svg" },
-            { name: 'Dedicated workspace', icon: "../../../public/svg/paw.svg" },
-            { name: 'TV', icon: "../../../public/svg/tv.svg" },
-            { name: 'Smoking allowed', icon: "../../../public/svg/smoking.svg" },
-            { name: 'Pets allowed', icon: "../../../public/svg/paw.svg" },
-            { name: 'Cooking basics', icon: "../../../public/svg/kitchen-utensil.svg" },
-            { name: 'Private hot tub - available all year', icon: "../../../public/svg/paw.svg" },
-            { name: 'Smoke alarm', icon: "../../../public/svg/paw.svg", strike: true },
-        ]
-    }
+    const stay = useSelector(storeState => storeState.stayModule.stay);
+    const isLoading = useSelector(storeState => storeState.stayModule.isLoading);
+    const dispatch = useDispatch();
 
     const reviews = {
         overall: 3.0,
@@ -136,21 +118,30 @@ export function StayDetails({ stayId }) {
         }
     }
 
-    useEffect(() => {
-        if (stayId) loadStay()
-
-        return () => {
-        }
-    }, [])
-
-    async function loadStay() {
-        try {
-            const stay = await stayService.getById(stayId)
-            setStay(stay)
-        } catch (err) {
-            console.log('Had issues loading the stay', err)
-        }
+    const stayAmenities = {
+        amenities: [
+            { name: 'Garden view', icon: "../../public/svg/flower.svg" },
+            { name: 'Shared beach access – Beachfront', icon: "../../public/svg/sunset.svg" },
+            { name: 'Wifi', icon: "../../public/svg/wifi.svg" },
+            { name: 'Free parking on premises', icon: "../../public/svg/car.svg" },
+            { name: 'Carbon monoxide alarm', icon: "../../public/svg/paw.svg", strike: true },
+            { name: 'Sea view', icon: "../../public/svg/sunset.svg" },
+            { name: 'Kitchen', icon: "../../public/svg/kitchen-utensil.svg" },
+            { name: 'Dedicated workspace', icon: "../../public/svg/paw.svg" },
+            { name: 'TV', icon: "../../public/svg/tv.svg" },
+            { name: 'Smoking allowed', icon: "../../public/svg/smoking.svg" },
+            { name: 'Pets allowed', icon: "../../public/svg/paw.svg" },
+            { name: 'Cooking basics', icon: "../../public/svg/kitchen-utensil.svg" },
+            { name: 'Private hot tub - available all year', icon: "../../public/svg/paw.svg" },
+            { name: 'Smoke alarm', icon: "../../public/svg/paw.svg", strike: true },
+        ]
     }
+
+    useEffect(() => {
+        if (stayId) {
+            loadStay(stayId)
+        }
+    }, [dispatch, stayId]);
 
     function handleScroll() {
         const stickyElement = stickyRef.current;
@@ -167,7 +158,8 @@ export function StayDetails({ stayId }) {
         }
     }
 
-    if (!stay) return <div>Loading..</div>
+    if (isLoading || !stay) return <div>Loading...</div>;
+
     return (
         <>
             <div className="stay-header">
@@ -278,7 +270,7 @@ export function StayDetails({ stayId }) {
                                             if (idx < 10) {
                                                 let amenityIcon = stayAmenities.amenities.find(a => a.name === amenity)
                                                 return (<div className="offer" key={idx}>
-                                                    <img src={amenityIcon.icon}></img>
+                                                    {amenityIcon && <img src={amenityIcon.icon}></img>}
                                                     <p>{amenity}</p>
                                                 </div>)
                                             }
@@ -309,7 +301,7 @@ export function StayDetails({ stayId }) {
                                 <div className="rating-title">Overall rating</div>
                                 <div className="rating-bars">
                                     {Array.from({ length: 5 }, (_, i) => (
-                                        <div key={i}  className="bar">
+                                        <div key={i} className="bar">
                                             <p>{i + 1}</p>
                                             <div className={`rating-bar ${i < reviews.overall ? 'filled' : ''}`}></div>
                                         </div>
@@ -475,3 +467,26 @@ export function StayDetails({ stayId }) {
         </>
     )
 }
+
+
+//     useEffect(() => {
+//         if (stayId) loadStay()
+
+//         return () => {
+//         }
+//     }, [])
+
+//     async function loadStay() {
+//         try {
+//             const stay = await stayService.getById(stayId)
+//             setStay(stay)
+//         } catch (err) {
+//             console.log('Had issues loading the stay', err)
+//         }
+//     }
+
+
+
+//     if (!stay) return <div>Loading..</div>
+
+// }
