@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loadOrders } from '../store/actions/order.actions'
+import { loadOrders, updateOrder } from '../store/actions/order.actions'
 
 
 
@@ -14,14 +14,15 @@ export default function RenterIndex() {
     loadOrders()
   }, [])
 
-  const handleStatusChange = (index, newStatus) => {
-    const updatedOrders = orders.map((order, i) =>
-      i === index ? { ...order, status: newStatus, action: newStatus } : order
-    );
-    // Update the orders in your state or dispatch an action to update the store
-    // setOrders(updatedOrders); // if using local state
-  };
-
+  async function onUpdateOrder(order, status) {
+    console.log(order);
+    const orderToSave = { ...order, status }
+    try {
+      const savedOrder = await updateOrder(orderToSave)
+    } catch (err) {
+      console.log('Cannot update car')
+    }
+  }
   return (
     <div className="reservations">
       <h2>Reservations</h2>
@@ -40,9 +41,9 @@ export default function RenterIndex() {
         </thead>
         <tbody>
           {orders && orders.map((order, index) => {
-            if (order.hostId !== user._id) return null; // Only show orders for the current user
+            if (order.hostId !== user._id) return null; 
             return (
-              <tr key={order.id || index}>
+              <tr key={order._id || index}>
                 <td className={`status-${order.status.toLowerCase()}`}>{String(order.status)}</td>
                 <td>{`Adults ${order.guests.adults} Kids: ${order.guests.kids}`}</td>
                 <td>{order.startDate}</td>
@@ -54,7 +55,7 @@ export default function RenterIndex() {
                   {order.status === 'pending' ? (
                     <select
                       value={order.status}
-                      onChange={(e) => handleStatusChange(index, e.target.value)}
+                      onChange={(e) => onUpdateOrder(order, e.target.value)}
                     >
                       <option value="Pending">Pending</option>
                       <option value="Approved">Approved</option>
