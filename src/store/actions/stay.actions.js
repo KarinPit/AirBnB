@@ -4,6 +4,7 @@ import { store } from "../store.js";
 import { showErrorMsg } from "../../services/event-bus.service.js";
 import {
   SET_STAYS,
+  SET_STAY,
   REMOVE_STAY,
   SET_FILTER_BY,
   ADD_STAY,
@@ -49,12 +50,15 @@ export async function saveStay(stay) {
 }
 
 export async function loadStay(stayId) {
+  store.dispatch({ type: SET_IS_LOADING, isLoading: true });
   try {
-    const res = await stayService.getById(stayId);
-    store.dispatch({ type: ADD_STAY, res });
+    const stay = await stayService.getById(stayId);
+    store.dispatch({ type: SET_STAY, stay });
   } catch (err) {
     showErrorMsg("Cannot load stay");
     console.error("Cannot load stay", err);
+  } finally {
+    store.dispatch({ type: SET_IS_LOADING, isLoading: false });
   }
 }
 
@@ -63,7 +67,7 @@ export function setFilterBy(fieldsToUpdate) {
 }
 
 export async function getTotalStaysFiltered(filterBy) {
-  const total = await stayService.getTotalFiltered( filterBy);
+  const total = await stayService.getTotalFiltered(filterBy);
   store.dispatch({ type: GET_TOTAL_STAYS_FILTERED, total });
 }
 

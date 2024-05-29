@@ -47,7 +47,7 @@ export function StayPreview({ stay }) {
 
         <div className="rate">
           <img src={starIcon}></img>
-          <p>{stay.reviews?.[0].rate.toFixed(1)}</p>
+          <p>{stay.reviews?.[0].moreRate.accuracy.toFixed(1)}</p>
         </div>
       </div>
     </>

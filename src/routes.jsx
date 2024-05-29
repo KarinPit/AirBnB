@@ -1,4 +1,4 @@
-import React, { Fragment, Suspense } from "react";
+import React, { Children, Fragment, Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import { AuthGuard } from "./guards/AuthGuard";
@@ -9,6 +9,7 @@ import { CreateHostLayout } from "./layouts/CreateHostLayout";
 const StaysIndex = React.lazy(() => import("./pages/StaysIndex"));
 const StayIndex = React.lazy(() => import("./pages/StayIndex"));
 const RenterIndex = React.lazy(() => import("./pages/RenterIndex"));
+const BuyerIndex = React.lazy(() => import("./pages/TravelerIndex"));
 const CreateHostIndex = React.lazy(() => import("./pages/CreateHostIndex"));
 
 const routes = [
@@ -29,6 +30,23 @@ const routes = [
       },
     ],
     key: "home",
+  },
+  {
+    path: "/profile",
+    element: <MainStayerLayout />,
+    children: [
+      {
+        key: "renter-profile",
+        path: "renter/:renterId",
+        element: <RenterIndex />
+      },
+      {
+        key: "buyer-profile",
+        path: "buyer/:buyerId",
+        element: <BuyerIndex />
+      }
+    ],
+    key: "profile",
   },
   {
     path: "/host",

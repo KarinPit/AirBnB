@@ -46,7 +46,7 @@ export function ImageCarousel({ stay, showArrows }) {
   return (
     <Slider {...settings} className="slides">
       {stay.imgUrls.map((image) => (
-        <div className="slide" key={stay._id}>
+        <div className="slide" key={stay.host._id}>
           <img src={image}></img>
         </div>
       ))}
