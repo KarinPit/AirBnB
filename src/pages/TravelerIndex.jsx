@@ -14,13 +14,6 @@ export default function TravelerIndex() {
     loadOrders()
   }, [])
 
-  const handleStatusChange = (index, newStatus) => {
-    const updatedOrders = orders.map((order, i) =>
-      i === index ? { ...order, status: newStatus, action: newStatus } : order
-    );
-    // Update the orders in your state or dispatch an action to update the store
-    // setOrders(updatedOrders); // if using local state
-  };
 
   return (
     <div className="reservations">
@@ -35,14 +28,14 @@ export default function TravelerIndex() {
             <th>Booked</th>
             <th>Listing</th>
             <th>Total Payout</th>
-            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {orders && orders.map((order, index) => {
+            console.log(order.buyer._id, user._id);
             if (order.buyer._id !== user._id) return null; // Only show orders for the current user
             return (
-              <tr key={order.id || index}>
+              <tr key={order._id || index}>
                 <td className={`status-${order.status.toLowerCase()}`}>{String(order.status)}</td>
                 <td>{`Adults ${order.guests.adults} Kids: ${order.guests.kids}`}</td>
                 <td>{order.startDate}</td>
@@ -50,20 +43,6 @@ export default function TravelerIndex() {
                 <td>{order.stay.name}</td>
                 <td>{order.totalPrice}</td>
                 <td>{order.totalPrice}</td>
-                <td>
-                  {order.status === 'pending' ? (
-                    <select
-                      value={order.status}
-                      onChange={(e) => handleStatusChange(index, e.target.value)}
-                    >
-                      <option value="Pending">Pending</option>
-                      <option value="Approved">Approved</option>
-                      <option value="Declined">Declined</option>
-                    </select>
-                  ) : (
-                    order.status
-                  )}
-                </td>
               </tr>
             );
           })}
@@ -82,6 +61,8 @@ export default function TravelerIndex() {
       </div>
     </div>
   )
-}
+};
+
+
 
 {/* <td className={`${order.action === 'Declined' || order.action === 'Approved' ? 'disabled' : ''}`}>{order.action}</td> */ }

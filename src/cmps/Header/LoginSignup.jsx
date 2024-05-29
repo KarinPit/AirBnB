@@ -3,7 +3,7 @@ import { userService } from '../../services/user.service'
 import { ImageUploader } from '../../cmps/General/ImageUploader'
 
 export function LoginSignup(props) {
-    const [credentials, setCredentials] = useState({ username: '', password: '', fullname: '', userType: '' })
+    const [credentials, setCredentials] = useState({ username: '', password: '', fullname: '' })
     const [isSignup, setIsSignup] = useState(false)
     const [users, setUsers] = useState([])
 
@@ -17,7 +17,7 @@ export function LoginSignup(props) {
     }
 
     function clearState() {
-        setCredentials({ username: '', password: '', fullname: '', userType: 'buyer', imgUrl: '' })
+        setCredentials({ username: '', password: '', fullname: '', imgUrl: '' })
         setIsSignup(false)
     }
 
@@ -36,7 +36,7 @@ export function LoginSignup(props) {
 
     function onSignup(ev = null) {
         if (ev) ev.preventDefault()
-        if (!credentials.username || !credentials.password || !credentials.fullname || !credentials.userType) return
+        if (!credentials.username || !credentials.password || !credentials.fullname) return
         props.onSignup(credentials)
         clearState()
     }
@@ -90,7 +90,7 @@ export function LoginSignup(props) {
                         onChange={handleChange}
                         required
                     />
-                    <select
+                    {/* <select
                         name="userType"
                         value={credentials.userType}
                         onChange={handleChange}
@@ -98,7 +98,7 @@ export function LoginSignup(props) {
                         <option value="">Select User Type</option>
                         <option value="buyer">Buyer</option>
                         <option value="seller">Seller</option>
-                    </select>
+                    </select> */}
                     {/* <ImageUploader onUploaded={onUploaded} /> */}
                     <button >Signup</button>
                 </form>}
