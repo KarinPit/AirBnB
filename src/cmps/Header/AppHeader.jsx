@@ -127,7 +127,9 @@ export function AppHeader({ location }) {
               {user && showAccMenu &&
                 <div className="acc-modal" ref={accMenuRef}>
                   <div className="user-options">
-                    <button>Account</button>
+                    <NavLink to={`/profile/buyer/${user._id}`}>
+                      <button>Account</button>
+                    </NavLink>
                   </div>
                   <div className="extra-options">
                     <button>Airbnb your home</button>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadStay } from '../../store/actions/stay.actions';
+import { updateCurrentOrder } from '../../store/actions/order.actions'
 
 import { stayService } from "../../services/stay.service.local"
 import { OrderSideBar } from "./OrderSideBar"
@@ -23,6 +24,7 @@ import priceTagIcon from "../../../public/svg/price-tag.svg"
 import sprayerIcon from "../../../public/svg/sprayer.svg"
 
 export function StayDetails({ stayId }) {
+    const currentOrder = useSelector(storeState => storeState.orderModule.currentOrder)
     const stay = useSelector(storeState => storeState.stayModule.stay);
     const isLoading = useSelector(storeState => storeState.stayModule.isLoading);
     const dispatch = useDispatch();
@@ -140,6 +142,8 @@ export function StayDetails({ stayId }) {
     useEffect(() => {
         if (stayId) {
             loadStay(stayId)
+            const orderToSave = { ...currentOrder, stayId: stayId}
+            updateCurrentOrder(orderToSave)
         }
     }, [dispatch, stayId]);
 

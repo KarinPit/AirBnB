@@ -9,6 +9,7 @@ export const SET_FILTER_BY = "SET_FILTER_BY";
 export const SET_IS_LOADING = "SET_IS_LOADING";
 export const GET_TOTAL_STAYS_FILTERED = "GET_TOTAL_STAYS_FILTERED";
 
+
 const initialState = {
   stays: [],
   stay: null,
@@ -39,7 +40,6 @@ export function stayReducer(state = initialState, action) {
           stay.id === action.stay.id ? action.stay : stay
         ),
       };
-
     case REMOVE_STAY:
       return {
         ...state,

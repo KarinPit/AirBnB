@@ -7,7 +7,6 @@ import { loadOrders, updateOrder } from '../store/actions/order.actions'
 export default function RenterIndex() {
   const user = useSelector(storeState => storeState.userModule.user);
   const orders = useSelector(storeState => storeState.orderModule.orders)
-  const dispatch = useDispatch()
 
 
   useEffect(() => {
@@ -15,7 +14,6 @@ export default function RenterIndex() {
   }, [])
 
   async function onUpdateOrder(order, status) {
-    console.log(order);
     const orderToSave = { ...order, status }
     try {
       const savedOrder = await updateOrder(orderToSave)
@@ -23,6 +21,7 @@ export default function RenterIndex() {
       console.log('Cannot update car')
     }
   }
+  
   return (
     <div className="reservations">
       <h2>Reservations</h2>

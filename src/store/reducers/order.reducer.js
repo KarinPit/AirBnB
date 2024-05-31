@@ -9,9 +9,11 @@ export const REMOVE_ORDER = "REMOVE_ORDER";
 export const SET_FILTER_BY = "SET_FILTER_BY";
 export const SET_IS_LOADING = "SET_IS_LOADING";
 export const GET_TOTAL_ORDERS_FILTERED = "GET_TOTAL_ORDERS_FILTERED";
+export const SET_CURRENT_ORDER = "SET_CURRENT_ORDER";
 
 const initialState = {
   orders: [],
+  currentOrder: {},
   isLoading: true,
   totalFiltered: 0,
 }
@@ -35,7 +37,13 @@ export function orderReducer(state = initialState, action) {
         ...state,
         orders: state.orders.filter((order) => order._id !== action.orderId),
       };
-
+      
+    case SET_CURRENT_ORDER:
+      return {
+        ...state,
+        currentOrder: action.order,
+      };
+      
     case SET_FILTER_BY:
       return {
         ...state,

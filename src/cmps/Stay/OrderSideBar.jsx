@@ -1,16 +1,71 @@
-/**
- * This component represents the sidebar book item from the Airbnb website look-alike.
- * It displays information about a book, including a reserve button, price, and price for a night.
- */
+import { useDispatch, useSelector } from 'react-redux';
+import { format, isValid, parse } from 'date-fns';
+import { updateCurrentOrder } from '../../store/actions/order.actions';
+
 export function OrderSideBar({ price }) {
+    const dispatch = useDispatch();
+    const currentOrder = useSelector(storeState => storeState.orderModule.currentOrder);
+
+    function formatDate(type) {
+        const date = currentOrder[type];
+        if (!date || !isValid(new Date(date))) {
+            return ''; // Return an empty string if the date is not set or invalid
+        }
+        return String(format(new Date(date), 'dd.MM.yyyy'));
+    }
+
+    function handleDateChange(event, type) {
+        const value = event.target.value;
+        const parsedDate = parse(value, 'dd.MM.yyyy', new Date());
+        if (isValid(parsedDate)) {
+            const orderToSave = { ...currentOrder, [type]: parsedDate }
+            updateCurrentOrder(orderToSave);
+        } else {
+            const orderToSave = { ...currentOrder, [type]: parsedDate }
+            updateCurrentOrder(orderToSave);
+        }
+    }
+
+    function formatGuests() {
+        const adults = currentOrder.adults
+        const children = currentOrder.children
+        if (adults) {
+            if (children) {
+                const formattedText = `Adults: ${adults} Children: ${children}`
+                return formattedText
+            }
+            else {
+                const formattedText = `Adults: ${adults}`
+                return formattedText
+            }
+        }
+    }
+
+    function handleGuestChange(event) {
+        // const value = event.target.value;
+        console.log('guests changed');
+    }
+
     return (
         <div className="book-it-sidebar">
             <h2>${price} <span>night</span></h2>
 
             <form>
-                <input className="check-in" placeholder="CHECK-IN"></input>
-                <input className="check-out" placeholder="CHECKOUT"></input>
-                <input className="guests" placeholder="GUESTS"></input>
+                <input
+                    className="check-in"
+                    placeholder="CHECK-IN"
+                    value={formatDate('startDate')}
+                    onChange={(e) => handleDateChange(e, 'startDate')}
+                />
+                <input
+                    className="check-out"
+                    placeholder="CHECKOUT"
+                    value={formatDate('endDate')}
+                    onChange={(e) => handleDateChange(e, 'endDate')}
+                />
+                <input className="guests" placeholder="GUESTS"
+                    value={formatGuests()}
+                    onChange={(e) => handleGuestChange(e)} />
             </form>
             <button>Reserve</button>
 

@@ -2,6 +2,7 @@ import React from 'react';
 import GoogleMapReact from 'google-map-react';
 
 import MapMarker from "../../../public/svg/MapMarker.svg";
+// import { apiKey } from "../../config"
 
 
 const AnyReactComponent = ({ text }) =>
@@ -14,6 +15,7 @@ const AnyReactComponent = ({ text }) =>
     </div>;
 
 export function MapView({ location }) {
+    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
 
     const handleApiLoaded = (map, maps) => {
         // use map and maps objects
@@ -33,7 +35,7 @@ export function MapView({ location }) {
             <p>Palmachim, Center District, Israel</p>
             <div style={{ height: '400px', width: '100%' }}>
                 <GoogleMapReact
-                    bootstrapURLKeys={{ key: 'AIzaSyDMl5nCzylGqvy3ogV2cL1CIxCl7X1b0vQ' }}
+                    bootstrapURLKeys={{ key: "AIzaSyDMl5nCzylGqvy3ogV2cL1CIxCl7X1b0vQ" }}
                     defaultCenter={defaultProps.center}
                     defaultZoom={defaultProps.zoom}
                     yesIWantToUseGoogleMapApiInternals

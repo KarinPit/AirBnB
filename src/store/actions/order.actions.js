@@ -12,6 +12,7 @@ import {
     UPDATE_ORDER,
     SET_IS_LOADING,
     GET_TOTAL_ORDERS_FILTERED,
+    SET_CURRENT_ORDER
 } from "../reducers/order.reducer.js";
 
 export async function loadOrders() {
@@ -52,6 +53,19 @@ export function updateOrder(order) {
             console.log('Cannot save order', err);
             throw err;
         });
+}
+
+export function updateCurrentOrder(order) {
+    return orderService.saveCurrentOrder(order)
+        .then(savedOrder => {
+            store.dispatch({ type: SET_CURRENT_ORDER, order });
+            return savedOrder;
+        })
+        .catch(err => {
+            console.log('Cannot save order', err);
+            throw err;
+        });
+
 }
 
 export async function saveOrder(order) {

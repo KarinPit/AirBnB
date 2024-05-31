@@ -7,6 +7,7 @@ import { ImageCarousel } from "./ImageCarousel";
 import starIcon from "../../../public/svg/star.svg";
 import heartIcon from "../../../public/svg/heart.svg";
 
+
 export function StayPreview({ stay }) {
   const [showArrows, setShowArrows] = useState(false);
 
@@ -16,6 +17,10 @@ export function StayPreview({ stay }) {
 
   function handleMouseLeave() {
     setShowArrows(false);
+  }
+
+  function onStayClick() {
+
   }
 
   return (
