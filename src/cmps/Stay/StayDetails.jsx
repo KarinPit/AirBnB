@@ -291,7 +291,8 @@ export function StayDetails({ stayId }) {
                             </div>
                         </div>
                         <div className="order-stay">
-                            <OrderSideBar price={stay.price} />
+                            <OrderSideBar price={stay.price} 
+                                />
                         </div>
                     </div>
 

@@ -1,38 +1,47 @@
-
 .guest-picker-dropdown {
   position: fixed;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   top: 100%;
-  width: auto;
-  height: auto;
   background: white;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 12px 0px;
   border-radius: 16px;
-  padding: 20px;
-  z-index: 1001;
-  .guest-input-container {
-    position: relative;
-    /* Other styles */
-  }
+  padding: 16px 32px 16px 32px;
+  width: 342px;
+  height: 363px;
+  max-width: 100%;
+
   .guest-picker-option {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 24px 4px 24px 0px;
     border-bottom: 1px solid #ddd;
 
     &:last-child {
       border-bottom: none;
     }
 
-    label {
+    .label-container {
       flex-grow: 1;
       margin-right: 10px;
+
+      label {
+        display: block;
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+
+      span {
+        font-size: 12px;
+        color: #888;
+      }
     }
 
     .guest-picker-controls {
       display: flex;
-      justify-content: flex-end;
+      align-items: center;
 
       button {
         padding: 5px 10px;
@@ -54,6 +63,11 @@
           opacity: 0.5;
           cursor: not-allowed;
         }
+      }
+
+      .guest-count {
+        margin: 0 10px;
+        font-size: 16px;
       }
     }
   }

@@ -1,33 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState,useRef} from 'react';
 import { useSelector } from 'react-redux'
 import { updateCurrentOrder } from '../../store/actions/order.actions'
-import { addMonths, subMonths, format, startOfDay, startOfWeek, addDays, isSameDay, isBefore, isWithinInterval, endOfDay, isAfter } from 'date-fns';
+import { addMonths, subMonths, format, startOfDay, startOfWeek, addDays, isSameDay, isBefore, isWithinInterval, endOfDay, isAfter,isValid } from 'date-fns';
 
 import RightArrowIcon from "../../../public/svg/arrow-right-black.svg";
 import leftArrowIcon from "../../../public/svg/arrow-left-black.svg"
 
 
-export function CalendarPicker() {
+export function CalendarPicker({ showCalendarPicker, onChange = (p0) => {} }) 
+{  
   const currentOrder = useSelector(storeState => storeState.orderModule.currentOrder)
   const [currentDate, setCurrentDate] = useState(new Date());
   const [range, setRange] = useState({ start: null, end: null });
   const [hoveredDate, setHoveredDate] = useState(null);
+  const pickerRef = useRef(null);
+
 
   const nextMonthDate = addMonths(currentDate, 1);
+  let calenderPickerClass = showCalendarPicker ? 'calender-picker calender-picker-absolute' : 'calendar-picker';
+  
 
   function onDateClick(day) {
     if (!range.start || (range.start && range.end)) {
-      setRange({ start: day, end: null });
-      const orderToSave = { ...currentOrder, startDate: day }
-      updateCurrentOrder(orderToSave)
+      if (isValid(day)) {
+        setRange({ start: day, end: null });
+        onChange({ start: day, end: null });
+      }
     } else {
-      setRange(prev => ({
-        start: prev.start,
-        end: day < prev.start ? prev.start : day
-      }));
-      const orderToSave = { ...currentOrder, startDate: range.start, endDate: day }
-      updateCurrentOrder(orderToSave)
+      const newRange = {
+        start: range.start,
+        end: day < range.start ? range.start : day
+      };
+      if (isValid(newRange.end)) {
+        setRange(newRange);
+        onChange({ start: newRange.start, end: newRange.end });
+      }
     }
+    // can you please save the range in the store?
+    const orderToSave = { ...currentOrder, range: range }
+    updateCurrentOrder(orderToSave);
   }
 
   function onDateHover(day) {
@@ -151,7 +162,7 @@ export function CalendarPicker() {
 
   return (
     <>
-      <div className='calendar-picker'>
+      <div className={calenderPickerClass}>
         <table className='current-month'>
           <thead>
             <tr className='prev-month-nav'>

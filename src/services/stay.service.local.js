@@ -116,8 +116,8 @@ function applyFilters(stays, filterBy) {
       withinPriceRange(stay) &&
       matchesPropertyType(stay)&&
       matchGuestFavorites(stay)&&
-      filterStaysByExactDates(stay, filterBy.startDate, filterBy.endDate)&&
-      isWithinGuestLimit(stay)
+      filterStaysByExactDates(stay, filterBy.startDate, filterBy.endDate)
+      // isWithinGuestLimit(stay)
     );
 }
 function filterStaysByGuestCount(stay, guestCount) {

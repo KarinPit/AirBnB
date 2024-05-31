@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { format, isValid, parse } from 'date-fns';
 import { updateCurrentOrder } from '../../store/actions/order.actions';
 
-export function OrderSideBar({ price }) {
+export function OrderSideBar({ price,startDate,endDate,adults,children }) {
     const dispatch = useDispatch();
     const currentOrder = useSelector(storeState => storeState.orderModule.currentOrder);
-
+    console.log('currentOrder', currentOrder);
     function formatDate(type) {
         const date = currentOrder[type];
         if (!date || !isValid(new Date(date))) {
@@ -15,6 +15,7 @@ export function OrderSideBar({ price }) {
     }
 
     function handleDateChange(event, type) {
+        console.log('date changed', event.target.value);
         const value = event.target.value;
         const parsedDate = parse(value, 'dd.MM.yyyy', new Date());
         if (isValid(parsedDate)) {
@@ -41,8 +42,10 @@ export function OrderSideBar({ price }) {
         }
     }
 
-    function handleGuestChange(event) {
-        // const value = event.target.value;
+    function handleGuestChange(event,) {
+        const value = event.target.value;
+        const orderToSave = { ...currentOrder, [type]: value }
+        updateCurrentOrder(orderToSave);
         console.log('guests changed');
     }
 
@@ -64,8 +67,8 @@ export function OrderSideBar({ price }) {
                     onChange={(e) => handleDateChange(e, 'endDate')}
                 />
                 <input className="guests" placeholder="GUESTS"
-                    value={formatGuests()}
-                    onChange={(e) => handleGuestChange(e)} />
+                    value={currentOrder.guestCount}
+                    onChange={(e) => handleGuestChange(e,'guestCount')} />
             </form>
             <button>Reserve</button>
 
