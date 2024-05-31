@@ -1,5 +1,6 @@
-// GuestPickerOption.js
-const GuestPicker = ({ label, count, onDecrease, onIncrease, disableDecrease }) => {
+
+export default function GuestPicker({ label, count, onDecrease, onIncrease, disableDecrease }) {
+
   return (
     <div className="guest-picker-option">
       <label>{label}</label>
@@ -9,5 +10,3 @@ const GuestPicker = ({ label, count, onDecrease, onIncrease, disableDecrease }) 
     </div>
   );
 };
-
-export default GuestPicker;

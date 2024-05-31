@@ -5,11 +5,13 @@ import { userService } from './user.service.js'
 import { dummyStays, dummyorders } from "../demoData/index.js";
 
 const STORAGE_KEY = 'order'
+const STORAGE_KEY_CURRENT_ORDER = 'currentOrder'
 
 export const orderService = {
     query,
     getById,
     save,
+    saveCurrentOrder,
     remove,
     addorderMsg,
 }
@@ -46,6 +48,19 @@ async function save(order) {
         // Later, owner is set by the backend
         order.owner = userService.getLoggedinUser()
         savedorder = await storageService.post(STORAGE_KEY, order)
+    }
+    return savedorder
+}
+
+async function saveCurrentOrder(order) {
+    var savedorder
+    console.log(order);
+    if (order._id) {
+        savedorder = await storageService.put(STORAGE_KEY_CURRENT_ORDER, order)
+    } else {
+        // Later, owner is set by the backend
+        order.owner = userService.getLoggedinUser()
+        savedorder = await storageService.post(STORAGE_KEY_CURRENT_ORDER, order)
     }
     return savedorder
 }
