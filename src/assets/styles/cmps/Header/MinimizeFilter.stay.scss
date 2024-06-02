@@ -28,15 +28,18 @@ $border-radius: 32px;
       font-size: 14px;
       font-family: Circular, -apple-system, "system-ui", Roboto, "Helvetica Neue", sans-serif;
       color: $text-color;
+      padding: 0 8px;
         
       &::placeholder {
         color: $border-color;
       }
-      
     }
 
     .option-box {
-        border-left: 1px solid rgb(221, 221, 221);
+      border-left: 1px solid rgb(221, 221, 221);
+      padding: 0 8px; // Adjust padding to match the design
+      display: flex;
+      align-items: center;
     }
 
     &__button {
@@ -54,9 +57,10 @@ $border-radius: 32px;
       cursor: pointer;
       transition: background-color 0.3s;
 
-    //   &:hover {
-    //     background-color: darken($primary-color, 10%);
-    //   }
+      svg {
+        height: 16px; // Adjust icon size to match the design
+        width: 16px; // Adjust icon size to match the design
+      }
     }
 
     &__option {
@@ -64,10 +68,8 @@ $border-radius: 32px;
       font-size: 14px;
       color: $text-color;
       cursor: pointer;
-    
-    //   &:hover {
-    //     color: $primary-color;
-    //   }
+      display: flex;
+      align-items: center; // Ensure items are centered
     }
   }
 

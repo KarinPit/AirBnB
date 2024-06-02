@@ -5,7 +5,11 @@ import { AuthGuard } from "./guards/AuthGuard";
 import MainStayerLayout from "./layouts/MainStayerLayout";
 import MainRenterLayout from "./layouts/MainRenterLayout";
 import { CreateHostLayout } from "./layouts/CreateHostLayout";
+import BookOrderLayout from "./layouts/BookOrderLayout";
 
+
+const OrderIndex = React.lazy(() => import("./pages/OrderIndex"));
+const OrderPage = React.lazy(() => import("./pages/OrderPage"));
 const StaysIndex = React.lazy(() => import("./pages/StaysIndex"));
 const StayIndex = React.lazy(() => import("./pages/StayIndex"));
 const RenterIndex = React.lazy(() => import("./pages/RenterIndex"));
@@ -74,7 +78,24 @@ const routes = [
     ],
     key: "become-host",
   },
-  { path: "*", element: <Navigate to="/" replace />, key: "404" }, // Added key for the 404 route
+  {
+    path: "/order/:stayId",
+    element: <BookOrderLayout />,
+    children: [
+      {
+        key: "order-index",
+        index: true,
+        element: <OrderPage />,
+      },      
+      {
+        key: "order-id",
+        path: ":stayId/order",
+        element: <OrderIndex />,
+      },
+    ],
+    key: "order",
+  },
+  { path: "*", element: <Navigate to="/" replace />, key: "404" },
 ];
 
 export const createRouting = () => {

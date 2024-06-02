@@ -1,74 +1,132 @@
-import { useState, useEffect, useRef } from "react"
-import { NavLink, useLocation } from "react-router-dom"
-import { useSelector } from 'react-redux'
+import { useState, useEffect, useRef } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
-import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service.js'
-import { login, logout, signup } from '../../store/actions/user.actions.js'
-import { LoginSignup } from './LoginSignup.jsx'
-import { utilService } from "../../services/util.service.js"
-import FilterStay from "./FilterStay.jsx"
-import MinimizedFilterStay from "./MinimizeFilterStay.jsx"
+import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service.js';
+import { login, logout, signup } from '../../store/actions/user.actions.js';
+import { LoginSignup } from './LoginSignup.jsx';
+import FilterStay from "./FilterStay.jsx";
+import MinimizedFilterStay from "./MinimizeFilterStay.jsx";
 
-import Logo from "/svg/logo.svg"
-import Language from "/svg/language.svg"
-import LineMenu from "/svg/menu.svg"
-import ProfileIcon from "/svg/profile.svg"
+import Logo from "/svg/logo.svg";
+import Language from "/svg/language.svg";
+import LineMenu from "/svg/menu.svg";
+import ProfileIcon from "/svg/profile.svg";
+import PropTypes from 'prop-types';
+import { set } from "date-fns";
 
 export function AppHeader({ location }) {
-  const [showAccMenu, setshowAccMenu] = useState(false)
-  const user = useSelector(storeState => storeState.userModule.user)
-  const menuRef = useRef(null)
-  const accMenuRef = useRef(null)
+  const [showAccMenu, setshowAccMenu] = useState(false);
+  const [headerSize, setHeaderSize] = useState('normal');
+  const [showFilter, setShowFilter] = useState("");
+  const [showRow, setShowRow] = useState("");
+  const [showMinimized, setShowMinimized] = useState("");
+  const user = useSelector(storeState => storeState.userModule.user);
+  const menuRef = useRef(null);
+  const accMenuRef = useRef(null);
+  // const location = useLocation();
 
+  AppHeader.propTypes = {
+    location: PropTypes.string.isRequired,
+  };
+  let locationProp = location;
+  let locationBool = locationProp.includes('/order/');
+  // how can i set case of includes in switch case
+
+
+
+
+  // please make switch case of the visibility like i did with the ifs
+  // Equivalent switch statement
+  const visibility = () => { 
+    switch (true) {
+      case location === ('/'):
+        console.log('full');
+        setHeaderSize('full');
+        setShowFilter("");
+        setShowRow("");
+        setShowMinimized("hide-filter");
+        break;
+      case locationProp.includes('/order/'):
+        setHeaderSize('compact-header');
+        setShowFilter("hide-filter");
+        setShowRow("hide-filter");
+        setShowMinimized("hide-filter");
+        break;
+      case locationProp.includes('/stay/'):
+        setHeaderSize('compact-header');
+        setShowFilter("hide-filter");
+        setShowRow("");
+        setShowMinimized("");
+        break;
+      default:
+    }
+}
+  // const determineVisibility = () => {
+  //   if (locationProp === '/') {
+  //     setHeaderSize('full');
+  //     setShowFilter("");
+  //     setShowRow("");
+  //     setShowMinimized("hide-filter");
+  //   } else if (locationProp.includes('/order/') || locationProp.includes('/stay/')) {
+  //     setHeaderSize('compact-header');
+  //     setShowFilter("hide-filter");
+  //     setShowRow("");
+  //     setShowMinimized("");
+  //   }
+  // };
+
+  useEffect(() => {
+    // determineVisibility();
+    visibility();
+  }, [location]);
 
   async function onLogin(credentials) {
     try {
-      const user = await login(credentials)
-      showSuccessMsg(`Welcome: ${user.fullname}`)
+      const user = await login(credentials);
+      showSuccessMsg(`Welcome: ${user.fullname}`);
     } catch (err) {
-      showErrorMsg('Cannot login')
+      showErrorMsg('Cannot login');
     }
   }
+
   async function onSignup(credentials) {
     try {
-      const user = await signup(credentials)
-      showSuccessMsg(`Welcome new user: ${user.fullname}`)
+      const user = await signup(credentials);
+      showSuccessMsg(`Welcome new user: ${user.fullname}`);
     } catch (err) {
-      showErrorMsg('Cannot signup')
+      showErrorMsg('Cannot signup');
     }
   }
+
   async function onLogout() {
     try {
-      await logout()
-      showSuccessMsg(`Bye now`)
+      await logout();
+      showSuccessMsg(`Bye now`);
     } catch (err) {
-      showErrorMsg('Cannot logout')
+      showErrorMsg('Cannot logout');
     }
   }
 
   function handleClick(event) {
     if (accMenuRef.current && accMenuRef.current.contains(event.target)) {
-      setshowAccMenu(true)
-    }
-    else if (menuRef.current.contains(event.target)) {
-      setshowAccMenu(prev => !prev)
-    }
-    else {
-      setshowAccMenu(false)
+      setshowAccMenu(true);
+    } else if (menuRef.current.contains(event.target)) {
+      setshowAccMenu(prev => !prev);
+    } else {
+      setshowAccMenu(false);
     }
   }
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClick)
+    document.addEventListener("mousedown", handleClick);
     return () => {
-      document.removeEventListener("mousedown", handleClick)
-    }
-  }, [menuRef, accMenuRef])
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, [menuRef, accMenuRef]);
 
   return (
-    <header
-      className={`app-header ${location === "/" ? "full" : "compact-header"}`}
-    >
+    <header className={`app-header ${headerSize}`}>
       <div className="top-row">
         <NavLink to={"/"}>
           <img className="logo" src={Logo} alt="logo" />
@@ -84,13 +142,12 @@ export function AppHeader({ location }) {
         </div>
 
         <div
-          className={`filter-row ${location === "/" ? "hide-filter" : "minimized-filter"
-            }`}
+          className={`filter-row ${showMinimized}`}
         >
           <MinimizedFilterStay />
         </div>
 
-        <div className="right-row">
+        <div className={`right-row ${showRow}`}>
           <div>
             <NavLink to={"/host/homes"}>
               <button className="btn-dark">Airbnb your home</button>
@@ -142,9 +199,9 @@ export function AppHeader({ location }) {
         </div>
       </div>
 
-      <div className={`filter-row ${location === "/" ? "" : "hide-filter"}`}>
+      <div className={`filter-row ${showFilter}`}>
         <FilterStay />
       </div>
     </header>
-  )
+  );
 }

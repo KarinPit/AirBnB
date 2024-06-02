@@ -7,7 +7,7 @@ import { setFilterBy, loadStays } from '../../store/actions/stay.actions';
 import React from 'react';
 
 
-export function OrderSideBar({ price }) {
+export function OrderDetails({ price }) {
     
     const currentOrder = useSelector(storeState => storeState.orderModule.currentOrder);
     const stay = useSelector(storeState => storeState.stayModule.stay);

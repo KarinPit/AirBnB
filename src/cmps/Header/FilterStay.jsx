@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-
 import { setFilterBy, loadStays } from '../../store/actions/stay.actions';
 import GuestPicker from '../Header/GuestPicker'; 
 import { CalendarPicker } from '../General/CalendarPicker';

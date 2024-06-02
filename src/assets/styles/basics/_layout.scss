@@ -1,73 +1,85 @@
 .main-layout {
-  display: grid;
-  grid-template-columns: minmax(80px, auto) 1fr minmax(80px, auto);
-  grid-template-rows: auto 1fr minmax(80px, auto);
-
-  &.compact-layout {
+    display: grid;
+    grid-template-columns: minmax(80px, auto) 1fr minmax(80px, auto);
+    grid-template-rows: auto 1fr minmax(80px, auto);
+  
+    &.compact-layout {
       grid-template-columns: minmax(80px, auto) minmax(auto, 1120px) minmax(80px, auto);
       padding-inline: 0;
-
-        hr {
-            position: absolute;
-            top: 70px;
-            width: 100%;
-            border-style: solid;
-            border-width: 1px;
-            border-color: rgba(190, 190, 190, 0.15);
-        }
-    }
-
-    main {
-        grid-row: 2;
-        grid-column: 2;
-    }
-
-    .app-header {
-        grid-row: 1;
-        grid-column: 2;
-    }
-
-    .app-footer {
-        grid-row: 3;
-        grid-column: 1/-1;
-    }
-
-    .full {
-        grid-column: 1 /-1;
-    }
-    
-    hr {
+  
+      hr {
         position: absolute;
-        top: 158px;
+        top: 70px;
         width: 100%;
         border-style: solid;
         border-width: 1px;
         border-color: rgba(190, 190, 190, 0.15);
+      }
     }
   
-  @include for-narrow-layout {
-      &.compact-layout {
-          grid-template-columns: minmax(20px, auto) minmax(auto, 1280px) minmax(20px, auto);
-
+    &.order-layout {
+      grid-template-columns: minmax(80px, auto) 1fr 1fr minmax(80px, auto);
+      padding-inline: 0;
+  
+      hr {
+        position: absolute;
+        top: 70px;
+        width: 100%;
+        border-style: solid;
+        border-width: 1px;
+        border-color: rgba(190, 190, 190, 0.15);
       }
-  }
-
-  @include for-normal-layout {
+    }
+  
+    main {
+      grid-row: 2;
+      grid-column: 2;
+    }
+  
+    .app-header {
+      grid-row: 1;
+      grid-column: 2;
+    }
+  
+    .app-footer {
+      grid-row: 3;
+      grid-column: 1/-1;
+    }
+  
+    .full {
+      grid-column: 1 /-1;
+    }
+  
+    hr {
+      position: absolute;
+      top: 158px;
+      width: 100%;
+      border-style: solid;
+      border-width: 1px;
+      border-color: rgba(190, 190, 190, 0.15);
+    }
+  
+    @include for-narrow-layout {
       &.compact-layout {
-          grid-template-columns: minmax(0, auto) minmax(auto, 1280px) minmax(0, auto);
-
+        grid-template-columns: minmax(20px, auto) minmax(auto, 1280px) minmax(20px, auto);
       }
-  }
-
-  @include for-wide-layout {
+    }
+  
+    @include for-normal-layout {
+      &.compact-layout {
+        grid-template-columns: minmax(0, auto) minmax(auto, 1280px) minmax(0, auto);
+      }
+    }    
+    @include for-normal-layout {
+      &.order-layout {
+        grid-template-columns: minmax(0, auto) minmax(auto, 1400px) minmax(0, auto);
+      }
+    }
+  
+    @include for-wide-layout {
       &>* {
-          padding-inline: 80px;
+        padding-inline: 80px;
       }
+    }
   }
-}
-.become-host-layout {
-  height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  overflow: hidden;
-}
+  

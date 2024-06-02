@@ -185,6 +185,9 @@
         background-color: red;
       }
     }
+    &.hide-filter {
+      display: none;
+    }
   }
 
 
@@ -198,6 +201,7 @@
     &.minimized-filter {
       max-width: 350px;
       align-items: center;
+      align-self: center;
       .search-container {
         height: 46px;
 
@@ -236,6 +240,8 @@
       position: relative;
       max-width: 400px;
       margin: 0;
+      align-self: center;
+      align-items: center;
 
       .location-search-container {
         input {
@@ -280,6 +286,10 @@
         }
       }
     }
+  }
+
+  &.normal-header {
+
   }
 
 }
