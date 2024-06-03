@@ -32,7 +32,6 @@ export default function TravelerIndex() {
         </thead>
         <tbody>
           {orders && orders.map((order, index) => {
-            console.log(order.buyer._id, user._id);
             if (order.buyer._id !== user._id) return null; // Only show orders for the current user
             return (
               <tr key={order._id || index}>

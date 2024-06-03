@@ -98,9 +98,7 @@ export function FilterStay({ isMinimize }) {
 const handleStartDateChange = ({ start, end }) => {
   const startDate = start;
   const endDate = end;
-  console.log("date handleStartDateChange", isValid(startDate));
   if (isValid(startDate)) {
-    console.log("date handleStartDateChange", startDate);
     setStartDatePick(startDate);
     setEndDatePick(endDate);
     setSearchParams(prev => ({

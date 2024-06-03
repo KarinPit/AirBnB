@@ -3,13 +3,13 @@ import { format, isValid, parse } from 'date-fns';
 import { updateCurrentOrder } from '../../store/actions/order.actions';
 
 export function OrderSideBar({ price,startDate,endDate,adults,children }) {
-    const dispatch = useDispatch();
     const currentOrder = useSelector(storeState => storeState.orderModule.currentOrder);
-    console.log('currentOrder', currentOrder);
+    // console.log('currentOrder', currentOrder);
+
     function formatDate(type) {
-        const date = currentOrder[type];
+        const date = currentOrder.range[type];
         if (!date || !isValid(new Date(date))) {
-            return ''; // Return an empty string if the date is not set or invalid
+            return ''
         }
         return String(format(new Date(date), 'dd.MM.yyyy'));
     }
@@ -42,7 +42,7 @@ export function OrderSideBar({ price,startDate,endDate,adults,children }) {
         }
     }
 
-    function handleGuestChange(event,) {
+    function handleGuestChange(event, type) {
         const value = event.target.value;
         const orderToSave = { ...currentOrder, [type]: value }
         updateCurrentOrder(orderToSave);
@@ -57,13 +57,13 @@ export function OrderSideBar({ price,startDate,endDate,adults,children }) {
                 <input
                     className="check-in"
                     placeholder="CHECK-IN"
-                    value={formatDate('startDate')}
+                    value={formatDate('start')}
                     onChange={(e) => handleDateChange(e, 'startDate')}
                 />
                 <input
                     className="check-out"
                     placeholder="CHECKOUT"
-                    value={formatDate('endDate')}
+                    value={formatDate('end')}
                     onChange={(e) => handleDateChange(e, 'endDate')}
                 />
                 <input className="guests" placeholder="GUESTS"

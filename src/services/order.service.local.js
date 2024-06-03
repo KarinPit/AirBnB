@@ -54,7 +54,6 @@ async function save(order) {
 
 async function saveCurrentOrder(order) {
     var savedorder
-    console.log(order);
     if (order._id) {
         savedorder = await storageService.put(STORAGE_KEY_CURRENT_ORDER, order)
     } else {
