@@ -46,7 +46,7 @@ const StaysIndex = () => {
 
   const { category_tag, ...rest } = filterBy;
 
-  if (isLoading) return <h1>loading...</h1>;
+  if (isLoading) return '';
 
   return (
     <section>

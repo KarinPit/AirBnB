@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { intervalToDuration, format } from 'date-fns';
 import { loadStay } from '../../store/actions/stay.actions';
 import { updateCurrentOrder } from '../../store/actions/order.actions'
-
 import { stayService } from "../../services/stay.service.local"
 import { OrderSideBar } from "./OrderSideBar"
 import { CalendarPicker } from "../General/CalendarPicker"
@@ -142,7 +143,7 @@ export function StayDetails({ stayId }) {
     useEffect(() => {
         if (stayId) {
             loadStay(stayId)
-            const orderToSave = { ...currentOrder, stayId: stayId}
+            const orderToSave = { ...currentOrder, stayId: stayId }
             updateCurrentOrder(orderToSave)
         }
     }, [dispatch, stayId]);
@@ -215,7 +216,7 @@ export function StayDetails({ stayId }) {
                             </div>
 
                             <div className="host-info">
-                                <img src={profileImg}></img>
+                                <img src={stay.host.imgUrl}></img>
                                 <div>
                                     <h3 className="hosted-by">Hosted by {stay.host.fullname}</h3>
                                     <p className="host-experience">Superhost &middot; 7 years hosting</p>
@@ -283,16 +284,21 @@ export function StayDetails({ stayId }) {
                                     <button>Show all {stay.amenities.length} amenities</button>
                                 </div>
 
-                                <div className="order-calendar">
-                                    <h2>8 nights in {stay.name}</h2>
-                                    <p>Nov 1, 2024 - Nov 9, 2024</p>
-                                    <CalendarPicker />
+                                <div>
+                                    {currentOrder && currentOrder.range && currentOrder.range.start ?
+                                        <div className="order-calendar">
+                                            <h2>{`${intervalToDuration({ start: new Date(currentOrder.range.start), end: new Date(currentOrder.range.end) }).days} nights in ${stay.name}`}</h2>
+                                            <p>{`${format(new Date(currentOrder.range.start), 'MMM d, yyyy')} - ${format(new Date(currentOrder.range.end), 'MMM d, yyyy')}`}</p>
+                                            <CalendarPicker />
+                                        </div>
+                                        : ''}
                                 </div>
+
                             </div>
                         </div>
                         <div className="order-stay">
-                            <OrderSideBar price={stay.price} 
-                                />
+                            <OrderSideBar price={stay.price}
+                            />
                         </div>
                     </div>
 
@@ -374,7 +380,7 @@ export function StayDetails({ stayId }) {
                         {reviewsExtended.map((review, index) => (
                             <div key={index} className="review-card">
                                 <div className="review-header">
-                                    <img src={profileImg} alt={`${review.name}'s profile`} className="review-image" />
+                                    <img src={stay.reviews[index].by.imgUrl} alt={`${review.name}'s profile`} className="review-image" />
                                     <div className="review-details">
                                         <div className="review-name">{review.name}</div>
                                         <div className="review-location">{review.location}</div>
@@ -387,14 +393,14 @@ export function StayDetails({ stayId }) {
                                     <span className="review-date">{review.date}</span>
                                     <span className="review-stay">{review.stay}</span>
                                 </div>
-                                <div className="review-text">{review.reviewText}</div>
+                                <div className="review-text">{stay.reviews[index].txt}</div>
                                 <div className="review-more">Show more</div>
                             </div>
                         ))}
                     </div>
 
                     <div className="map-view">
-                        <MapView location={stay.loc} />
+                        <MapView stay={stay} />
                     </div>
                 </div>
             </div>
@@ -405,18 +411,18 @@ export function StayDetails({ stayId }) {
                     <div className="host-card">
                         <div className="host-info">
                             <div className="host-overview">
-                                <img src={profileImg} alt={`${host.name}'s profile`} className="host-image" />
-                                <div className="host-name">{host.name}</div>
+                                <img src={stay.host.imgUrl} alt={`${stay.host.fullname}'s profile`} className="host-image" />
+                                <div className="host-name">{stay.host.fullname}</div>
                                 <div className="host-role">Host</div>
                             </div>
                             <div className="host-stats">
                                 <div className="host-details">
                                     <div className="host-detail">
-                                        {host.reviews} Reviews
+                                        {stay.reviews.length} Reviews
                                     </div>
-                                    <div className="host-detail">
+                                    {/* <div className="host-detail">
                                         {host.rating}
-                                    </div>
+                                    </div> */}
                                     <div className="host-detail">
                                         {host.yearsHosting} Years hosting
                                     </div>
@@ -472,26 +478,3 @@ export function StayDetails({ stayId }) {
         </>
     )
 }
-
-
-//     useEffect(() => {
-//         if (stayId) loadStay()
-
-//         return () => {
-//         }
-//     }, [])
-
-//     async function loadStay() {
-//         try {
-//             const stay = await stayService.getById(stayId)
-//             setStay(stay)
-//         } catch (err) {
-//             console.log('Had issues loading the stay', err)
-//         }
-//     }
-
-
-
-//     if (!stay) return <div>Loading..</div>
-
-// }

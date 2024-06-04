@@ -1,27 +1,37 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom/dist';
 import { useDispatch, useSelector } from 'react-redux'
+
 import { loadOrders, updateOrder } from '../store/actions/order.actions'
+import { format } from 'date-fns';
 
 
 
 export default function RenterIndex() {
   const user = useSelector(storeState => storeState.userModule.user);
   const orders = useSelector(storeState => storeState.orderModule.orders)
+  const navigate = useNavigate()
 
 
   useEffect(() => {
-    loadOrders()
-  }, [])
+    if (!sessionStorage.loggedinUser) {
+      console.log('no user');
+      navigate("/")
+    }
+    else {
+      loadOrders()
+    }
+  }, [user, navigate])
 
   async function onUpdateOrder(order, status) {
     const orderToSave = { ...order, status }
     try {
       const savedOrder = await updateOrder(orderToSave)
     } catch (err) {
-      console.log('Cannot update car')
+      console.log('Cannot update orders')
     }
   }
-  
+
   return (
     <div className="reservations">
       <h2>Reservations</h2>
@@ -40,13 +50,16 @@ export default function RenterIndex() {
         </thead>
         <tbody>
           {orders && orders.map((order, index) => {
-            if (order.hostId !== user._id) return null; 
+            if (order.hostId !== user._id) return null;
             return (
               <tr key={order._id || index}>
                 <td className={`status-${order.status.toLowerCase()}`}>{String(order.status)}</td>
-                <td>{`Adults ${order.guests.adults} Kids: ${order.guests.kids}`}</td>
-                <td>{order.startDate}</td>
-                <td>{order.endDate}</td>
+                <td>{order.guests ? Object.entries(order.guests)
+                  .filter(([key, count]) => count > 0)
+                  .map(([key, count]) => count > 0 ? `${count} ${key}` : '')
+                  .join(', ') : ''}</td>
+                <td>{format(order.startDate, 'd.M.yyyy')}</td>
+                <td>{format(order.endDate, 'd.M.yyyy')}</td>
                 <td>{order.stay.name}</td>
                 <td>{order.totalPrice}</td>
                 <td>{order.totalPrice}</td>

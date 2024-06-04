@@ -38,10 +38,10 @@ export function AppHeader({ location }) {
 
   // please make switch case of the visibility like i did with the ifs
   // Equivalent switch statement
-  const visibility = () => { 
+  const visibility = () => {
     switch (true) {
       case location === ('/'):
-        console.log('full');
+        // console.log('full');
         setHeaderSize('full');
         setShowFilter("");
         setShowRow("");
@@ -53,6 +53,11 @@ export function AppHeader({ location }) {
         setShowRow("hide-filter");
         setShowMinimized("hide-filter");
         break;
+      case locationProp.includes('/profile/'):
+        setHeaderSize('compact-header');
+        setShowFilter("hide-filter");
+        setShowRow("");
+        break;
       case locationProp.includes('/stay/'):
         setHeaderSize('compact-header');
         setShowFilter("hide-filter");
@@ -61,7 +66,7 @@ export function AppHeader({ location }) {
         break;
       default:
     }
-}
+  }
   // const determineVisibility = () => {
   //   if (locationProp === '/') {
   //     setHeaderSize('full');
