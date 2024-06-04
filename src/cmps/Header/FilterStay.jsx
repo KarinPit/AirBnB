@@ -4,7 +4,7 @@ import { setFilterBy, loadStays } from '../../store/actions/stay.actions';
 import GuestPicker from '../Header/GuestPicker';
 import { CalendarPicker } from '../General/CalendarPicker';
 import { updateCurrentOrder } from '../../store/actions/order.actions';
-import { format } from 'date-fns';
+import { format,isValid } from 'date-fns';
 import { loadCurrentOrder } from '../../store/actions/order.actions';
 
 
@@ -15,6 +15,7 @@ export function FilterStay({ isMinimize }) {
   const [showGuestPicker, setShowGuestPicker] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState('');
   const [focusedField, setFocusedField] = useState(null);
+  const [startDatePick, setStartDatePick] = useState(null);
   const [endDatePick, setEndDatePick] = useState(null);
   const [showCheckInDatePicker, setShowCheckInDatePicker] = useState(false);
   const [showCheckOutDatePicker, setShowCheckOutDatePicker] = useState(false);
@@ -111,6 +112,39 @@ export function FilterStay({ isMinimize }) {
     setShowRegionPicker(false);
   };
 
+  const handleStartDateChange = ({ start, end }) => {
+    const startDate = start;
+    const endDate = end;
+    console.log("date handleStartDateChange", isValid(startDate));
+    if (isValid(startDate)) {
+      console.log("date handleStartDateChange", startDate);
+      setStartDatePick(startDate);
+      setEndDatePick(endDate);
+      setSearchParams(prev => ({
+        ...prev,
+        checkIn: startDate,
+        checkOut: endDate
+      }));
+      if (startDate && endDate && startDate >= endDate) {
+        setEndDatePick(null);
+        setSearchParams(prev => ({
+          ...prev,
+          checkOut: null
+        }));
+      }
+      if (endDatePickerRef.current) {
+        endDatePickerRef.current.setFocus();
+      }
+    } else {
+      console.log(" date else !! null handleStartDateChange");
+      setStartDatePick(null);
+      setSearchParams(prev => ({
+        ...prev,
+        checkIn: null
+      }));
+    }
+  };
+
   const handleSelectRecentSearch = (search) => {
     const checkInDate = search.startDate ? new Date(search.startDate) : null;
     const checkOutDate = search.endDate ? new Date(search.endDate) : null;
@@ -133,6 +167,7 @@ export function FilterStay({ isMinimize }) {
     };
     // updateCurrentOrder(updatedOrder)
     localStorage.setItem('currentOrder', JSON.stringify(updatedOrder))
+    updateCurrentOrder({ updatedOrder});
 
   };
 
@@ -176,7 +211,7 @@ export function FilterStay({ isMinimize }) {
     }
     setFilterBy(filters)
     await loadStays()
-    // updateCurrentOrder(filters)
+    updateCurrentOrder(filters)
   };
 
   const handleClickOutside = (event) => {
@@ -264,16 +299,17 @@ export function FilterStay({ isMinimize }) {
                   Check in
                 </label>
                 <div className='label-dates-selected'>
-                  {currentOrderDebug && currentOrderDebug.range && currentOrderDebug.range.start ? (
-                    <p>{format(currentOrderDebug.range.start, 'dd/MM/yyyy')}</p>
-                  ) : (
-                    <p className='label-dates'>Add dates</p>
+                {startDatePick ? (
+                      <p>{format(startDatePick, 'dd/MM/yyyy')}</p>
+                    ) : (
+                      <p className='label-dates'>Add dates</p>
                   )}
                 </div>
 
                 {showCheckInDatePicker && (
                   <CalendarPicker
-                    onChange={(range) => onChangeCurrentOrder('range', range)}
+                  onChange={handleStartDateChange}
+                    // onChange={(range) => onChangeCurrentOrder('range', range)}
                     showCalendarPicker={showCheckInDatePicker}
 
                   />
@@ -304,16 +340,16 @@ export function FilterStay({ isMinimize }) {
                   Check out
                 </label>
                 <div className='label-dates-selected'>
-                  {currentOrderDebug && currentOrderDebug.range && currentOrderDebug.range.end ? (
-                    <p>{format(currentOrderDebug.range.end, 'dd/MM/yyyy')}</p>
-                  ) : (
-                    <p className='label-dates'>Add dates</p>
-                  )}
+                {endDatePick ? (
+                  <p>{format(endDatePick, 'dd/MM/yyyy')}</p>
+                ) : (
+                  <p className='label-dates'>Add dates</p>
+                )}
                 </div>
                 {showCheckOutDatePicker && (
                   <CalendarPicker
-                    onChange={(range) => onChangeCurrentOrder('range', range)}
-                    showCalendarPicker={showCheckOutDatePicker}
+                  onChange={handleStartDateChange}
+                  showCalendarPicker={showCheckOutDatePicker}
                   />
                 )}
               </div>

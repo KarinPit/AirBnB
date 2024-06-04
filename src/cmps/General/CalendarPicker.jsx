@@ -35,7 +35,6 @@ export function CalendarPicker({ showCalendarPicker, onChange = (p0) => {} })
         onChange({ start: newRange.start, end: newRange.end });
       }
     }
-    // can you please save the range in the store?
     // const orderToSave = { ...currentOrder, range: range }
     localStorage.setItem('currentOrder', JSON.stringify(range))
 
