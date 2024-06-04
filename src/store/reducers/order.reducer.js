@@ -1,6 +1,5 @@
 // reducers/order.reducer.js
 
-import { orderService } from "../../services/order.service.local";
 
 export const SET_ORDERS = "SET_ORDERS";
 export const ADD_ORDER = "ADD_ORDER";
@@ -37,13 +36,13 @@ export function orderReducer(state = initialState, action) {
         ...state,
         orders: state.orders.filter((order) => order._id !== action.orderId),
       };
-      
+
     case SET_CURRENT_ORDER:
       return {
         ...state,
         currentOrder: action.order,
       };
-      
+
     case SET_FILTER_BY:
       return {
         ...state,

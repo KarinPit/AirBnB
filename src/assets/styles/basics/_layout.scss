@@ -18,6 +18,7 @@
     }
   
     &.order-layout {
+      padding-block-start: 24px;
       grid-template-columns: minmax(80px, auto) 1fr 1fr minmax(80px, auto);
       padding-inline: 0;
   

@@ -14,7 +14,7 @@ const AnyReactComponent = ({ text }) =>
         <img src={MapMarker}></img>
     </div>;
 
-export function MapView({ location }) {
+export function MapView({ stay }) {
     const apiKey = process.env.GOOGLE_MAPS_API_KEY;
 
     const handleApiLoaded = (map, maps) => {
@@ -32,7 +32,7 @@ export function MapView({ location }) {
     return (
         <div className="map-container">
             <h2>Where you'll be</h2>
-            <p>Palmachim, Center District, Israel</p>
+            <p>{stay.loc.address}</p>
             <div style={{ height: '400px', width: '100%' }}>
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: "AIzaSyDMl5nCzylGqvy3ogV2cL1CIxCl7X1b0vQ" }}

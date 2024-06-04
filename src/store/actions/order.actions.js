@@ -27,6 +27,19 @@ export async function loadOrders() {
     }
 }
 
+export async function loadCurrentOrder() {
+    store.dispatch({ type: SET_IS_LOADING, isLoading: true });
+    try {
+        const currentOrder = await orderService.queryCurrentOrder();
+        console.log(currentOrder);
+        store.dispatch({ type: SET_CURRENT_ORDER, currentOrder });
+    } catch (err) {
+        console.error("CurrentOrderActions: err in loadCurrentOrder", err);
+    } finally {
+        store.dispatch({ type: SET_IS_LOADING, isLoading: false });
+    }
+}
+
 export async function removeOrder(orderId) {
     try {
         await orderService.remove(orderId);

@@ -9,7 +9,6 @@ import leftArrowIcon from "../../../public/svg/arrow-left-black.svg"
 
 export function CalendarPicker({ showCalendarPicker, onChange = (p0) => {} }) 
 {  
-  const currentOrder = useSelector(storeState => storeState.orderModule.currentOrder)
   const [currentDate, setCurrentDate] = useState(new Date());
   const [range, setRange] = useState({ start: null, end: null });
   const [hoveredDate, setHoveredDate] = useState(null);
@@ -37,8 +36,9 @@ export function CalendarPicker({ showCalendarPicker, onChange = (p0) => {} })
       }
     }
     // can you please save the range in the store?
-    const orderToSave = { ...currentOrder, range: range }
-    updateCurrentOrder(orderToSave);
+    // const orderToSave = { ...currentOrder, range: range }
+    localStorage.setItem('currentOrder', JSON.stringify(range))
+
   }
 
   function onDateHover(day) {

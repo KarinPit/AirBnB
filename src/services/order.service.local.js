@@ -2,13 +2,14 @@
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
-import { dummyStays, dummyorders } from "../demoData/index.js";
+import { dummyorders } from "../demoData/index.js";
 
 const STORAGE_KEY = 'order'
 const STORAGE_KEY_CURRENT_ORDER = 'currentOrder'
 
 export const orderService = {
     query,
+    queryCurrentOrder,
     getById,
     save,
     saveCurrentOrder,
@@ -18,17 +19,16 @@ export const orderService = {
 window.cs = orderService
 
 _createOrders()
+// _createCurrentzOrder()
 
 async function query() {
     var orders = await storageService.query(STORAGE_KEY)
-    // if (filterBy.txt) {
-    //     const regex = new RegExp(filterBy.txt, 'i')
-    //     orders = orders.filter(order => regex.test(order.vendor) || regex.test(order.description))
-    // }
-    // if (filterBy.price) {
-    //     orders = orders.filter(order => order.price <= filterBy.price)
-    // }
     return orders
+}
+
+async function queryCurrentOrder() {
+    var currentOrder = await storageService.query(STORAGE_KEY_CURRENT_ORDER)
+    return currentOrder
 }
 
 function getById(orderId) {
@@ -54,14 +54,8 @@ async function save(order) {
 
 async function saveCurrentOrder(order) {
     var savedorder
-    console.log(order);
-    if (order._id) {
-        savedorder = await storageService.put(STORAGE_KEY_CURRENT_ORDER, order)
-    } else {
-        // Later, owner is set by the backend
-        order.owner = userService.getLoggedinUser()
-        savedorder = await storageService.post(STORAGE_KEY_CURRENT_ORDER, order)
-    }
+    // console.log('POST', order);
+    savedorder = await storageService.post(STORAGE_KEY_CURRENT_ORDER, order)
     return savedorder
 }
 
@@ -86,6 +80,14 @@ function _createOrders() {
     if (!orders || !orders.length) {
         orders = dummyorders;
         utilService.saveToStorage(STORAGE_KEY, orders);
+    }
+}
+
+function _createCurrentOrder() {
+    let currentOrder = utilService.loadFromStorage(STORAGE_KEY_CURRENT_ORDER);
+    if (!currentOrder || !currentOrder.length) {
+        currentOrder = {};
+        utilService.saveToStorage(STORAGE_KEY_CURRENT_ORDER, currentOrder);
     }
 }
 

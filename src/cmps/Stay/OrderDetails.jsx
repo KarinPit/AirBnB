@@ -11,9 +11,7 @@ export function OrderDetails({ price }) {
     
     const currentOrder = useSelector(storeState => storeState.orderModule.currentOrder);
     const stay = useSelector(storeState => storeState.stayModule.stay);
-    const dispatch = useDispatch();
-    console.log('stay', stay);
-    console.log('currentOrder', currentOrder);
+
     function formatDate(type) {
         console.log("inside the format date function");
         const date = currentOrder[type];
@@ -27,6 +25,7 @@ export function OrderDetails({ price }) {
     function handleReserve() {
         console.log('reserving');
     }
+    
     function handleDateChange(event, type) {
         console.log('date changed', event.target.value);
         const value = event.target.value;

@@ -100,7 +100,7 @@ const routes = [
 
 export const createRouting = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={''}>
       <Routes>
         {routes.map((route) => {
           const Guard = route.guard || Fragment;
