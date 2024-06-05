@@ -111,7 +111,7 @@
         top: 75px;
         border-radius: 48px;
         box-shadow: rgba(0, 0, 0, 0.448) 0px 3px 12px 0px;
-        
+
         table {
           &.current-month {
             background-color: white;
@@ -197,12 +197,32 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      line-height: 1.4;
+
+      p {
+        margin: 0;
+      }
+
+      div {
+        display: flex;
+        // flex-direction: column;
+      }
     }
 
     .checkOut-box {
       display: flex;
       flex-direction: column;
       justify-content: center;
+      line-height: 1.4;
+
+      p {
+        margin: 0;
+      }
+
+      div {
+        display: flex;
+        flex-direction: column;
+      }
     }
 
 
@@ -220,14 +240,17 @@
       transition: all 0.2s ease-in-out;
       z-index: 2;
     }
+
     .label-dates {
       font-size: 14px;
       color: rgb(106, 106, 106);
-    }    
+    }
+
     .label-dates-selected {
       font-size: 14px;
       color: rgb(0, 0, 0);
     }
+
     input {
       background-color: transparent;
     }

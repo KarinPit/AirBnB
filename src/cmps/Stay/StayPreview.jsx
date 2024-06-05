@@ -43,13 +43,18 @@ export function StayPreview({ stay }) {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <div className={`top-menu ${stay.isFavorite ? "favorite" : ""}`}>
+          <div className={`top-menu ${stay.host.isSuperHost ? "favorite" : ""}`}>
             {isLoading ? (
               <Skeleton width={100} />
             ) : (
               <p>Guest favorite</p>
             )}
-            {/* <img className="whishlist-icon" src={heartIcon}></img> */}
+            {isLoading ? (
+              <Skeleton height={200} />
+            ) : (
+              <img className="whishlist-icon" src={heartIcon}></img>
+            )}
+
           </div>
         </div>
       </Link>

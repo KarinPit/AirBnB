@@ -11,7 +11,7 @@ export function OrderSideBar({ price }) {
 
     const currentOrder = useSelector(storeState => storeState.orderModule.currentOrder);
     const stay = useSelector(storeState => storeState.stayModule.stay);
-    const loggedUser = JSON.parse(sessionStorage.loggedinUser)
+    const loggedUser = sessionStorage.loggedinUser ? JSON.parse(sessionStorage.loggedinUser) : ''
     const cleaningFee = 10
     const airbnbFee = 25
 
