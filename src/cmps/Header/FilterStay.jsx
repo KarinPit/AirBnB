@@ -150,17 +150,18 @@ export function FilterStay({ isMinimize }) {
     e.preventDefault();
     const filters = {
       location: searchParams.query,
-      startDate: startDatePick.toISOString().split('T')[0],
-      endDate: endDatePick.toISOString().split('T')[0],
+      startDate: format(currentOrderDebug.range.start, 'yyyy-MM-dd'),
+      endDate: format(currentOrderDebug.range.end, 'yyyy-MM-dd'),
       guestCount: guestCounts.adults + guestCounts.children + guestCounts.infants + guestCounts.pets,
     };
+
 
     if (!recentSearches.find(search => search.query === searchParams.query)) {
       const newSearch = {
         label: searchParams.query,
         query: searchParams.query,
-        startDate: startDatePick,
-        endDate: endDatePick,
+        startDate: format(currentOrderDebug.range.start, 'yyyy-MM-dd'),
+        endDate: format(currentOrderDebug.range.end, 'yyyy-MM-dd'),
         icon: "/svg/watch-list.svg",
         guestCounts: searchParams.guestCounts,
       };
@@ -275,7 +276,6 @@ export function FilterStay({ isMinimize }) {
                   <CalendarPicker
                     onChange={(range) => onChangeCurrentOrder('range', range)}
                     showCalendarPicker={showCheckInDatePicker}
-
                   />
                 )}
               </div>

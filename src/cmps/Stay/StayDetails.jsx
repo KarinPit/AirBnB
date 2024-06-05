@@ -163,7 +163,7 @@ export function StayDetails({ stayId }) {
         }
     }
 
-    if (isLoading || !stay) return <div>Loading...</div>;
+    if (isLoading || !stay) return '';
 
     return (
         <>
