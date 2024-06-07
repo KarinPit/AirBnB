@@ -32,6 +32,25 @@ const StaysIndex = () => {
     setFilterBy(stayService.getFilterFromParams(searchParams));
   }, []);
 
+
+  // Inside your component that renders the category bar
+useEffect(() => {
+  const categoryBar = document.querySelector('.stays-index-category-bar');
+  const headerHeight = document.querySelector('.app-header').offsetHeight;
+
+  const handleScroll = () => {
+    if (window.scrollY > headerHeight) {
+      categoryBar.style.position = 'sticky';
+      categoryBar.style.top = `${headerHeight}px`;
+    } else {
+      categoryBar.style.position = 'static'; 
+    }
+  };
+
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+}, []);
+
   useEffectUpdate(() => {
     if (Object.keys(filterBy).length !== 0) {
       const sanitizedFilter = stayService.sanitizeFilter(filterBy);

@@ -15,7 +15,7 @@ import ProfileIcon from "/svg/profile.svg";
 import PropTypes from 'prop-types';
 import { set } from "date-fns";
 
-export function AppHeader({ location }) {
+export function AppHeader({ location, isCompact}) {
   const [showAccMenu, setshowAccMenu] = useState(false);
   const [headerSize, setHeaderSize] = useState('normal');
   const [showFilter, setShowFilter] = useState("");
@@ -24,6 +24,9 @@ export function AppHeader({ location }) {
   const user = useSelector(storeState => storeState.userModule.user);
   const menuRef = useRef(null);
   const accMenuRef = useRef(null);
+  const [isScrolling, setIsScrolling] = useState(false);
+
+
   // const location = useLocation();
 
   AppHeader.propTypes = {
@@ -33,7 +36,8 @@ export function AppHeader({ location }) {
   let locationBool = locationProp.includes('/order/');
   // how can i set case of includes in switch case
 
-
+console.log("location", locationProp);
+console.log("isCompact", isCompact);
 
 
   // please make switch case of the visibility like i did with the ifs
@@ -41,7 +45,6 @@ export function AppHeader({ location }) {
   const visibility = () => {
     switch (true) {
       case location === ('/'):
-        // console.log('full');
         setHeaderSize('full');
         setShowFilter("");
         setShowRow("");
@@ -67,24 +70,31 @@ export function AppHeader({ location }) {
       default:
     }
   }
-  // const determineVisibility = () => {
-  //   if (locationProp === '/') {
-  //     setHeaderSize('full');
-  //     setShowFilter("");
-  //     setShowRow("");
-  //     setShowMinimized("hide-filter");
-  //   } else if (locationProp.includes('/order/') || locationProp.includes('/stay/')) {
-  //     setHeaderSize('compact-header');
-  //     setShowFilter("hide-filter");
-  //     setShowRow("");
-  //     setShowMinimized("");
-  //   }
-  // };
 
   useEffect(() => {
     // determineVisibility();
     visibility();
-  }, [location]);
+    const handleScroll = () => {
+      setIsScrolling(window.scrollY > 0);
+    };
+    if (isScrolling) {
+      setShowMinimized("");
+      setShowFilter("hide-filter");
+      setShowRow("");
+      setHeaderSize("scroller-header");
+    } else {
+      setShowMinimized("hide-filter");
+      setShowFilter("");
+      setShowRow("");
+    }
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+       // ... your existing logic for headerSize, showFilter, etc. ...
+
+    // This part will run whenever 'isScrolling' change
+
+ 
+  }, [isScrolling,location]);
 
   async function onLogin(credentials) {
     try {
@@ -131,7 +141,7 @@ export function AppHeader({ location }) {
   }, [menuRef, accMenuRef]);
 
   return (
-    <header className={`app-header ${headerSize}`}>
+    <header className={`app-header ${headerSize} `}>
       <div className="top-row">
         <NavLink to={"/"}>
           <img className="logo" src={Logo} alt="logo" />
