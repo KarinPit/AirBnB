@@ -1,11 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
+
+import { format } from 'date-fns';
 import { setFilterBy, loadStays } from '../../store/actions/stay.actions';
+import { updateCurrentOrder } from '../../store/actions/order.actions';
+import { orderService } from '../../services/order.service.local'
+
 import GuestPicker from '../Header/GuestPicker';
 import { CalendarPicker } from '../General/CalendarPicker';
-import { updateCurrentOrder } from '../../store/actions/order.actions';
-import { format } from 'date-fns';
-import { loadCurrentOrder } from '../../store/actions/order.actions';
+import { FilterStaySkeleton } from './Skeleton/FilterStaySkeleton';
 
 
 
@@ -18,7 +21,41 @@ export function FilterStay({ isMinimize }) {
   const [endDatePick, setEndDatePick] = useState(null);
   const [showCheckInDatePicker, setShowCheckInDatePicker] = useState(false);
   const [showCheckOutDatePicker, setShowCheckOutDatePicker] = useState(false);
+  const isLoading = useSelector(storeState => storeState.stayModule.isLoading);
 
+  const startDate = useRef(null);
+  const endDate = useRef(null);
+  const wrapperRef = useRef(null);
+
+  const [searchParams, setSearchParams] = useState({
+    query: '',
+    checkIn: '',
+    checkOut: '',
+    guestCounts: 0,
+  });
+
+  const [guestCounts, setGuestCounts] = useState({
+    adults: 0,
+    children: 0,
+    infants: 0,
+    pets: 0,
+  });
+
+  const regions = [
+    { name: 'Asia', imageName: '/img/locations/asia.png' },
+    { name: 'Europe', imageName: '/img/locations/europe.png' },
+    { name: 'Greece', imageName: '/img/locations/greece.png' },
+    { name: 'Italy', imageName: '/img/locations/italy.png' },
+    { name: 'Flexible', imageName: '/img/locations/search-flexible.png' },
+    { name: 'United States', imageName: '/img/locations/united-state.png' },
+  ];
+
+  const [recentSearches, setRecentSearches] = useState(() => {
+    const savedSearches = localStorage.getItem('recentSearches');
+    return savedSearches ? JSON.parse(savedSearches) : [
+      { label: 'Europe', query: 'Europe', date: 'Month in Jun', icon: "/svg/watch-list.svg" }
+    ];
+  });
 
   function onChangeCurrentOrder(key, value) {
     setCurrentOrderDebug(prev => ({ ...prev, [key]: value }))
@@ -36,41 +73,6 @@ export function FilterStay({ isMinimize }) {
     });
   };
 
-  // Refs
-  const startDate = useRef(null);
-  const endDate = useRef(null);
-  const wrapperRef = useRef(null);
-
-  // Countries and Filters
-  const regions = [
-    { name: 'Asia', imageName: '/img/locations/asia.png' },
-    { name: 'Europe', imageName: '/img/locations/europe.png' },
-    { name: 'Greece', imageName: '/img/locations/greece.png' },
-    { name: 'Italy', imageName: '/img/locations/italy.png' },
-    { name: 'Flexible', imageName: '/img/locations/search-flexible.png' },
-    { name: 'United States', imageName: '/img/locations/united-state.png' },
-  ];
-
-  const [recentSearches, setRecentSearches] = useState(() => {
-    const savedSearches = localStorage.getItem('recentSearches');
-    return savedSearches ? JSON.parse(savedSearches) : [
-      { label: 'Europe', query: 'Europe', date: 'Month in Jun', icon: "/svg/watch-list.svg" }
-    ];
-  });
-
-  const [searchParams, setSearchParams] = useState({
-    query: '',
-    checkIn: '',
-    checkOut: '',
-    guestCounts: 0,
-  });
-
-  const [guestCounts, setGuestCounts] = useState({
-    adults: 0,
-    children: 0,
-    infants: 0,
-    pets: 0,
-  });
 
   // Handlers
   const handleFocusChange = (focusType) => {
@@ -131,7 +133,7 @@ export function FilterStay({ isMinimize }) {
       checkOut: checkOutDate,
       guestCounts: search.guests || '0'
     };
-    // updateCurrentOrder(updatedOrder)
+
     localStorage.setItem('currentOrder', JSON.stringify(updatedOrder))
 
   };
@@ -177,7 +179,6 @@ export function FilterStay({ isMinimize }) {
     }
     setFilterBy(filters)
     await loadStays()
-    // updateCurrentOrder(filters)
   };
 
   const handleClickOutside = (event) => {
@@ -193,6 +194,19 @@ export function FilterStay({ isMinimize }) {
   useEffect(() => {
     if (currentOrderDebug) {
       updateCurrentOrder(currentOrderDebug)
+
+      if (currentOrderDebug.guests) {
+        setGuestCounts(prev => ({ ...prev, ...currentOrderDebug.guests }))
+      }
+    }
+    else {
+      orderService.queryCurrentOrder()
+        .then((order) => {
+          setCurrentOrderDebug(order)
+        })
+        .catch((err) => {
+          console.log('err in loading current order in the stay details', err)
+        })
     }
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -201,6 +215,7 @@ export function FilterStay({ isMinimize }) {
     };
   }, [currentOrderDebug]);
 
+  if(isLoading) return <FilterStaySkeleton />
 
   return (
     <div
