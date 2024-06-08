@@ -7,6 +7,7 @@ import { login, logout, signup } from '../../store/actions/user.actions.js';
 import { LoginSignup } from './LoginSignup.jsx';
 import FilterStay from "./FilterStay.jsx";
 import MinimizedFilterStay from "./MinimizeFilterStay.jsx";
+import MobileFilter from "./MobileFilter.jsx";
 
 import Logo from "/svg/logo.svg";
 import Language from "/svg/language.svg";
@@ -21,6 +22,7 @@ export function AppHeader({ location, isCompact}) {
   const [showFilter, setShowFilter] = useState("");
   const [showRow, setShowRow] = useState("");
   const [showMinimized, setShowMinimized] = useState("");
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 744);
   const user = useSelector(storeState => storeState.userModule.user);
   const menuRef = useRef(null);
   const accMenuRef = useRef(null);
@@ -77,6 +79,17 @@ console.log("isCompact", isCompact);
     const handleScroll = () => {
       setIsScrolling(window.scrollY > 0);
     };
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 744);
+    };
+    window.addEventListener("resize", handleResize);
+    if(isMobile){
+      console.log("mobile");
+      // setShowMinimized("hide-filter");
+      setShowFilter("hide-filter");
+      setShowRow("");
+      // setHeaderSize("scroller-header");
+    }
     if (isScrolling) {
       setShowMinimized("");
       setShowFilter("hide-filter");
@@ -88,13 +101,17 @@ console.log("isCompact", isCompact);
       setShowRow("");
     }
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+
+    };
        // ... your existing logic for headerSize, showFilter, etc. ...
 
     // This part will run whenever 'isScrolling' change
 
  
-  }, [isScrolling,location]);
+  }, [isScrolling,location,isMobile]);
 
   async function onLogin(credentials) {
     try {
@@ -214,9 +231,16 @@ console.log("isCompact", isCompact);
         </div>
       </div>
 
-      <div className={`filter-row ${showFilter}`}>
-        <FilterStay />
-      </div>
+      {isMobile ? (
+        <div className="mobile-filter-row">
+          {/* Mobile version of the search bar */}
+          <MobileFilter />
+        </div>
+      ) : (
+        <div className={`filter-row ${showFilter}`}>
+          <FilterStay />
+        </div>
+      )}
     </header>
   );
 }

@@ -235,6 +235,29 @@
     }
   }
 
+  &.responsive-header {
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 16px;
+      height: 80px;
+      transition: padding 0.3s ease;
+    }
+
+    .center-row {
+      display: none;
+    }
+
+    .filter-row {
+      display: none;
+    }
+
+    .right-row {
+      display: none;
+    }
+  }
+
 
   &.scroller-header {
     // can i make the header smaller in this style?
@@ -324,8 +347,6 @@
     }
   }
 
-  &.normal-header {}
-
 }
 
 
@@ -338,22 +359,50 @@
       align-items: center;
 
     }
+    .mobile-filter-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: 10px;
+      background-color: white; /* Ensure background matches the header */
+    }
   }
 }
 
 
 @media screen and (min-width: $narrow-breakpoint) {
   .app-header {
-    .center-row {
-      display: flex;
-      order: 3;
-      gap: 35px;
-      width: 100%;
-      justify-content: center;
-      align-items: center;
-      margin: 10px;
+      .top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 16px;
+        height: 80px;
+        transition: padding 0.3s ease;
+      }
+  
+      .center-row {
+        display: none;
+      }
+  
+      .filter-row {
+        //  display: none; /* Hide the filter row */
+      }
+  
+      .right-row {
+        // display: none;
+      }
+      .mobile-filter-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 10px;
+        background-color: white; /* Ensure background matches the header */
+      }
     }
-  }
+
 }
 
 @media screen and (min-width: $normal-breakpoint) {
@@ -363,9 +412,16 @@
       width: auto;
     }
 
-    .filter-row {
-      height: 64px;
-      margin-block-end: 16px;
-    }
+    // .filter-row {
+    //   height: 64px;
+    //   margin-block-end: 16px;
+    .mobile-filter-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: 10px;
+      background-color: white; /* Ensure background matches the header */
+    } // }
   }
 }
