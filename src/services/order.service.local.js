@@ -2,7 +2,7 @@
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
-import { dummyorders } from "../demoData/index.js";
+import { dummyorders } from "../layouts/index.js";
 
 const STORAGE_KEY = 'order'
 const STORAGE_KEY_CURRENT_ORDER = 'currentOrder'
