@@ -90,26 +90,26 @@ console.log("isCompact", isCompact);
       setShowRow("");
       // setHeaderSize("scroller-header");
     }
-    if (isScrolling) {
-      setShowMinimized("");
-      setShowFilter("hide-filter");
-      setShowRow("");
-      setHeaderSize("scroller-header");
-    } else {
-      setShowMinimized("hide-filter");
-      setShowFilter("");
-      setShowRow("");
+    if(locationProp.includes('/')){
+      if (isScrolling) {
+        setShowMinimized("");
+        setShowFilter("hide-filter");
+        setShowRow("");
+        setHeaderSize("scroller-header");
+      }
+      //  } else {
+      //   setShowMinimized("hide-filter");
+      //   setShowFilter("");
+      //   setShowRow("");
+      // }
     }
+    
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
 
     };
-       // ... your existing logic for headerSize, showFilter, etc. ...
-
-    // This part will run whenever 'isScrolling' change
-
  
   }, [isScrolling,location,isMobile]);
 
