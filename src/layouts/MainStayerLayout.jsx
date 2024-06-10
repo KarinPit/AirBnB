@@ -2,8 +2,8 @@ import React,{useEffect,useState} from "react";
 import { AppFooter } from "../cmps/Footer/AppFooter";
 
 import { Outlet, useLocation } from "react-router-dom";
-import StayerHeader from "../cmps/Header/StayerHeader";
 import { AppHeader } from "../cmps/Header/AppHeader";
+
 
 const MainStayerLayout = () => {
   const location = useLocation().pathname;
@@ -16,8 +16,8 @@ const MainStayerLayout = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll); 
-  }, []); 
-  // className={`${location === '/' ? 'full' : ''}`}
+  }, []);
+  
   return (
     <div className={`main-layout ${location === "/" ? "" : "compact-layout"}`}>
       <hr></hr>

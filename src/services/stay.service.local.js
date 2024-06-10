@@ -1,7 +1,7 @@
 import { storageService } from "./async-storage.service.js";
 import { utilService } from "./util.service.js";
 import { userService } from "./user.service.js";
-import { dummyStays } from "../demoData/index.js";
+import { dummyStays } from "../layouts/index.js";
 
 const STORAGE_KEY = "stay";
 
@@ -37,7 +37,8 @@ TO DO:
 
 
 */
-_createStays();
+_createStays()
+
 async function query(filterBy) {
   let stays = await storageService.query(STORAGE_KEY);
   if (filterBy) {
@@ -86,11 +87,11 @@ function applyFilters(stays, filterBy) {
   // Determine if stay is within the specified guest favorite
   const matchGuestFavorites = (stay) => {
     if (filterBy.guest_favorite === undefined) return true;
-  
+
     if (filterBy.guest_favorite === true) {
       return stay.guest_favorite === true;
     }
-    
+
     return true;
   };
 
@@ -99,13 +100,13 @@ function applyFilters(stays, filterBy) {
   }
   const filterStaysByExactDates = (stays, startDateStr, endDateStr) => {
     // if stays dont have filterd yet , return all stays
-    
+
     return stays.availabilityPeriods.some(period => {
-        const matchesStartDate = period.startDate === startDateStr;
-        const matchesEndDate = period.endDate === endDateStr;
-        return matchesStartDate && matchesEndDate;
+      const matchesStartDate = period.startDate === startDateStr;
+      const matchesEndDate = period.endDate === endDateStr;
+      return matchesStartDate && matchesEndDate;
     });
-};
+  };
   const isWithinGuestLimit = (stay) => {
     return filterBy.guestCount ? filterStaysByGuestCount(stay, filterBy.guestCount) : true;
   };
@@ -114,11 +115,11 @@ function applyFilters(stays, filterBy) {
       matchesCategoryTag(stay) &&
       matchesAmenities(stay) &&
       withinPriceRange(stay) &&
-      matchesPropertyType(stay)&&
-      matchGuestFavorites(stay)&&
+      matchesPropertyType(stay) &&
+      matchGuestFavorites(stay) &&
       filterStaysByExactDates(stay, filterBy.startDate, filterBy.endDate)
-      // isWithinGuestLimit(stay)
-    );
+    // isWithinGuestLimit(stay)
+  );
 }
 function filterStaysByGuestCount(stay, guestCount) {
   return stay.capacity >= guestCount;
@@ -179,7 +180,7 @@ function getDefaultFilter(
   price_min = minPricesStays(),
   price_max = maxPricesStays(),
   l2_property_type_ids = [],
-  guest_favorite=false,
+  guest_favorite = false,
 ) {
   return {
     category_tag,
@@ -193,7 +194,7 @@ function getDefaultFilter(
 }
 
 function minPricesStays() {
-  let stays = utilService.loadFromStorage(STORAGE_KEY) || []; 
+  let stays = utilService.loadFromStorage(STORAGE_KEY) || [];
   if (!stays.length) return null;
 
   return Math.min(...stays.map(stay => stay.price));
@@ -235,7 +236,7 @@ function getAllPrices() {
   return stays.map((stay) => stay.price);
 }
 
-async function getTotalFiltered (filterBy) {
+async function getTotalFiltered(filterBy) {
   let stays = utilService.loadFromStorage(STORAGE_KEY);
   const total = await applyFilters(stays, filterBy).length
   return total
@@ -269,13 +270,13 @@ export function convertToServerDateFormat(date) {
     (date.getMonth() + 1).toString().padStart(2, '0'),
     date.getFullYear(),
   ].join('/');
+}
+export function convertFromServerDateFormat(dateStr) {
+  // Converts DD/MM/YYYY to JavaScript Date object
+  const parts = dateStr.split('/');
+  if (parts.length === 3) {
+    // Note: Month is 0-indexed in JavaScript Date
+    return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
   }
-  export function convertFromServerDateFormat(dateStr) {
-    // Converts DD/MM/YYYY to JavaScript Date object
-    const parts = dateStr.split('/');
-    if (parts.length === 3) {
-        // Note: Month is 0-indexed in JavaScript Date
-        return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
-    }
-    return null;
+  return null;
 }

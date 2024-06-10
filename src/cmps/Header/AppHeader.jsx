@@ -14,7 +14,8 @@ import Language from "/svg/language.svg";
 import LineMenu from "/svg/menu.svg";
 import ProfileIcon from "/svg/profile.svg";
 import PropTypes from 'prop-types';
-import { set } from "date-fns";
+import Skeleton from "react-loading-skeleton";
+
 
 export function AppHeader({ location, isCompact}) {
   const [showAccMenu, setshowAccMenu] = useState(false);
@@ -23,7 +24,10 @@ export function AppHeader({ location, isCompact}) {
   const [showRow, setShowRow] = useState("");
   const [showMinimized, setShowMinimized] = useState("");
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 744);
+  const [showMinimized, setShowMinimized] = useState(false);
   const user = useSelector(storeState => storeState.userModule.user);
+  const isLoading = useSelector(storeState => storeState.stayModule.isLoading);
+
   const menuRef = useRef(null);
   const accMenuRef = useRef(null);
   const [isScrolling, setIsScrolling] = useState(false);
@@ -36,14 +40,6 @@ export function AppHeader({ location, isCompact}) {
   };
   let locationProp = location;
   let locationBool = locationProp.includes('/order/');
-  // how can i set case of includes in switch case
-
-console.log("location", locationProp);
-console.log("isCompact", isCompact);
-
-
-  // please make switch case of the visibility like i did with the ifs
-  // Equivalent switch statement
   const visibility = () => {
     switch (true) {
       case location === ('/'):
@@ -169,15 +165,17 @@ console.log("isCompact", isCompact);
             to="/"
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
-            Stays
+            {!isLoading ? 'Stays' : <Skeleton width={60} height={25}/>}
           </NavLink>
         </div>
 
-        <div
+        {showMinimized ? <div
           className={`filter-row ${showMinimized}`}
         >
           <MinimizedFilterStay />
         </div>
+          : ''}
+
 
         <div className={`right-row ${showRow}`}>
           <div>

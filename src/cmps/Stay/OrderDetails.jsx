@@ -13,7 +13,6 @@ export function OrderDetails({ price }) {
     const stay = useSelector(storeState => storeState.stayModule.stay);
 
     function formatDate(type) {
-        console.log("inside the format date function");
         const date = currentOrder[type];
         if (!date || !isValid(new Date(date))) {
             return ''; // Return an empty string if the date is not set or invalid
@@ -21,13 +20,11 @@ export function OrderDetails({ price }) {
         return String(format(new Date(date), 'dd.MM.yyyy'));
     }
 
-
     function handleReserve() {
         console.log('reserving');
     }
     
     function handleDateChange(event, type) {
-        console.log('date changed', event.target.value);
         const value = event.target.value;
         const parsedDate = parse(value, 'dd.MM.yyyy', new Date());
         if (isValid(parsedDate)) {
@@ -39,20 +36,20 @@ export function OrderDetails({ price }) {
         }
     }
 
-    function formatGuests() {
-        const adults = currentOrder.adults
-        const children = currentOrder.children
-        if (adults) {
-            if (children) {
-                const formattedText = `Adults: ${adults} Children: ${children}`
-                return formattedText
-            }
-            else {
-                const formattedText = `Adults: ${adults}`
-                return formattedText
-            }
-        }
-    }
+    // function formatGuests() {
+    //     const adults = currentOrder.adults
+    //     const children = currentOrder.children
+    //     if (adults) {
+    //         if (children) {
+    //             const formattedText = `Adults: ${adults} Children: ${children}`
+    //             return formattedText
+    //         }
+    //         else {
+    //             const formattedText = `Adults: ${adults}`
+    //             return formattedText
+    //         }
+    //     }
+    // }
 
     function handleGuestChange(event,) {
         const value = event.target.value;

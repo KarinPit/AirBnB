@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: 1fr;
     padding-block-start :12px;
+    padding-inline: 10px;
     gap: 16px;
     align-items: center;
     grid-auto-flow: column;
@@ -10,4 +11,5 @@
     top: 80px;       /* Stick it below the header (adjust if your header height is different) */
     background-color: white;
     background-attachment:scroll;
+    max-width: 100vw;
 }
