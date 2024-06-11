@@ -1,5 +1,5 @@
 import React from "react";
-import { SmallLogo } from "../../services/svg.service";
+import { SmallLogo } from "../../services/other/svg.service";
 import { NavLink } from "react-router-dom";
 export default function CreateHostHeader() {
   return (

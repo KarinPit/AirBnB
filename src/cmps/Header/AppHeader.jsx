@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
-import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service.js';
+import { showErrorMsg, showSuccessMsg } from '../../services/other/event-bus.service.js';
 import { login, logout, signup } from '../../store/actions/user.actions.js';
 import { LoginSignup } from './LoginSignup.jsx';
 import FilterStay from "./FilterStay.jsx";
@@ -126,7 +126,7 @@ export function AppHeader({ location }) {
             to="/"
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
-            {!isLoading ? 'Stays' : <Skeleton width={60} height={25}/>}
+            {!isLoading ? 'Stays' : <Skeleton width={60} height={25} />}
           </NavLink>
         </div>
 

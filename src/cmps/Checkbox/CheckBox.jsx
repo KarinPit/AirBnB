@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CheckedIcon } from "../../services/svg.service";
+import { CheckedIcon } from "../../services/other/svg.service";
 
 const Checkbox = ({ id, label, checked, onChange, ...props }) => {
   return (

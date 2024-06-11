@@ -4,7 +4,7 @@ import { useSearchParams } from "react-router-dom";
 
 import FilterCategories from "../cmps/Filters/FilterCategories";
 import { FilterCategoriesSkeleton } from "../cmps/Filters/Skeleton/FilterCategoriesSkeleton";
-import { stayService } from "../services/stay.service.local";
+import { stayService } from "../services/stay/stay.service";
 import { loadStays, setFilterBy } from "../store/actions/stay.actions";
 import AdvancedFilter from "../cmps/Filters/AdvancedFilter";
 import { StayList } from "../cmps/Stay/StayList";

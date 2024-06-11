@@ -86,7 +86,7 @@
                     content: '';
                     position: absolute;
                     left: 50%;
-                    width: 46px;
+                    width: 55px;
                     height: 42px;
                     background-color: rgb(247, 247, 247);
                     z-index: -1;
@@ -95,7 +95,7 @@
                 &:not(.selected):before {
                     content: '';
                     position: absolute;
-                    width: 46px;
+                    width: 55px;
                     height: 42px;
                     background-color: rgb(247, 247, 247);
                     z-index: -1;
@@ -108,7 +108,7 @@
                     content: '';
                     position: absolute;
                     left: 50%;
-                    width: 46px;
+                    width: 55px;
                     height: 42px;
                     background-color: rgb(247, 247, 247);
                     z-index: -1;
@@ -125,7 +125,7 @@
                         content: '';
                         position: absolute;
                         right: 50%;
-                        width: 46px;
+                        width: 55px;
                         height: 42px;
                         background-color: rgb(247, 247, 247);
                         z-index: -1;
@@ -135,7 +135,7 @@
                 &:not(.selected):before {
                     content: '';
                     position: absolute;
-                    width: 46px;
+                    width: 55px;
                     height: 42px;
                     background-color: rgb(247, 247, 247);
                     z-index: -1;

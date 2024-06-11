@@ -1,7 +1,7 @@
-import { stayService } from "../../services/stay.service.local.js";
+import { stayService } from "../../services/stay/stay.service.js";
 import { store } from "../store.js";
 
-import { showErrorMsg } from "../../services/event-bus.service.js";
+import { showErrorMsg } from "../../services/other/event-bus.service.js";
 import {
   SET_STAYS,
   SET_STAY,

@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { intervalToDuration, format } from 'date-fns';
 import { loadStay } from '../../store/actions/stay.actions';
-import { orderService } from '../../services/order.service.local'
+import { orderService } from '../../services/order/order.service'
 
 import { StayDetailsSkeleton } from './Skeletons/StayDetailsSkeleton';
-import { OrderSideBar } from "./OrderSideBar"
+import { OrderSideBar } from "../Order/OrderSideBar"
 import { CalendarPicker } from "../General/CalendarPicker"
 import { MapView } from "./MapView"
 
@@ -258,7 +258,8 @@ export function StayDetails({ stayId }) {
                                 <img src={stay.host.imgUrl}></img>
                                 <div>
                                     <h3 className="hosted-by">Hosted by {stay.host.fullname}</h3>
-                                    <p className="host-experience">Superhost &middot; 7 years hosting</p>
+                                    {stay.host.isSuperHost ?
+                                        <p className="host-experience">Superhost &middot; 7 years hosting</p> : ''}
                                 </div>
                             </div>
 
@@ -287,16 +288,19 @@ export function StayDetails({ stayId }) {
                                         </div>
                                     </div>
 
-                                    <div className="amenity">
-                                        <div className="amenity-img">
-                                            <img src={medalIcon}></img>
-                                        </div>
+                                    {stay.host.isSuperHost ?
+                                        <>
+                                            <div className="amenity">
+                                                <div className="amenity-img">
+                                                    <img src={medalIcon}></img>
+                                                </div>
 
-                                        <div className="amenity-info">
-                                            <h3>{stay.host.fullname} is a Superhost</h3>
-                                            <p>Superhosts are experienced, highly rated Hosts.</p>
-                                        </div>
-                                    </div>
+                                                <div className="amenity-info">
+                                                    <h3>{stay.host.fullname} is a Superhost</h3>
+                                                    <p>Superhosts are experienced, highly rated Hosts.</p>
+                                                </div>
+                                            </div></> : ''}
+
                                 </div>
 
                                 <div className="full-desc">
@@ -324,13 +328,19 @@ export function StayDetails({ stayId }) {
                                 </div>
 
                                 <div>
-                                    {currentOrder && currentOrder.range && currentOrder.range.start ?
-                                        <div className="order-calendar">
-                                            <h2>{`${intervalToDuration({ start: new Date(currentOrder.range.start), end: new Date(currentOrder.range.end) }).days} nights in ${stay.name}`}</h2>
-                                            <p>{`${format(new Date(currentOrder.range.start), 'MMM d, yyyy')} - ${format(new Date(currentOrder.range.end), 'MMM d, yyyy')}`}</p>
-                                            <CalendarPicker />
-                                        </div>
-                                        : ''}
+                                    <div className="order-calendar">
+                                        {currentOrder && currentOrder.range && currentOrder.range.start ?
+                                            <>
+                                                <h2>{`${intervalToDuration({ start: new Date(currentOrder.range.start), end: new Date(currentOrder.range.end) }).days} nights in ${stay.name}`}</h2>
+                                                <p>{`${format(new Date(currentOrder.range.start), 'MMM d, yyyy')} - ${format(new Date(currentOrder.range.end), 'MMM d, yyyy')}`}</p>
+                                            </>
+                                            :
+                                            <>
+                                                <h2>Select check-in date</h2>
+                                                <p>Add your travel dates for exact pricing</p>
+                                            </>}
+                                        <CalendarPicker />
+                                    </div>
                                 </div>
 
                             </div>
@@ -432,8 +442,17 @@ export function StayDetails({ stayId }) {
                                         <span className="review-date">{review.date}</span>
                                         <span className="review-stay">{review.stay}</span>
                                     </div>
-                                    <div className="review-text">{stay.reviews[index].txt}</div>
-                                    <div className="review-more">Show more</div></> : ''}
+                                    {stay.reviews[index].txt.length > 185 ?
+                                        <>
+                                            <div className="review-text">
+                                                {stay.reviews[index].txt.substring(0, 185)}...
+                                            </div>
+                                            <div className="review-more">Show more</div>
+                                        </>
+                                        : <div className="review-text">
+                                            {stay.reviews[index].txt}
+                                        </div>}
+                                </> : ''}
 
                             </div>
                         ))}
@@ -443,7 +462,7 @@ export function StayDetails({ stayId }) {
                         <MapView stay={stay} />
                     </div>
                 </div>
-            </div>
+            </div >
 
             <div className="host-profile-container">
                 <div className="host-profile">

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import ScrollMenu from "../Stay/ScrollMenu";
-import { LeftArrowIcon, RightArrowIcon } from "../../services/svg.service";
-import { fetchImages } from "../../services/data.service";
+import { LeftArrowIcon, RightArrowIcon } from "../../services/other/svg.service";
+import { fetchImages } from "../../services/other/data.service";
 
 export default function FilterCategories({ onSetFilter, filterBy }) {
   const [images, setImages] = useState([]);
@@ -64,9 +64,8 @@ export default function FilterCategories({ onSetFilter, filterBy }) {
           <label
             key={index}
             ref={(el) => (labelRefs.current[index] = el)}
-            className={`filter-categories-label ${
-              filterBy === image.title ? "focused" : ""
-            }`}
+            className={`filter-categories-label ${filterBy === image.title ? "focused" : ""
+              }`}
             tabIndex={0}
             aria-labelledby={`input-${index}`}
             onClick={() => handleClick(image.title)}
