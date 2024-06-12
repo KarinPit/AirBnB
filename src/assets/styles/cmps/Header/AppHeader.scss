@@ -284,9 +284,6 @@
 
   &.compact-header {
     position: relative;
-    position: relative;
-
-    position: relative;    
 
     .center-row {
       a {
@@ -405,16 +402,13 @@
 
 }
 
+
 @media screen and (min-width: $normal-breakpoint) {
   .app-header {
     .center-row {
       order: 0;
       width: auto;
     }
-
-    // .filter-row {
-    //   height: 64px;
-    //   margin-block-end: 16px;
     .mobile-filter-row {
       display: flex;
       flex-direction: column;
@@ -422,6 +416,6 @@
       width: 100%;
       padding: 10px;
       background-color: white; /* Ensure background matches the header */
-    } // }
+    }
   }
 }

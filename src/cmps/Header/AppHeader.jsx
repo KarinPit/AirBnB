@@ -22,7 +22,6 @@ export function AppHeader({ location, isCompact}) {
   const [headerSize, setHeaderSize] = useState('normal');
   const [showFilter, setShowFilter] = useState("");
   const [showRow, setShowRow] = useState("");
-  const [showMinimized, setShowMinimized] = useState("");
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 744);
   const [showMinimized, setShowMinimized] = useState(false);
   const user = useSelector(storeState => storeState.userModule.user);
@@ -46,13 +45,13 @@ export function AppHeader({ location, isCompact}) {
         setHeaderSize('full');
         setShowFilter("");
         setShowRow("");
-        setShowMinimized("hide-filter");
+        setShowMinimized(false);
         break;
       case locationProp.includes('/order/'):
         setHeaderSize('compact-header');
         setShowFilter("hide-filter");
         setShowRow("hide-filter");
-        setShowMinimized("hide-filter");
+        setShowMinimized(false);
         break;
       case locationProp.includes('/profile/'):
         setHeaderSize('compact-header');
@@ -63,7 +62,7 @@ export function AppHeader({ location, isCompact}) {
         setHeaderSize('compact-header');
         setShowFilter("hide-filter");
         setShowRow("");
-        setShowMinimized("");
+        setShowMinimized(true);
         break;
       default:
     }
@@ -88,16 +87,11 @@ export function AppHeader({ location, isCompact}) {
     }
     if(locationProp.includes('/')){
       if (isScrolling) {
-        setShowMinimized("");
+        setShowMinimized(true);
         setShowFilter("hide-filter");
         setShowRow("");
         setHeaderSize("scroller-header");
       }
-      //  } else {
-      //   setShowMinimized("hide-filter");
-      //   setShowFilter("");
-      //   setShowRow("");
-      // }
     }
     
     window.addEventListener("scroll", handleScroll);
