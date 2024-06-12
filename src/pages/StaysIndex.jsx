@@ -34,6 +34,7 @@ useEffect(() => {
     if (window.scrollY > headerHeight) {
       categoryBar.style.position = 'sticky';
       categoryBar.style.top = `${headerHeight}px`;
+      console.log("headerHeight", headerHeight);
     }
   };
 
