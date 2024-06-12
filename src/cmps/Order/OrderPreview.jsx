@@ -6,8 +6,10 @@ import { format, intervalToDuration } from 'date-fns'
 import { showErrorMsg, showSuccessMsg } from '../../services/other/event-bus.service.js';
 import { login, logout, signup } from '../../store/actions/user.actions.js';
 import { saveOrder } from '../../store/actions/order.actions.js';
-import { orderService } from '../../services/order/order.service.js'
-import { stayService } from '../../services/stay.service'
+import { orderService } from '../../services/order/order.service.local'
+// import { orderService } from '../../services/order/order.service'
+import { stayService } from '../../services/stay/stay.service.local'
+// import { stayService } from '../../services/stay/stay.service'
 import { LoginSignup } from '../Header/LoginSignup.jsx';
 
 

@@ -1,4 +1,5 @@
-import { stayService } from "../../services/stay/stay.service.js";
+import { stayService } from "../../services/stay/stay.service.local";
+// import { stayService } from "../../services/stay/stay.service.js";
 import { store } from "../store.js";
 
 import { showErrorMsg } from "../../services/other/event-bus.service.js";
