@@ -63,3 +63,9 @@
     font-size: rem(16px);
   }
 }
+/* Media Query for hiding the filters button on larger screens */
+@media (max-width: 744px) {
+  .advanced-filter--filters-button {
+    display: none;
+  }
+}

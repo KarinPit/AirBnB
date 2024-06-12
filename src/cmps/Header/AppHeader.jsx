@@ -80,13 +80,11 @@ export function AppHeader({ location, isCompact}) {
     window.addEventListener("resize", handleResize);
     if(isMobile){
       console.log("mobile");
-      // setShowMinimized("hide-filter");
       setShowFilter("hide-filter");
       setShowRow("");
-      // setHeaderSize("scroller-header");
     }
     if(locationProp.includes('/')){
-      if (isScrolling) {
+      if (isScrolling && !isMobile) {
         setShowMinimized(true);
         setShowFilter("hide-filter");
         setShowRow("");

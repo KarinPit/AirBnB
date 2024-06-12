@@ -25,16 +25,14 @@ const StaysIndex = () => {
   }, []);
 
 
-  // Inside your component that renders the category bar
 useEffect(() => {
   const categoryBar = document.querySelector('.stays-index-category-bar');
-  const headerHeight = document.querySelector('.app-header').offsetHeight;
-
+  const headerHeight = document.querySelector('.app-header').offsetHeight ;
+  console.log("headerHeight", headerHeight);
   const handleScroll = () => {
     if (window.scrollY > headerHeight) {
       categoryBar.style.position = 'sticky';
-      categoryBar.style.top = `${headerHeight}px`;
-      console.log("headerHeight", headerHeight);
+      categoryBar.style.top = '86px';
     }
   };
 

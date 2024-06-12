@@ -1,13 +1,12 @@
 .stays-index-category-bar {
     display: grid;
     grid-template-columns: 1fr;
-    padding-block-start :12px;
+    padding-block-start: 12px;
     padding-inline: 10px;
     gap: 16px;
     align-items: center;
     grid-auto-flow: column;
-    position: sticky; /* Correctly using sticky positioning */
+    position: sticky;
     z-index: 999;
     background-color: white;
-
 }
