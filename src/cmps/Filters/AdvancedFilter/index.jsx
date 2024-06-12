@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import { Formik } from "formik";
 
-import { AdvancedFilterIcon } from "../../../services/svg.service";
+import { AdvancedFilterIcon } from "../../../services/other/svg.service";
 import ModalContainer from "../../General/ModalContainer";
 import AdvancedFilterForm from "../../Forms/AdvancedFilterForm";
 import { useSelector } from "react-redux";
-import { stayService } from "../../../services/stay.service.local";
+import { stayService } from "../../../services/stay/stay.service";
 import { getTotalStaysFiltered } from "../../../store/actions/stay.actions";
 
 function AdvancedFilter({ onSetFilter, filterBy }) {

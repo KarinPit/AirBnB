@@ -1,43 +1,39 @@
-import React, { useState,useRef} from 'react';
-import { useSelector } from 'react-redux'
+import React, { useState, useRef } from 'react';
 import { updateCurrentOrder } from '../../store/actions/order.actions'
-import { addMonths, subMonths, format, startOfDay, startOfWeek, addDays, isSameDay, isBefore, isWithinInterval, endOfDay, isAfter,isValid } from 'date-fns';
+import { addMonths, subMonths, format, startOfDay, startOfWeek, addDays, isSameDay, isBefore, isWithinInterval, endOfDay, isAfter, isValid } from 'date-fns';
 
 import RightArrowIcon from "../../../public/svg/arrow-right-black.svg";
 import leftArrowIcon from "../../../public/svg/arrow-left-black.svg"
 
 
-export function CalendarPicker({ showCalendarPicker, onChange = (p0) => {} }) 
-{  
+export function CalendarPicker({ showCalendarPicker, onChange = (p0) => { } }) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [range, setRange] = useState({ start: null, end: null });
   const [hoveredDate, setHoveredDate] = useState(null);
-  const pickerRef = useRef(null);
 
+  const nextMonthDate = addMonths(currentDate, 1)
+  let calenderPickerClass = showCalendarPicker ? 'calender-picker-absolute' : 'calendar-picker'
 
-  const nextMonthDate = addMonths(currentDate, 1);
-  let calenderPickerClass = showCalendarPicker ? 'calender-picker calender-picker-absolute' : 'calendar-picker';
-  
 
   function onDateClick(day) {
     if (!range.start || (range.start && range.end)) {
       if (isValid(day)) {
-        setRange({ start: day, end: null });
-        onChange({ start: day, end: null });
+        setRange({ start: day, end: null })
+        onChange({ start: day, end: null })
+        localStorage.setItem('currentOrder', JSON.stringify({ range: { start: day, end: null } }))
       }
     } else {
       const newRange = {
         start: range.start,
-        end: day < range.start ? range.start : day
-      };
+        end: day < range.start ? null : day
+      }
+
       if (isValid(newRange.end)) {
-        setRange(newRange);
-        onChange({ start: newRange.start, end: newRange.end });
+        setRange(newRange)
+        onChange({ start: newRange.start, end: newRange.end })
+        localStorage.setItem('currentOrder', JSON.stringify({ range: { start: newRange.start, end: newRange.end } }))
       }
     }
-    // can you please save the range in the store?
-    // const orderToSave = { ...currentOrder, range: range }
-    localStorage.setItem('currentOrder', JSON.stringify(range))
 
   }
 

@@ -114,13 +114,11 @@
 
         table {
           &.current-month {
-            background-color: white;
             border-radius: 48px 0 0 48px;
             padding-inline-start: 15px;
           }
 
           &.next-month {
-            background-color: white;
             border-radius: 0 48px 48px 0;
             padding-inline-end: 15px;
           }

@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 
 import { format } from 'date-fns';
 import { setFilterBy, loadStays } from '../../store/actions/stay.actions';
-import { updateCurrentOrder } from '../../store/actions/order.actions';
-import { orderService } from '../../services/order.service.local'
+import { loadCurrentOrder, updateCurrentOrder } from '../../store/actions/order.actions';
+import { orderService } from '../../services/order/order.service'
 
 import GuestPicker from '../Header/GuestPicker';
 import { CalendarPicker } from '../General/CalendarPicker';
@@ -13,7 +13,8 @@ import { FilterStaySkeleton } from './Skeleton/FilterStaySkeleton';
 
 
 export function FilterStay({ isMinimize }) {
-  const [currentOrderDebug, setCurrentOrderDebug] = useState(null)
+  const currentOrderDebug = useSelector(storeState => storeState.orderModule.currentOrder)
+  // const [currentOrderDebug, setCurrentOrderDebug] = useState(null)
   const [showRegionPicker, setShowRegionPicker] = useState(false);
   const [showGuestPicker, setShowGuestPicker] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState('');
@@ -179,7 +180,7 @@ export function FilterStay({ isMinimize }) {
     }
     setFilterBy(filters)
     await loadStays()
-  };
+  }
 
   const handleClickOutside = (event) => {
     if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
@@ -189,33 +190,20 @@ export function FilterStay({ isMinimize }) {
       setShowRegionPicker(false);
       handleFocusChange();
     }
-  };
+  }
 
   useEffect(() => {
-    if (currentOrderDebug) {
-      updateCurrentOrder(currentOrderDebug)
+    loadCurrentOrder()
+  }, [])
 
-      if (currentOrderDebug.guests) {
-        setGuestCounts(prev => ({ ...prev, ...currentOrderDebug.guests }))
-      }
-    }
-    else {
-      orderService.queryCurrentOrder()
-        .then((order) => {
-          setCurrentOrderDebug(order)
-        })
-        .catch((err) => {
-          console.log('err in loading current order in the stay details', err)
-        })
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [currentOrderDebug]);
+  }, [currentOrderDebug]); // Run every time currentOrderDebug changes
 
-  if(isLoading) return <FilterStaySkeleton />
+  if (isLoading) return <FilterStaySkeleton />
 
   return (
     <div
