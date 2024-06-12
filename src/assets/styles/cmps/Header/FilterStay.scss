@@ -297,13 +297,13 @@
 
   .guest-input-container {
     display: flex;
-    // border-left: 1px solid rgb(221, 221, 221);
+    margin-right: 30px;
     flex-direction: column;
 
     &.focused {
       background-color: #ffff;
       // padding: 8px 10px 8px 24px;
-      border-radius: 37px;
+      border-radius: 20px;
     }
 
     &.unfocused {
