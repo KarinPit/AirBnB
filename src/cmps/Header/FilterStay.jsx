@@ -1,11 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
+
+import { format } from 'date-fns';
 import { setFilterBy, loadStays } from '../../store/actions/stay.actions';
+import { updateCurrentOrder } from '../../store/actions/order.actions';
+import { orderService } from '../../services/order.service.local'
+
 import GuestPicker from '../Header/GuestPicker';
 import { CalendarPicker } from '../General/CalendarPicker';
-import { updateCurrentOrder } from '../../store/actions/order.actions';
-import { format,isValid } from 'date-fns';
-import { loadCurrentOrder } from '../../store/actions/order.actions';
+import { FilterStaySkeleton } from './Skeleton/FilterStaySkeleton';
 
 
 
@@ -19,7 +22,41 @@ export function FilterStay({ isMinimize }) {
   const [endDatePick, setEndDatePick] = useState(null);
   const [showCheckInDatePicker, setShowCheckInDatePicker] = useState(false);
   const [showCheckOutDatePicker, setShowCheckOutDatePicker] = useState(false);
+  const isLoading = useSelector(storeState => storeState.stayModule.isLoading);
 
+  const startDate = useRef(null);
+  const endDate = useRef(null);
+  const wrapperRef = useRef(null);
+
+  const [searchParams, setSearchParams] = useState({
+    query: '',
+    checkIn: '',
+    checkOut: '',
+    guestCounts: 0,
+  });
+
+  const [guestCounts, setGuestCounts] = useState({
+    adults: 0,
+    children: 0,
+    infants: 0,
+    pets: 0,
+  });
+
+  const regions = [
+    { name: 'Asia', imageName: '/img/locations/asia.png' },
+    { name: 'Europe', imageName: '/img/locations/europe.png' },
+    { name: 'Greece', imageName: '/img/locations/greece.png' },
+    { name: 'Italy', imageName: '/img/locations/italy.png' },
+    { name: 'Flexible', imageName: '/img/locations/search-flexible.png' },
+    { name: 'United States', imageName: '/img/locations/united-state.png' },
+  ];
+
+  const [recentSearches, setRecentSearches] = useState(() => {
+    const savedSearches = localStorage.getItem('recentSearches');
+    return savedSearches ? JSON.parse(savedSearches) : [
+      { label: 'Europe', query: 'Europe', date: 'Month in Jun', icon: "/svg/watch-list.svg" }
+    ];
+  });
 
   function onChangeCurrentOrder(key, value) {
     setCurrentOrderDebug(prev => ({ ...prev, [key]: value }))
@@ -37,41 +74,6 @@ export function FilterStay({ isMinimize }) {
     });
   };
 
-  // Refs
-  const startDate = useRef(null);
-  const endDate = useRef(null);
-  const wrapperRef = useRef(null);
-
-  // Countries and Filters
-  const regions = [
-    { name: 'Asia', imageName: '/img/locations/asia.png' },
-    { name: 'Europe', imageName: '/img/locations/europe.png' },
-    { name: 'Greece', imageName: '/img/locations/greece.png' },
-    { name: 'Italy', imageName: '/img/locations/italy.png' },
-    { name: 'Flexible', imageName: '/img/locations/search-flexible.png' },
-    { name: 'United States', imageName: '/img/locations/united-state.png' },
-  ];
-
-  const [recentSearches, setRecentSearches] = useState(() => {
-    const savedSearches = localStorage.getItem('recentSearches');
-    return savedSearches ? JSON.parse(savedSearches) : [
-      { label: 'Europe', query: 'Europe', date: 'Month in Jun', icon: "/svg/watch-list.svg" }
-    ];
-  });
-
-  const [searchParams, setSearchParams] = useState({
-    query: '',
-    checkIn: '',
-    checkOut: '',
-    guestCounts: 0,
-  });
-
-  const [guestCounts, setGuestCounts] = useState({
-    adults: 0,
-    children: 0,
-    infants: 0,
-    pets: 0,
-  });
 
   // Handlers
   const handleFocusChange = (focusType) => {
@@ -145,6 +147,7 @@ export function FilterStay({ isMinimize }) {
     }
   };
 
+
   const handleSelectRecentSearch = (search) => {
     const checkInDate = search.startDate ? new Date(search.startDate) : null;
     const checkOutDate = search.endDate ? new Date(search.endDate) : null;
@@ -165,8 +168,9 @@ export function FilterStay({ isMinimize }) {
       checkOut: checkOutDate,
       guestCounts: search.guests || '0'
     };
-    // updateCurrentOrder(updatedOrder)
+
     localStorage.setItem('currentOrder', JSON.stringify(updatedOrder))
+    updateCurrentOrder({ updatedOrder});
     updateCurrentOrder({ updatedOrder});
 
   };
@@ -185,17 +189,18 @@ export function FilterStay({ isMinimize }) {
     e.preventDefault();
     const filters = {
       location: searchParams.query,
-      startDate: startDatePick.toISOString().split('T')[0],
-      endDate: endDatePick.toISOString().split('T')[0],
+      startDate: format(currentOrderDebug.range.start, 'yyyy-MM-dd'),
+      endDate: format(currentOrderDebug.range.end, 'yyyy-MM-dd'),
       guestCount: guestCounts.adults + guestCounts.children + guestCounts.infants + guestCounts.pets,
     };
+
 
     if (!recentSearches.find(search => search.query === searchParams.query)) {
       const newSearch = {
         label: searchParams.query,
         query: searchParams.query,
-        startDate: startDatePick,
-        endDate: endDatePick,
+        startDate: format(currentOrderDebug.range.start, 'yyyy-MM-dd'),
+        endDate: format(currentOrderDebug.range.end, 'yyyy-MM-dd'),
         icon: "/svg/watch-list.svg",
         guestCounts: searchParams.guestCounts,
       };
@@ -211,7 +216,6 @@ export function FilterStay({ isMinimize }) {
     }
     setFilterBy(filters)
     await loadStays()
-    updateCurrentOrder(filters)
   };
 
   const handleClickOutside = (event) => {
@@ -227,6 +231,19 @@ export function FilterStay({ isMinimize }) {
   useEffect(() => {
     if (currentOrderDebug) {
       updateCurrentOrder(currentOrderDebug)
+
+      if (currentOrderDebug.guests) {
+        setGuestCounts(prev => ({ ...prev, ...currentOrderDebug.guests }))
+      }
+    }
+    else {
+      orderService.queryCurrentOrder()
+        .then((order) => {
+          setCurrentOrderDebug(order)
+        })
+        .catch((err) => {
+          console.log('err in loading current order in the stay details', err)
+        })
     }
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -235,6 +252,7 @@ export function FilterStay({ isMinimize }) {
     };
   }, [currentOrderDebug]);
 
+  if(isLoading) return <FilterStaySkeleton />
 
   return (
     <div
@@ -277,7 +295,6 @@ export function FilterStay({ isMinimize }) {
           <div className="input-container check-in-container" ref={startDate}
 
           >
-            <div className='checkIn-box'>
               <div
                 className={`test ${focusedField === "checkIn"
                   ? "focused"
@@ -295,10 +312,10 @@ export function FilterStay({ isMinimize }) {
                 setShowCheckOutDatePicker(false)
                 setShowGuestPicker(false)
               }}>
+                <div className='dates-text-div'>
                 <label htmlFor="start-date-picker" className="input-label">
                   Check in
                 </label>
-                <div className='label-dates-selected'>
                 {startDatePick ? (
                       <p>{format(startDatePick, 'dd/MM/yyyy')}</p>
                     ) : (
@@ -311,10 +328,8 @@ export function FilterStay({ isMinimize }) {
                   onChange={handleStartDateChange}
                     // onChange={(range) => onChangeCurrentOrder('range', range)}
                     showCalendarPicker={showCheckInDatePicker}
-
                   />
                 )}
-              </div>
             </div>
           </div>
 
@@ -336,15 +351,15 @@ export function FilterStay({ isMinimize }) {
                 }
               }
               }>
-                <label htmlFor="end-date-picker" className="input-label">
-                  Check out
-                </label>
-                <div className='label-dates-selected'>
-                {endDatePick ? (
-                  <p>{format(endDatePick, 'dd/MM/yyyy')}</p>
-                ) : (
-                  <p className='label-dates'>Add dates</p>
-                )}
+                <div className='dates-text-div'>
+                  <label htmlFor="end-date-picker" className="input-label">
+                    Check out
+                  </label>
+                  {endDatePick ? (
+                    <p>{format(endDatePick, 'dd/MM/yyyy')}</p>
+                  ) : (
+                    <p className='label-dates'>Add dates</p>
+                  )}
                 </div>
                 {showCheckOutDatePicker && (
                   <CalendarPicker

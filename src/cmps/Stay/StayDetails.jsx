@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { intervalToDuration, format } from 'date-fns';
 import { loadStay } from '../../store/actions/stay.actions';
-import { updateCurrentOrder } from '../../store/actions/order.actions'
-import { stayService } from "../../services/stay.service.local"
+import { orderService } from '../../services/order.service.local'
+
+import { StayDetailsSkeleton } from './Skeletons/StayDetailsSkeleton';
 import { OrderSideBar } from "./OrderSideBar"
 import { CalendarPicker } from "../General/CalendarPicker"
 import { MapView } from "./MapView"
 
-import profileImg from "../../../public/Albert.jpg"
 import saveIcon from "../../../public/svg/heart-b&w.svg"
 import shareIcon from "../../../public/svg/share.svg"
 import StarIcon from "../../../public/svg/star.svg"
@@ -25,10 +25,11 @@ import priceTagIcon from "../../../public/svg/price-tag.svg"
 import sprayerIcon from "../../../public/svg/sprayer.svg"
 
 export function StayDetails({ stayId }) {
-    const currentOrder = useSelector(storeState => storeState.orderModule.currentOrder)
+    const [currentOrder, setCurrentOrder] = useState(null)
     const stay = useSelector(storeState => storeState.stayModule.stay);
     const isLoading = useSelector(storeState => storeState.stayModule.isLoading);
     const dispatch = useDispatch();
+
 
     const reviews = {
         overall: 3.0,
@@ -124,27 +125,65 @@ export function StayDetails({ stayId }) {
     const stayAmenities = {
         amenities: [
             { name: 'Garden view', icon: "../../public/svg/flower.svg" },
+            { name: 'Courtyard view', icon: "../../public/svg/flower.svg" },
+            { name: 'Backyard', icon: "../../public/svg/flower.svg" },
+            { name: 'Mountain', icon: "../../public/svg/mountain.svg" },
+            { name: 'Pool', icon: "../../public/svg/pool.svg" },
+            { name: 'Doorman', icon: "../../public/svg/doorman.svg" },
+            { name: 'Heating', icon: "../../public/svg/temperature.svg" },
+            { name: 'Washer', icon: "../../public/svg/washer.svg" },
+            { name: 'Elevator', icon: "../../public/svg/elevator.svg" },
+            { name: 'Dryer', icon: "../../public/svg/dryer.svg" },
+            { name: 'Smoke detector', icon: "../../public/svg/smoke-detector.svg" },
+            { name: 'Essentials', icon: "../../public/svg/hygiene-kit.svg" },
+            { name: 'Fire extinguisher', icon: "../../public/svg/extinguisher.svg" },
+            { name: 'Shampoo', icon: "../../public/svg/shampoo.svg" },
+            { name: 'Carbon monoxide detector', icon: "../../public/svg/carbon-monoxide-detector.svg" },
+            { name: 'Paid parking off premises', icon: "../../public/svg/parking.svg" },
+            { name: 'Free street parking', icon: "../../public/svg/parking.svg" },
+            { name: 'Valley view', icon: "../../public/svg/mountain.svg" },
             { name: 'Shared beach access – Beachfront', icon: "../../public/svg/sunset.svg" },
             { name: 'Wifi', icon: "../../public/svg/wifi.svg" },
+            { name: 'Buzzer/wireless intercom', icon: "../../public/svg/telephone.svg" },
+            { name: 'Internet', icon: "../../public/svg/internet.svg" },
+            { name: 'Family/kid friendly', icon: "../../public/svg/family.svg" },
+            { name: 'Air conditioning', icon: "../../public/svg/snow-flake.svg" },
+            { name: 'Wheelchair accessible', icon: "../../public/svg/wheelchair.svg" },
             { name: 'Free parking on premises', icon: "../../public/svg/car.svg" },
             { name: 'Carbon monoxide alarm', icon: "../../public/svg/paw.svg", strike: true },
             { name: 'Sea view', icon: "../../public/svg/sunset.svg" },
+            { name: 'Hair dryer', icon: "../../public/svg/hairdryer.svg" },
             { name: 'Kitchen', icon: "../../public/svg/kitchen-utensil.svg" },
+            { name: 'Dishes and silverware', icon: "../../public/svg/kitchen-utensil.svg" },
             { name: 'Dedicated workspace', icon: "../../public/svg/paw.svg" },
             { name: 'TV', icon: "../../public/svg/tv.svg" },
+            { name: 'Cable TV', icon: "../../public/svg/tv.svg" },
             { name: 'Smoking allowed', icon: "../../public/svg/smoking.svg" },
             { name: 'Pets allowed', icon: "../../public/svg/paw.svg" },
+            { name: 'Pets live on this property', icon: "../../public/svg/paw.svg" },
+            { name: 'Cat(s)', icon: "../../public/svg/paw.svg" },
+            { name: 'First aid kit', icon: "../../public/svg/first-aid.svg" },
             { name: 'Cooking basics', icon: "../../public/svg/kitchen-utensil.svg" },
             { name: 'Private hot tub - available all year', icon: "../../public/svg/paw.svg" },
             { name: 'Smoke alarm', icon: "../../public/svg/paw.svg", strike: true },
+            { name: 'Hangers', icon: "../../public/svg/hangers.svg" },
+            { name: 'Lock on bedroom door', icon: "../../public/svg/lock.svg" },
         ]
     }
 
     useEffect(() => {
         if (stayId) {
             loadStay(stayId)
-            const orderToSave = { ...currentOrder, stayId: stayId }
-            updateCurrentOrder(orderToSave)
+            orderService.queryCurrentOrder()
+                .then((order) => {
+                    setCurrentOrder(order)
+                })
+                .catch((err) => {
+                    console.log('err in loading current order in the stay details', err)
+                })
+            // const orderToSave = { ...currentOrder, stayId: stayId }
+
+            // updateCurrentOrder(orderToSave)
         }
     }, [dispatch, stayId]);
 
@@ -163,7 +202,7 @@ export function StayDetails({ stayId }) {
         }
     }
 
-    if (isLoading || !stay) return <div>Loading...</div>;
+    if (isLoading || !stay) return <StayDetailsSkeleton />;
 
     return (
         <>
@@ -379,22 +418,23 @@ export function StayDetails({ stayId }) {
                     <div className="review-list">
                         {reviewsExtended.map((review, index) => (
                             <div key={index} className="review-card">
-                                <div className="review-header">
+                                {index <= stay.reviews.length - 1 ? <><div className="review-header">
                                     <img src={stay.reviews[index].by.imgUrl} alt={`${review.name}'s profile`} className="review-image" />
                                     <div className="review-details">
                                         <div className="review-name">{review.name}</div>
                                         <div className="review-location">{review.location}</div>
                                     </div>
                                 </div>
-                                <div className="review-rating">
-                                    {Array.from({ length: review.rating }, (_, i) => (
-                                        <img key={i} src={StarIcon}></img>
-                                    ))}
-                                    <span className="review-date">{review.date}</span>
-                                    <span className="review-stay">{review.stay}</span>
-                                </div>
-                                <div className="review-text">{stay.reviews[index].txt}</div>
-                                <div className="review-more">Show more</div>
+                                    <div className="review-rating">
+                                        {Array.from({ length: review.rating }, (_, i) => (
+                                            <img key={i} src={StarIcon}></img>
+                                        ))}
+                                        <span className="review-date">{review.date}</span>
+                                        <span className="review-stay">{review.stay}</span>
+                                    </div>
+                                    <div className="review-text">{stay.reviews[index].txt}</div>
+                                    <div className="review-more">Show more</div></> : ''}
+
                             </div>
                         ))}
                     </div>

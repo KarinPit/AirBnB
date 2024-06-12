@@ -3,22 +3,14 @@ import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
 import FilterCategories from "../cmps/Filters/FilterCategories";
+import { FilterCategoriesSkeleton } from "../cmps/Filters/Skeleton/FilterCategoriesSkeleton";
 import { stayService } from "../services/stay.service.local";
 import { loadStays, setFilterBy } from "../store/actions/stay.actions";
 import AdvancedFilter from "../cmps/Filters/AdvancedFilter";
 import { StayList } from "../cmps/Stay/StayList";
+import { StaysIndexSkeleton } from "../cmps/Stay/Skeletons/StaysIndexSkeleton";
 import { useEffectUpdate } from "../customHooks/useEffectUpdate";
 
-/*
-TO DO:
-// Homepage: TOP categories: Best Rate / Houses / Kitchen  - show all - link to Explore
-// Renders a <StayList> with <StayPreview> with Link to <StayDetails>   url: /stay/123
-// See More => /explore?topRate=true
-// See More => /explore?type=House
-// See More => /explore?amenities=Kitchen
-// Explore page:
-// stayService.query({type: 'House'})
-*/
 
 const StaysIndex = () => {
   const stays = useSelector((storeState) => storeState.stayModule.stays);
@@ -31,6 +23,25 @@ const StaysIndex = () => {
   useEffect(() => {
     setFilterBy(stayService.getFilterFromParams(searchParams));
   }, []);
+
+
+  // Inside your component that renders the category bar
+useEffect(() => {
+  const categoryBar = document.querySelector('.stays-index-category-bar');
+  const headerHeight = document.querySelector('.app-header').offsetHeight;
+
+  const handleScroll = () => {
+    if (window.scrollY > headerHeight) {
+      categoryBar.style.position = 'sticky';
+      categoryBar.style.top = `${headerHeight}px`;
+    } else {
+      categoryBar.style.position = 'static'; 
+    }
+  };
+
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+}, []);
 
   useEffectUpdate(() => {
     if (Object.keys(filterBy).length !== 0) {
@@ -46,13 +57,23 @@ const StaysIndex = () => {
 
   const { category_tag, ...rest } = filterBy;
 
-  if (isLoading) return '';
+  if (isLoading) return (
+    <>
+      <section>
+        <div className="stays-index-category-bar">
+          <FilterCategoriesSkeleton />
+          <AdvancedFilter filterBy={rest} onSetFilter={onSetFilter} />
+        </div>
+        <StaysIndexSkeleton count={20} />
+      </section>
+    </>
+  )
+
 
   return (
     <section>
       <div className="stays-index-category-bar">
         <FilterCategories onSetFilter={onSetFilter} filterBy={category_tag} />
-
         <AdvancedFilter filterBy={rest} onSetFilter={onSetFilter} />
       </div>
       <StayList stays={stays} />

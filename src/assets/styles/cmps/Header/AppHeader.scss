@@ -233,6 +233,14 @@
 
   &.compact-header {
     position: relative;
+    position: relative;
+    position: relative;
+
+    position: relative;    
+    position: relative;  
+    position: relative;
+
+    position: relative;    
 
     .center-row {
       a {
@@ -307,6 +315,14 @@
       align-items: center;
 
     }
+    .mobile-filter-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: 10px;
+      background-color: white; /* Ensure background matches the header */
+    }
   }
 }
 
@@ -324,6 +340,7 @@
     }
   }
 }
+
 
 @media screen and (min-width: $normal-breakpoint) {
   .app-header {
