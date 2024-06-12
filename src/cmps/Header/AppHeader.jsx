@@ -22,7 +22,7 @@ export function AppHeader({ location, isCompact}) {
   const [headerSize, setHeaderSize] = useState('normal');
   const [showFilter, setShowFilter] = useState("");
   const [showRow, setShowRow] = useState("");
-  const [showMinimized, setShowMinimized] = useState("");
+  // const [showMinimized, setShowMinimized] = useState("");
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 744);
   const [showMinimized, setShowMinimized] = useState(false);
   const user = useSelector(storeState => storeState.userModule.user);
