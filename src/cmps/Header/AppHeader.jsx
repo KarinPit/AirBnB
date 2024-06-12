@@ -92,11 +92,6 @@ export function AppHeader({ location, isCompact}) {
         setShowRow("");
         setHeaderSize("scroller-header");
       }
-      //  } else {
-      //   setShowMinimized("hide-filter");
-      //   setShowFilter("");
-      //   setShowRow("");
-      // }
     }
     
     window.addEventListener("scroll", handleScroll);
