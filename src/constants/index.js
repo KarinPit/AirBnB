@@ -1,4 +1,4 @@
-import { GuestFavoritesIcon } from "../services/svg.service";
+import { GuestFavoritesIcon } from "../services/other/svg.service";
 
 export const RoomTypes = [
   {
@@ -69,12 +69,12 @@ export const Amenities = {
         { title: "Paid parking on premises", value: "Paid parking on premises", icon: "/public/assets/img/amenities/paid-parking.svg" },
         { title: "Air conditioning", value: "Air conditioning", icon: "/public/assets/img/amenities/air-conditioning.svg" },
         { title: "Dedicated workspace", value: "Dedicated workspace", icon: "/public/assets/img/amenities/dedicated-workspace.svg" },
-          
+
       ],
     },
     {
       title: "Do you have any standout amenities?",
-      
+
       items: [
         { title: "Pool", value: "Pool", icon: "/public/assets/img/amenities/pool.svg" },
         { title: "Hot tub", value: "Hot tub", icon: "/public/assets/img/amenities/hot-tub.svg" },
@@ -89,18 +89,18 @@ export const Amenities = {
         { title: "Lake access", value: "Lake access", icon: "/public/assets/img/amenities/lake-access.svg" },
         { title: "Beach access", value: "Beach access", icon: "/public/assets/img/amenities/beach-access.svg" },
         { title: "Ski-in/Ski-out", value: "Ski-in/Ski-out", icon: "/public/assets/img/amenities/ski-in-out.jpeg" },
-        { title: "Outdoor shower", value: "Outdoor shower", icon: "/public/assets/img/amenities/outdoor-shower.svg" },          
+        { title: "Outdoor shower", value: "Outdoor shower", icon: "/public/assets/img/amenities/outdoor-shower.svg" },
       ],
     },
     {
       title: "Do you have any of these safety items?",
-      
+
       items: [
         { title: "Smoke alarm", value: "Smoke alarm", icon: "/public/assets/img/amenities/smoke-alarm.svg" },
         { title: "First aid kit", value: "First aid kit", icon: "/public/assets/img/amenities/first-aid-kit.svg" },
         { title: "Fire extinguisher", value: "Fire extinguisher", icon: "/public/assets/img/amenities/fire-extinguisher.svg" },
         { title: "Carbon monoxide alarm", value: "Carbon monoxide alarm", icon: "/public/assets/img/amenities/carbon-monoxide-alarm.svg" },
-          
+
       ],
     },
   ],

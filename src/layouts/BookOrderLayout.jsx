@@ -14,7 +14,7 @@ export default function BookOrderLayout(){
       <main className={`${location === "/" ? "full" : ""}`}>
         <Outlet />
       </main>
-      <AppFooter />
+      <AppFooter/>
     </div>
   );
 };

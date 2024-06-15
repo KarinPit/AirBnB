@@ -24,50 +24,47 @@ export default function TravelerIndex() {
 
   return (
     <div className="reservations">
-      <h2>Reservations</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Status</th>
-            <th>Guests</th>
-            <th>Check-in</th>
-            <th>Check-out</th>
-            <th>Booked</th>
-            <th>Listing</th>
-            <th>Total Payout</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders && orders.map((order, index) => {
-            // console.log(order.buyer._id, user._id);
-            if (order.buyer._id !== user._id) return null; // Only show orders for the current user
-            return (
-              <tr key={order._id || index}>
-                <td className={`status-${order.status.toLowerCase()}`}>{String(order.status)}</td>
-                <td>{order.guests ? Object.entries(order.guests)
-                  .filter(([key, count]) => count > 0)
-                  .map(([key, count]) => count > 0 ? `${count} ${key}` : '')
-                  .join(', ') : ''}</td>
-                <td>{format(order.startDate, 'd.M.yyyy')}</td>
-                <td>{format(order.endDate, 'd.M.yyyy')}</td>
-                <td>{order.stay.name}</td>
-                <td>{order.totalPrice}</td>
-                <td>{order.totalPrice}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <div className="pagination">
-        <label htmlFor="rows-per-page">Rows per page:</label>
-        <select id="rows-per-page">
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="20">20</option>
-        </select>
-        <span>1-4 of 4</span>
-        <button>Prev</button>
-        <button>Next</button>
+      <h1>Welcome, {user.fullname.split(' ')[0]}!</h1>
+      <h2>Trips</h2>
+      <h3>Upcoming reservations</h3>
+
+      <div className='buyer-reservations'>
+        <div className='upcoming'>
+          <div className='order-summary'>
+            <h3>Budapest</h3>
+            <p>Entire apartement hosted by booboo</p>
+          </div>
+
+          <div className='order-dates'>
+            <p>17 Jun- 20 Jun</p>
+            <p>2024</p>
+          </div>
+
+          <div className='order-location'>
+            <p>Budapest, delibalo utca 14</p>
+            <p>Budapest</p>
+            <p>Hungary</p>
+          </div>
+
+          <div className='order-images'>
+            <img></img>
+            <img></img>
+            <img></img>
+          </div>
+        </div>
+
+        <div className='buyer-history'>
+          <h3>WHere you've been</h3>
+
+          <div>
+            <img></img>
+            <div>
+              <h3>Funchal</h3>
+              <p>Hosted by lolo</p>
+              <p>21 Aug 2023- 4 Setp 2023</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )

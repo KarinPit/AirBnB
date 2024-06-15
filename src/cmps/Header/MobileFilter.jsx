@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from "react-redux";
 import FilterStay from '../Header/FilterStay';
 import '../../assets/styles/main.scss';
+import MobileSearchLayout from './MobileSearchLayout';
 
 export default function MobileFilter({ toggleHeaderSize }) {
   const currentOrder = useSelector(storeState => storeState.orderModule.currentOrder);
@@ -15,12 +16,7 @@ export default function MobileFilter({ toggleHeaderSize }) {
     <div className="minimized-mobile-filter-container">
       {isExpanded ? (
         <div className="minimized-mobile-filter-content">
-          <FilterStay
-            isMinimized={true}
-            onSearch={(filters) => {
-              console.log('Search with filters:', filters);
-            }}
-          />
+            <MobileSearchLayout toggleExpand={toggleExpand} /> 
         </div>
       ) : (
         <div className="minimized-mobile-search" onClick={toggleExpand}>

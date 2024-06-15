@@ -1,7 +1,7 @@
 import React from "react";
 
 import CardSelectList from "../../cmps/CardSelect/CardSelectList";
-import { DoorIcon, HomeIcon, SharedRooms } from "../../services/svg.service";
+import { DoorIcon, HomeIcon, SharedRooms } from "../../services/other/svg.service";
 const options = [
   {
     key: "1",

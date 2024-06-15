@@ -1,0 +1,65 @@
+.login-menu {
+    padding-block-start: 24px;
+    border-top: 1px solid rgb(221, 221, 221);
+}
+
+.login-order-preview {
+    margin-block-end: 32px;
+    padding-block-end: 32px;
+    // border-bottom: 1px solid rgb(221, 221, 221);
+
+    .btn-link {
+        margin-block: 24px;
+        font-size: 18px;
+    }
+
+    form {
+
+        input,
+        select {
+            width: 100%;
+            padding: 16px 36px 16px 12px;
+        }
+
+        select {
+            border: 1px solid rgb(221, 221, 221);
+            border-radius: 8px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: transparent;
+            background-image: url("../../../../../public/svg/arrow-down.svg");
+            background-repeat: no-repeat;
+            background-position-x: 98%;
+            background-position-y: 50%;
+        }
+
+        input {
+            width: 1fr;
+            display: block;
+
+            &:nth-child(1) {
+                border: 1px solid rgb(221, 221, 221);
+                border-radius: 8px 8px 0 0;
+            }
+
+            &:nth-child(2) {
+                border: 1px solid rgb(221, 221, 221);
+            }
+
+            &:nth-child(3) {
+                border: 1px solid rgb(221, 221, 221);
+                border-radius: 0 0 8px 8px;
+            }
+        }
+
+        button {
+            margin-block-start: 24px;
+            width: 100%;
+            background-color: rgb(255, 56, 92);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+    }
+}

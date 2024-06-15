@@ -1,9 +1,10 @@
 // actions/order.actions.js
 
-import { orderService } from "../../services/order.service.local.js";
+// import { orderService } from "../../services/order/order.service";
+import { orderService } from "../../services/order/order.service.local";
 import { store } from "../store.js";
 
-import { showErrorMsg } from "../../services/event-bus.service.js";
+import { showErrorMsg } from "../../services/other/event-bus.service.js";
 import {
     SET_ORDERS,
     REMOVE_ORDER,

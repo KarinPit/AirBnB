@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CardSelectList from "../../cmps/CardSelect/CardSelectList";
-import { fetchImages } from "../../services/data.service";
+import { fetchImages } from "../../services/other/data.service";
 
 export default function DescribeStep2({ formik }) {
   const [options, setOptions] = useState([]);

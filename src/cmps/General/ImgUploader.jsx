@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { uploadService } from "../../services/upload.service";
-import { ImageIcon, PlusIcon } from "../../services/svg.service";
+import { uploadService } from "../../services/other/upload.service";
+import { ImageIcon, PlusIcon } from "../../services/other/svg.service";
 
 export function ImgUploader({ onUploaded = null, images = [] }) {
   const [imgData, setImgData] = useState(new Array(6).fill(null));
@@ -46,9 +46,8 @@ export function ImgUploader({ onUploaded = null, images = [] }) {
       {imgData.map((data, index) => (
         <div
           key={index}
-          className={`upload-item ${
-            index === 0 && data?.imgUrl ? "first-upload" : ""
-          }`}
+          className={`upload-item ${index === 0 && data?.imgUrl ? "first-upload" : ""
+            }`}
         >
           {data?.imgUrl ? (
             <img
