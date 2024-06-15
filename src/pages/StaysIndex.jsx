@@ -26,17 +26,19 @@ const StaysIndex = () => {
   // Inside your component that renders the category bar
   useEffect(() => {
     setFilterBy(stayService.getFilterFromParams(searchParams));
-    const categoryBar = document.querySelector('.stays-index-category-bar');
-    const headerHeight = document.querySelector('.app-header').offsetHeight;
+  }, []);
 
-    const handleScroll = () => {
-      if (window.scrollY > headerHeight) {
-        categoryBar.style.position = 'sticky';
-        categoryBar.style.top = `${headerHeight}px`;
-      } else {
-        categoryBar.style.position = 'static';
-      }
-    };
+
+useEffect(() => {
+  const categoryBar = document.querySelector('.stays-index-category-bar');
+  const headerHeight = document.querySelector('.app-header').offsetHeight ;
+  console.log("headerHeight", headerHeight);
+  const handleScroll = () => {
+    if (window.scrollY > headerHeight) {
+      categoryBar.style.position = 'sticky';
+      categoryBar.style.top = '86px';
+    }
+  };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);

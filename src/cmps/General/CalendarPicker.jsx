@@ -34,6 +34,8 @@ export function CalendarPicker({ showCalendarPicker, onChange = (p0) => { } }) {
         localStorage.setItem('currentOrder', JSON.stringify({ range: { start: newRange.start, end: newRange.end } }))
       }
     }
+    // const orderToSave = { ...currentOrder, range: range }
+    localStorage.setItem('currentOrder', JSON.stringify(range))
 
   }
 

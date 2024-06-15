@@ -22,7 +22,6 @@ export function AppHeader({ location, isCompact}) {
   const [headerSize, setHeaderSize] = useState('normal');
   const [showFilter, setShowFilter] = useState("");
   const [showRow, setShowRow] = useState("");
-  // const [showMinimized, setShowMinimized] = useState("");
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 744);
   const [showMinimized, setShowMinimized] = useState(false);
   const user = useSelector(storeState => storeState.userModule.user);
@@ -46,13 +45,13 @@ export function AppHeader({ location, isCompact}) {
         setHeaderSize('full');
         setShowFilter("");
         setShowRow("");
-        setShowMinimized("hide-filter");
+        setShowMinimized(false);
         break;
       case locationProp.includes('/order/'):
         setHeaderSize('compact-header');
         setShowFilter("hide-filter");
         setShowRow("hide-filter");
-        setShowMinimized("hide-filter");
+        setShowMinimized(false);
         break;
       case locationProp.includes('/profile/'):
         setHeaderSize('full');
@@ -63,7 +62,7 @@ export function AppHeader({ location, isCompact}) {
         setHeaderSize('compact-header');
         setShowFilter("hide-filter");
         setShowRow("");
-        setShowMinimized("");
+        setShowMinimized(true);
         break;
       default:
     }
@@ -80,20 +79,18 @@ export function AppHeader({ location, isCompact}) {
     };
     window.addEventListener("resize", handleResize);
     if(isMobile){
-      console.log("mobile");
-      // setShowMinimized("hide-filter");
       setShowFilter("hide-filter");
       setShowRow("");
-      // setHeaderSize("scroller-header");
     }
-    if(locationProp.includes('/') && !locationProp.includes('/order')){
-      if (isScrolling) {
-        setShowMinimized("");
+    if(locationProp.includes('/')){
+      if (isScrolling && !isMobile) {
+        setShowMinimized(true);
         setShowFilter("hide-filter");
         setShowRow("");
         setHeaderSize("scroller-header");
       }
     }
+  
     
     window.addEventListener("scroll", handleScroll);
     return () => {

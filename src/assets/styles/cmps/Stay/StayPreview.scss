@@ -3,6 +3,7 @@
     grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 40px 24px;
     margin: 18px 0 32px 0;
+    
 
     .stay-card {
         position: relative;
@@ -123,9 +124,13 @@
 
 }
 
+@media screen and (max-width: $mobile-breakpoint) {
+}
+
 @media screen and (min-width: $mobile-breakpoint) {
     .stay-list {
         grid-template-columns: repeat(2, minmax(230px, 1fr));
+        
     }
 }
 

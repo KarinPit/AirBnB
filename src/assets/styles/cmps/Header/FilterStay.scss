@@ -36,7 +36,7 @@
 
     .input-group {
       display: grid;
-      grid-template-columns: 280px 150px 150px 280px;
+      grid-template-columns: 280px 150px 150px 268px;
       width: 100%;
       justify-content: space-between;
       align-items: center;
@@ -73,7 +73,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: auto;
+        // width: auto;
         padding: 8px 16px;
         height: 48px;
         background-color: #ff385c;
@@ -161,10 +161,37 @@
     }
   }
 
-  .check-out-container,
-  .guest-box-container,
-  .check-in-container {
+  .check-out-container{
     position: relative;
+    display: flex;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    justify-content: center;
+  }
+
+
+  .dates-text-div {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    align-self: center;
+    flex-direction: column;
+    align-content: center;
+
+    p {
+      margin: 0;
+      font-size: 14px;
+    }
+  }
+  .check-in-container{
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    flex-direction: column;  
+    justify-content: center;
+    align-self: center;
+
   }
 
   .check-out-container::before,
@@ -174,9 +201,7 @@
     position: absolute;
     left: 0;
     top: 25%;
-    /* Adjust to position vertically */
     height: 50%;
-    /* Adjust to change the border height */
     width: 1px;
     background-color: rgb(221, 221, 221);
   }
@@ -187,23 +212,23 @@
     width: 100%;
     padding: 0 32px;
     display: flex;
-    justify-content: start;
-    align-items: center;
 
+  .guest-box-container{
+    position: relative;
+    display: flex;
+  }
 
     .checkIn-box {
       display: flex;
+      line-height: 1.4;
       flex-direction: column;
+      align-self: start;
+      align-items: center;
       justify-content: center;
       line-height: 1.4;
 
       p {
         margin: 0;
-      }
-
-      div {
-        display: flex;
-        // flex-direction: column;
       }
     }
 
@@ -215,11 +240,6 @@
 
       p {
         margin: 0;
-      }
-
-      div {
-        display: flex;
-        flex-direction: column;
       }
     }
 
@@ -300,12 +320,6 @@
     margin-right: 30px;
     flex-direction: column;
 
-    &.focused {
-      background-color: #ffff;
-      // padding: 8px 10px 8px 24px;
-      border-radius: 20px;
-    }
-
     &.unfocused {
       background-color: red;
     }
@@ -329,16 +343,6 @@
       padding: 0 32px 0 0;
       // justify-content: center;
     }
-
-    // .input-label {
-    //   line-height: 16px;
-    //   font-family: AirbnbCereal-Light;
-    //   font-weight: bold;
-    //   font-size: 12px;
-    //   pointer-events: none;
-    //   transition: top 0.2s ease, font-size 0.2s ease;
-    //   background-color: transparent;
-    // }
 
     .guest-picker-dropdown {
       position: relative;
