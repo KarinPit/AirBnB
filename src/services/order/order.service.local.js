@@ -1,7 +1,7 @@
 
 import { storageService } from '../other/async-storage.service.js'
 import { utilService } from '../other/util.service.js'
-import { userService } from '../user/user.service.local.js'
+import { userService } from '../user/user.service.js'
 import { dummyorders } from "../../demoData/index.js";
 
 const STORAGE_KEY = 'order'
@@ -54,7 +54,6 @@ async function save(order) {
 
 async function saveCurrentOrder(order) {
     var savedorder
-    // console.log('POST', order);
     savedorder = await storageService.post(STORAGE_KEY_CURRENT_ORDER, order)
     return savedorder
 }

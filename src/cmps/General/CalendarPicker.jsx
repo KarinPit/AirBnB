@@ -1,12 +1,8 @@
-import React, { useState, useRef } from "react";
-import { updateCurrentOrder } from "../../store/actions/order.actions";
+import React, { useState } from "react";
 import {
   addMonths,
   subMonths,
-  format,
   startOfDay,
-  startOfWeek,
-  addDays,
   isSameDay,
   isBefore,
   isWithinInterval,
@@ -33,10 +29,7 @@ export function CalendarPicker({ showCalendarPicker, onChange = (p0) => { } }) {
       if (isValid(day)) {
         setRange({ start: day, end: null });
         onChange({ start: day, end: null });
-        // localStorage.setItem(
-        //   "currentOrder",
-        //   JSON.stringify({ range: { start: day, end: null } })
-        // );
+
       }
     } else {
       const newRange = {
@@ -47,12 +40,7 @@ export function CalendarPicker({ showCalendarPicker, onChange = (p0) => { } }) {
       if (isValid(newRange.end)) {
         setRange(newRange);
         onChange({ start: newRange.start, end: newRange.end });
-        localStorage.setItem(
-          "currentOrder",
-          JSON.stringify({
-            range: { start: newRange.start, end: newRange.end },
-          })
-        );
+
       }
     }
   }

@@ -1,56 +1,61 @@
-import { useState, useEffect } from 'react'
-import { userService } from '../../services/user/user.service'
-import { ImageUploader } from '../../cmps/General/ImageUploader'
+import { useState, useEffect } from 'react';
+import { userService } from '../../services/user/user.service';
 
 export function LoginSignup(props) {
-    const [credentials, setCredentials] = useState({ username: '', password: '', fullname: '' })
-    const [isSignup, setIsSignup] = useState(false)
-    const [users, setUsers] = useState([])
+    const [credentials, setCredentials] = useState({ username: '', password: '', fullname: '' });
+    const [isSignup, setIsSignup] = useState(false);
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        loadUsers()
-    }, [])
+        loadUsers();
+    }, []);
 
     async function loadUsers() {
-        const users = await userService.getUsers()
-        setUsers(users)
+        const users = await userService.getUsers();
+        setUsers(users);
     }
 
     function clearState() {
-        setCredentials({ username: '', password: '', fullname: '', imgUrl: '' })
-        setIsSignup(false)
+        setCredentials({ username: '', password: '', fullname: '', imgUrl: '' });
+        setIsSignup(false);
     }
 
     function handleChange(ev) {
-        const field = ev.target.name
-        const value = ev.target.value
-        setCredentials({ ...credentials, [field]: value })
+        const field = ev.target.name;
+        const value = ev.target.value;
+        setCredentials({ ...credentials, [field]: value });
     }
 
     function onLogin(ev = null) {
-        if (ev) ev.preventDefault()
-        if (!credentials.username) return
-        props.onLogin(credentials)
-        clearState()
+        if (ev) ev.preventDefault();
+        if (!credentials.username) return;
+        props.onLogin(credentials);
+        clearState();
+        if (props.onUserLogIn) {
+            props.onUserLogIn();
+        }
     }
 
     function onSignup(ev = null) {
-        if (ev) ev.preventDefault()
-        if (!credentials.username || !credentials.password || !credentials.fullname) return
-        props.onSignup(credentials)
-        clearState()
+        if (ev) ev.preventDefault();
+        if (!credentials.username || !credentials.password || !credentials.fullname) return;
+        props.onSignup(credentials);
+        clearState();
+        if (props.onUserLogIn) {
+            props.onUserLogIn();
+        }
     }
 
     function toggleSignup() {
-        setIsSignup(!isSignup)
+        setIsSignup(!isSignup);
     }
 
     function onUploaded(imgUrl) {
-        setCredentials({ ...credentials, imgUrl })
+        setCredentials({ ...credentials, imgUrl });
     }
 
     return (
-        <div className={`login-page ${props.isOrderPreview ? 'login-order-preview': ''}`}>
+        <div className={`login-page ${props.isOrderPreview ? 'login-order-preview' : ''}`}>
             <button className="btn-link" onClick={toggleSignup}>{!isSignup ? 'Switch to signup' : 'Switch to login'}</button>
             {!isSignup && <form className="login-form" onSubmit={onLogin}>
                 <select
@@ -90,19 +95,9 @@ export function LoginSignup(props) {
                         onChange={handleChange}
                         required
                     />
-                    {/* <select
-                        name="userType"
-                        value={credentials.userType}
-                        onChange={handleChange}
-                    >
-                        <option value="">Select User Type</option>
-                        <option value="buyer">Buyer</option>
-                        <option value="seller">Seller</option>
-                    </select> */}
-                    {/* <ImageUploader onUploaded={onUploaded} /> */}
                     <button >Continue</button>
                 </form>}
             </div>
         </div>
-    )
+    );
 }

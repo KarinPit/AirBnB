@@ -176,16 +176,6 @@ export function StayDetails({ stayId }) {
     useEffect(() => {
         if (stayId) {
             loadStay(stayId)
-            // orderService.queryCurrentOrder()
-            //     .then((order) => {
-            //         setCurrentOrder(order)
-            //     })
-            //     .catch((err) => {
-            //         console.log('err in loading current order in the stay details', err)
-            //     })
-            // const orderToSave = { ...currentOrder, stayId: stayId }
-
-            // updateCurrentOrder(orderToSave)
         }
     }, [dispatch, stayId]);
 
@@ -193,20 +183,26 @@ export function StayDetails({ stayId }) {
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 744);
         };
-    
+
         // Initialize isMobile on component mount
         handleResize();
-    
+
         // Add event listener
         window.addEventListener('resize', handleResize);
-    
+
         // Clean up event listener on component unmount
         return () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
-    
-    console.log("isMobile", isMobile);
+
+    useEffect(() => {
+        orderService.queryCurrentOrder().then((order) => {
+            setCurrentOrder(order)
+        }).catch((err) => {
+            console.log('error in loading current order in stayDetails', err);
+        })
+    }, [])
 
 
     function handleScroll() {
@@ -224,41 +220,52 @@ export function StayDetails({ stayId }) {
         }
     }
 
+function handleDateRangeChange(range) {
+    setCurrentOrder(prevOrder => {
+        const updatedOrder = {
+            ...prevOrder,
+            range
+        };
+        orderService.saveCurrentOrder(updatedOrder); // Save the updated order
+        return updatedOrder; // Return the updated order to set the state
+    });
+}
+
     if (isLoading || !stay) return <StayDetailsSkeleton />;
 
     return (
         <>
-        <div className='stay-container'>
-            <div className="stay-header">
-                <h1>{stay.name}</h1>
-                <div className="stay-header-actions">
-                    <a>
-                        <img src={shareIcon}></img>
-                        <p>Share</p>
-                    </a>
-                    <a>
-                        <img src={saveIcon}></img>
-                        <p>Save</p>
-                    </a>
+            <div className='stay-container'>
+                <div className="stay-header">
+                    <h1>{stay.name}</h1>
+                    <div className="stay-header-actions">
+                        <a>
+                            <img src={shareIcon}></img>
+                            <p>Share</p>
+                        </a>
+                        <a>
+                            <img src={saveIcon}></img>
+                            <p>Save</p>
+                        </a>
+                    </div>
                 </div>
-            </div>
 
-            <div className="stay-img-gallery">
-                {stay.imgUrls.map((img, idx) => {
-                    if (idx <= 5) {
-                        return (
-                            <img
-                                key={idx}
-                                src={img}
-                                className={idx === 0 ? "main-img" : ""}
-                                alt={`Description ${idx + 1}`}
-                            />
-                        )
-                    }
-                    return null
-                })}
-                <div className="overlay"></div>
-            </div>
+                <div className="stay-img-gallery">
+                    {stay.imgUrls.map((img, idx) => {
+                        if (idx <= 5) {
+                            return (
+                                <img
+                                    key={idx}
+                                    src={img}
+                                    className={idx === 0 ? "main-img" : ""}
+                                    alt={`Description ${idx + 1}`}
+                                />
+                            )
+                        }
+                        return null
+                    })}
+                    <div className="overlay"></div>
+                </div>
             </div>
 
             <div className="main-desc">
@@ -339,7 +346,7 @@ export function StayDetails({ stayId }) {
                                     <h2>What this place offers</h2>
                                     <div className="place-offers">
                                         {stay.amenities.map((amenity, idx) => {
-                                                  if (isMobile ? idx < 5 : idx < 10) {
+                                            if (isMobile ? idx < 5 : idx < 10) {
                                                 let amenityIcon = stayAmenities.amenities.find(a => a.name === amenity)
                                                 return (<div className="offer" key={idx}>
                                                     {amenityIcon && <img src={amenityIcon.icon}></img>}
@@ -353,7 +360,7 @@ export function StayDetails({ stayId }) {
 
                                 <div>
                                     <div className="order-calendar">
-                                        {currentOrder && currentOrder.range && currentOrder.range.start ?
+                                        {currentOrder && currentOrder.range && currentOrder.range.start && currentOrder.range.end ?
                                             <>
                                                 <h2>{`${intervalToDuration({ start: new Date(currentOrder.range.start), end: new Date(currentOrder.range.end) }).days} nights in ${stay.name}`}</h2>
                                                 <p>{`${format(new Date(currentOrder.range.start), 'MMM d, yyyy')} - ${format(new Date(currentOrder.range.end), 'MMM d, yyyy')}`}</p>
@@ -363,15 +370,14 @@ export function StayDetails({ stayId }) {
                                                 <h2>Select check-in date</h2>
                                                 <p>Add your travel dates for exact pricing</p>
                                             </>}
-                                        <CalendarPicker />
+                                        <CalendarPicker onChange={handleDateRangeChange} />
                                     </div>
                                 </div>
 
                             </div>
                         </div>
                         <div className="order-stay">
-                            <OrderSideBar price={stay.price}
-                            />
+                            <OrderSideBar currentOrder={currentOrder} />
                         </div>
                     </div>
 

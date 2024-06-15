@@ -1,7 +1,7 @@
 // actions/order.actions.js
 
-// import { orderService } from "../../services/order/order.service";
-import { orderService } from "../../services/order/order.service.local";
+import { orderService } from "../../services/order/order.service";
+// import { orderService } from "../../services/order/order.service.local";
 import { store } from "../store.js";
 
 import { showErrorMsg } from "../../services/other/event-bus.service.js";
@@ -59,6 +59,7 @@ export function getActionUpdateOrder(order) {
 export function updateOrder(order) {
     return orderService.save(order)
         .then(savedOrder => {
+            console.log('saving order');
             store.dispatch(getActionUpdateOrder(savedOrder));
             return savedOrder;
         })

@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { format, isValid, intervalToDuration } from 'date-fns';
 
 
-export function OrderSideBar({ price }) {
-
-    const currentOrder = useSelector(storeState => storeState.orderModule.currentOrder);
+export function OrderSideBar({ currentOrder }) {
     const stay = useSelector(storeState => storeState.stayModule.stay);
     const loggedUser = sessionStorage.loggedinUser ? JSON.parse(sessionStorage.loggedinUser) : ''
     const cleaningFee = 10
@@ -21,18 +19,19 @@ export function OrderSideBar({ price }) {
         return String(format(new Date(date), 'dd.MM.yyyy'));
     }
 
-
     return (
         <div className="book-it-sidebar">
             <h2>${stay.price}<span> night</span></h2>
 
             <form>
+
                 <input
                     className="check-in"
                     placeholder={currentOrder && currentOrder.range && currentOrder.range.start ? format(currentOrder.range.start, 'd.M.yyyy') : "CHECK-IN"}
                     value={currentOrder && currentOrder.range && currentOrder.range.start ? format(currentOrder.range.start, 'd.M.yyyy') : 'CHECK-IN'}
                     readOnly
                 />
+
                 <input
                     className="check-out"
                     placeholder={currentOrder && currentOrder.range && currentOrder.range.end ? format(currentOrder.range.end, 'd.M.yyyy') : "CHECK-IN"}
