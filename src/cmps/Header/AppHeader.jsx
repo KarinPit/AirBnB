@@ -79,7 +79,6 @@ export function AppHeader({ location, isCompact}) {
     };
     window.addEventListener("resize", handleResize);
     if(isMobile){
-      console.log("mobile");
       setShowFilter("hide-filter");
       setShowRow("");
     }
@@ -91,6 +90,7 @@ export function AppHeader({ location, isCompact}) {
         setHeaderSize("scroller-header");
       }
     }
+  
     
     window.addEventListener("scroll", handleScroll);
     return () => {

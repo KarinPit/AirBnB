@@ -1,5 +1,5 @@
 
-export default function GuestPicker({ label, count, onDecrease, onIncrease, disableDecrease }) {
+export default function GuestPicker({ label, count, onDecrease, onIncrease, disableDecrease,on }) {
 
   return (
     <div className="guest-picker-option">

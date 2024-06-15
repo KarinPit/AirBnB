@@ -288,21 +288,7 @@ body {
             }
         }
 
-        .order-stay {
-            position: sticky;
-            top: 80px;
-            display: flex;
-            flex-direction: column;
-            width: 33.33333333333333%;
-            max-width: 1120px;
-            margin: 0 0 48px 8.333333333333332%;
-            height: fit-content;
-            z-index: 1;
-            border: 1px solid rgb(221, 221, 221);
-            box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
-            border-radius: 12px;
-            padding: 24px;
-        }
+
 
         .reviews {
             font-family: Arial, sans-serif;
@@ -408,7 +394,7 @@ body {
         .review-list {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            gap:10px;
             margin-block-start: 24px;
             padding-block-end: 24px;
             border-bottom: 1px solid rgba(190, 190, 190, 0.6);
@@ -491,6 +477,21 @@ body {
         }
     }
 }
+.order-stay {
+    position: sticky;
+    top: 80px;
+    display: flex;
+    flex-direction: column;
+    width: 33.33333333333333%;
+    max-width: 1120px;
+    margin: 0 0 48px 8.333333333333332%;
+    height: fit-content;
+    z-index: 1;
+    border: 1px solid rgb(221, 221, 221);
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+    border-radius: 12px;
+    padding: 24px;
+}
 
 .host-profile {
     padding: 20px;
@@ -504,18 +505,16 @@ body {
     .host-card {
         display: flex;
         justify-content: space-evenly;
-        background-color: rgb(240, 239, 233);
         border-radius: 12px;
         gap: 48px;
-        padding: 40px 24px 24px 24px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 24px 24px 24px 24px;
 
         .host-info {
             display: flex;
             justify-content: space-evenly;
             flex-grow: 1;
             max-width: 380px;
-            height: 242px;
+            height: auto;
             background-color: white;
             padding: 32px 24px;
             border-radius: 24px;
@@ -656,5 +655,173 @@ body {
 
     .thing a:hover {
         text-decoration: underline;
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .stay-img-gallery {
+        display: flex;
+        flex-direction: column;
+        order: 1; /* Ensure this is displayed first */
+        img {
+            &:nth-child(1) {
+                width: 90%;
+                contain: paint;
+                grid-column: 1;
+            }
+            &:nth-child(n+2) {
+                display: none;
+            }
+        }
+        .overlay{
+            border-radius: 0px;
+            
+        }
+    }
+
+    
+    .stay-header {
+        margin-top: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-block-end: 16px;
+        order: 2; /* Ensure this is displayed second */
+        
+        h1{
+            font-size: 26px;
+            font-weight: 600;
+        }
+        p{
+            display: none;
+        }
+
+        .stay-header-actions {
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+        }
+    }
+
+   
+
+    .main-desc {
+        padding-block-start: 0px;
+    
+        .stay-desc{
+            h2{
+                font-size: 16px;
+            }
+            p{
+                font-size: 14px;
+            }
+        }
+
+        .review-list{
+            justify-content: initial;
+        }
+    }    
+    .stay-container {
+        display: flex;
+        flex-direction: column; /* This will stack items vertically */
+    }
+
+    .review-summary {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 10px;
+        padding-block-start: 16px;
+        padding-block-end: 24px;
+        border-bottom: 1px solid rgba(190, 190, 190, 0.6);
+    }
+    .host-profile{
+
+        .host-card{
+            display: flex;
+            flex-direction: column;
+        }
+        padding:0;
+        h2{
+            font-size: 22px;        
+        }
+    }
+    .host-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 0;
+        border-bottom: 1px solid rgba(190, 190, 190, 0.6);
+    }
+
+    .more-info {
+        padding-block-start: 16px;
+
+        .main-amenities {
+            flex-direction: column;
+            gap: 20px;
+            border-bottom: 1px solid rgba(190, 190, 190, 0.6);
+            padding-block-end: 16px;
+        }
+
+        .full-desc {
+            padding-block: 16px;
+            border-bottom: 1px solid rgba(190, 190, 190, 0.6);
+        }
+
+        .place-offers-summary {
+            padding-block: 16px;
+            border-bottom: 1px solid rgba(190, 190, 190, 0.6);
+
+            .place-offers {
+                flex-direction: column;
+            
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px 16px;
+            }
+        }
+
+        .order-calendar {
+            padding-block-start: 16px;
+
+            p {
+                padding-block: 4px;
+            }
+        }
+    }
+
+    .reviews {
+        .overall-rating {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .ratings {
+            flex-direction: column;
+            gap: 10px;
+            padding-top: 12px;
+        }
+
+        .rating-category {
+            width: 100%;
+            border-right: none;
+        }
+
+        .review-list {
+            justify-content: initial;
+            flex-direction: column;
+            padding-block-end: 16px;
+        }
+
+        .review-card {
+            width: 100%;
+        }
+    }
+
+    .map-view {
+        padding-block-start: 16px;
     }
 }

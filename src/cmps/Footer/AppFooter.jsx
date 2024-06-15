@@ -1,6 +1,4 @@
 import React from "react";
-import { useLocation } from "react-router";
-import AppFooterMobile from "./AppFooterMobile";
 
 export function AppFooter() {
   return (

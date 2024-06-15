@@ -29,6 +29,8 @@ export function StayDetails({ stayId }) {
     const stay = useSelector(storeState => storeState.stayModule.stay);
     const isLoading = useSelector(storeState => storeState.stayModule.isLoading);
     const dispatch = useDispatch();
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 744);
+
 
 
     const reviews = {
@@ -187,6 +189,26 @@ export function StayDetails({ stayId }) {
         }
     }, [dispatch, stayId]);
 
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 744);
+        };
+    
+        // Initialize isMobile on component mount
+        handleResize();
+    
+        // Add event listener
+        window.addEventListener('resize', handleResize);
+    
+        // Clean up event listener on component unmount
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+    
+    console.log("isMobile", isMobile);
+
+
     function handleScroll() {
         const stickyElement = stickyRef.current;
         const stopPoint = stopPointRef.current;
@@ -206,6 +228,7 @@ export function StayDetails({ stayId }) {
 
     return (
         <>
+        <div className='stay-container'>
             <div className="stay-header">
                 <h1>{stay.name}</h1>
                 <div className="stay-header-actions">
@@ -235,6 +258,7 @@ export function StayDetails({ stayId }) {
                     return null
                 })}
                 <div className="overlay"></div>
+            </div>
             </div>
 
             <div className="main-desc">
@@ -311,7 +335,7 @@ export function StayDetails({ stayId }) {
                                     <h2>What this place offers</h2>
                                     <div className="place-offers">
                                         {stay.amenities.map((amenity, idx) => {
-                                            if (idx < 10) {
+                                                  if (isMobile ? idx < 5 : idx < 10) {
                                                 let amenityIcon = stayAmenities.amenities.find(a => a.name === amenity)
                                                 return (<div className="offer" key={idx}>
                                                     {amenityIcon && <img src={amenityIcon.icon}></img>}
