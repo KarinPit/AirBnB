@@ -22,7 +22,9 @@
   &.order-layout {
     padding-block-start: 24px;
     grid-template-columns: minmax(80px, auto) 1fr 1fr minmax(80px, auto);
-    padding-inline: 0;
+    .minimized-mobile-filter-container {
+      display: none;
+    }
 
     hr {
       position: absolute;
@@ -117,7 +119,6 @@
   &.order-layout {
     padding-block-start: 24px;
     grid-template-rows: auto 1fr auto;
-    padding: 0;
     height: 100vh;
 
     hr {

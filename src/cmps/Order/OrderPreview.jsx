@@ -1,34 +1,27 @@
-import React from 'react';
-import { useState, useEffect, useRef } from 'react';
-import { Link, NavLink, useNavigate, useParams } from 'react-router-dom/dist';
-import { format, intervalToDuration } from 'date-fns'
-
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, NavLink, useNavigate, useParams } from 'react-router-dom';
+import { format, intervalToDuration } from 'date-fns';
 import { showErrorMsg, showSuccessMsg } from '../../services/other/event-bus.service.js';
 import { login, logout, signup } from '../../store/actions/user.actions.js';
 import { saveOrder } from '../../store/actions/order.actions.js';
-import { orderService } from '../../services/order/order.service.local'
-// import { orderService } from '../../services/order/order.service'
-import { stayService } from '../../services/stay/stay.service.local'
-// import { stayService } from '../../services/stay/stay.service'
+import { orderService } from '../../services/order/order.service.local';
+import { stayService } from '../../services/stay/stay.service.local';
 import { LoginSignup } from '../Header/LoginSignup.jsx';
-
 import LeftArrowIcon from '../../../public/svg/arrow-left-black.svg';
-import circleSelect from "../../../public/svg/circle.svg"
-import circleSelected from "../../../public/svg/circle-selected.svg"
-
+import circleSelect from "../../../public/svg/circle.svg";
+import circleSelected from "../../../public/svg/circle-selected.svg";
 
 export default function OrderPreview() {
-  const [currentOrder, setCurrentOrder] = useState(null)
-  const [currentStay, setCurrentStay] = useState(null)
-  const [loggedUser, setLoggedUser] = useState(null)
+  const [currentOrder, setCurrentOrder] = useState(null);
+  const [currentStay, setCurrentStay] = useState(null);
+  const [loggedUser, setLoggedUser] = useState(null);
   const [selectedPayment, setSelectedPayment] = useState(null);
   const imgRef1 = useRef(null);
   const imgRef2 = useRef(null);
   const { stayId } = useParams();
-  const navigate = useNavigate()
-  const cleaningFee = 10
-  const airbnbFee = 25
-
+  const navigate = useNavigate();
+  const cleaningFee = 10;
+  const airbnbFee = 25;
 
   function createOrder() {
     const order = {
@@ -40,8 +33,7 @@ export default function OrderPreview() {
       totalPrice: currentStay.price * intervalToDuration({
         start: currentOrder.range.start,
         end: currentOrder.range.end
-      }).days - cleaningFee - airbnbFee
-      ,
+      }).days - cleaningFee - airbnbFee,
       startDate: currentOrder.range.start,
       endDate: currentOrder.range.end,
       guests: { ...currentOrder.guests },
@@ -52,16 +44,17 @@ export default function OrderPreview() {
       },
       msgs: [],
       status: "pending",
-    }
+    };
 
-    saveOrder(order)
-    navigate(`/profile/buyer/${loggedUser._id}`)
+    saveOrder(order);
+    navigate(`/profile/buyer/${loggedUser._id}`);
   }
 
   async function onLogin(credentials) {
     try {
       const user = await login(credentials);
       showSuccessMsg(`Welcome: ${user.fullname}`);
+      setLoggedUser(user);
     } catch (err) {
       showErrorMsg('Cannot login');
     }
@@ -71,6 +64,7 @@ export default function OrderPreview() {
     try {
       const user = await signup(credentials);
       showSuccessMsg(`Welcome new user: ${user.fullname}`);
+      setLoggedUser(user);
     } catch (err) {
       showErrorMsg('Cannot signup');
     }
@@ -80,6 +74,7 @@ export default function OrderPreview() {
     try {
       await logout();
       showSuccessMsg(`Bye now`);
+      setLoggedUser(null);
     } catch (err) {
       showErrorMsg('Cannot logout');
     }
@@ -88,12 +83,10 @@ export default function OrderPreview() {
   function onSelectPayment(ref) {
     setSelectedPayment((prevSelected) => {
       if (prevSelected === ref.current.className) {
-        // ref.current.src = circleSelect;
         return null;
       } else {
         if (imgRef1.current) imgRef1.current.src = circleSelect;
         if (imgRef2.current) imgRef2.current.src = circleSelect;
-
         ref.current.src = circleSelected;
         return ref.current.className;
       }
@@ -102,30 +95,29 @@ export default function OrderPreview() {
 
   useEffect(() => {
     if ('loggedinUser' in sessionStorage) {
-      const loggedUser = JSON.parse(sessionStorage.loggedinUser)
-      setLoggedUser(loggedUser)
+      const loggedUser = JSON.parse(sessionStorage.loggedinUser);
+      setLoggedUser(loggedUser);
     }
 
     orderService.queryCurrentOrder()
       .then((order) => {
-        setCurrentOrder(order)
+        setCurrentOrder(order);
       })
       .catch((err) => {
-        console.log('err in loading current order in the stay details', err)
-      })
+        console.log('err in loading current order in the stay details', err);
+      });
 
     stayService.getById(stayId)
       .then((stay) => {
-        setCurrentStay(stay)
+        setCurrentStay(stay);
       })
       .catch((err) => {
-        console.log('err in loading current stay in the order preview', err)
-      })
+        console.log('err in loading current stay in the order preview', err);
+      });
 
-  }, []);
+  }, [loggedUser]);
 
-
-  if (!currentStay) return ''
+  if (!currentStay) return '';
 
   return (
     <div className="order-preview">
@@ -133,33 +125,21 @@ export default function OrderPreview() {
         <NavLink to={`/stay/${stayId}`}>
           <img src={LeftArrowIcon}></img>
         </NavLink>
-        <h2>Confirm and pay</h2>
         <div className="trip-summary">
+          <h2>Confirm and pay</h2>
           <div className="trip-details">
             <h3>Your trip</h3>
-
             <div className='trip-info'>
               <div>
-                <p><strong>Dates</strong></p>
-                <p>6.12.2024 - 17.12.2024</p>
-                {/* <p><strong>Dates</strong>: {format(currentOrder.range.start, 'd.MM.yyyy')} - {format(currentOrder.range.end, 'd.MM.yyyy')}</p>
+                <p><strong>Dates</strong>: {format(currentOrder.range.start, 'd.MM.yyyy')} - {format(currentOrder.range.end, 'd.MM.yyyy')}</p>
                 <p><strong>Guests</strong>: {Object.entries(currentOrder.guests)
                   .filter(([key, count]) => count > 0)
                   .map(([key, count]) => count > 0 ? `${count} ${key}` : '')
-                  .join(', ')}</p> */}
-              </div>
-              <button>Edit</button>
-            </div>
-
-            <div className='trip-info'>
-              <div>
-                <p><strong>Guests</strong></p>
-                <p>Adults: 2, children: 1</p>
+                  .join(', ')}</p>
               </div>
               <button>Edit</button>
             </div>
           </div>
-
           <div className="payment-summary">
             <h3>Choose how to pay</h3>
             <div>
@@ -169,7 +149,6 @@ export default function OrderPreview() {
                   <img className="pay-now" ref={imgRef1} src={circleSelect} alt="Pay Now" />
                 </button>
               </div>
-
               <div className={`payment-option ${selectedPayment === 'pay-later' ? 'selected' : ''}`}>
                 <div>
                   <p><strong>Pay part now, part later</strong></p>
@@ -181,15 +160,12 @@ export default function OrderPreview() {
               </div>
             </div>
           </div>
-
           {loggedUser ? <button className="confirm-btn" onClick={createOrder}>Confirm and pay</button> : <div className='login-menu'>
             <h3>Log in or sign up to book</h3>
-            <LoginSignup onLogin={onLogin} onSignup={onSignup} isOrderPreview={true} />
+            <LoginSignup onLogin={onLogin} onSignup={onSignup} onUserLogIn={() => setLoggedUser(JSON.parse(sessionStorage.loggedinUser))} isOrderPreview={true} />
           </div>}
-
         </div>
       </div>
-
       <div className="order-details">
         <div className="stay-details">
           <img src={currentStay.imgUrls[0]} alt={currentStay.name} />
@@ -211,37 +187,29 @@ export default function OrderPreview() {
                   d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z">
                 </path>
               </svg>
-              <p className='stay-reviews'>{currentStay.avgRating.toFixed(1)} ({currentStay.reviews.length} reviews)</p>
+              {/* <p className='stay-reviews'>{currentStay.avgRating.toFixed(1)} ({currentStay.reviews.length} reviews)</p> */}
             </div>
           </div>
         </div>
-
         <div className="stay-info">
           <div className='stay-info-container'>
             <div className='stay-info-container-title'>
               <p>Price details</p>
             </div>
-            {/* <div className='stay-info-price-container'>
-                  <p>Accommodation: ${currentStay.price * intervalToDuration({
-                    start: currentOrder.range.start,
-                    end: currentOrder.range.end
-                  }).days}</p>
-                  <p>Taxes: ${cleaningFee + airbnbFee}</p>
-                  <p>Total: ${currentStay.price * intervalToDuration({
-                    start: currentOrder.range.start,
-                    end: currentOrder.range.end
-                  }).days - cleaningFee - airbnbFee}</p>
-                </div> */}
             <div className='stay-info-price-container'>
-              <p>Accommodation: </p>
+              <p>Accommodation: ${currentStay.price * intervalToDuration({
+                start: new Date(currentOrder.range.start),
+                end: new Date(currentOrder.range.end)
+              }).days}</p>
               <p>Taxes: ${cleaningFee + airbnbFee}</p>
-              <p>Total:</p>
+              <p>Total: ${currentStay.price * intervalToDuration({
+                start: new Date(currentOrder.range.start),
+                end: new Date(currentOrder.range.end)
+              }).days - cleaningFee - airbnbFee}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-
   );
-};
-
+}
