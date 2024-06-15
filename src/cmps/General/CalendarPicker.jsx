@@ -1,40 +1,60 @@
-import React, { useState, useRef } from 'react';
-import { updateCurrentOrder } from '../../store/actions/order.actions'
-import { addMonths, subMonths, format, startOfDay, startOfWeek, addDays, isSameDay, isBefore, isWithinInterval, endOfDay, isAfter, isValid } from 'date-fns';
+import React, { useState, useRef } from "react";
+import { updateCurrentOrder } from "../../store/actions/order.actions";
+import {
+  addMonths,
+  subMonths,
+  format,
+  startOfDay,
+  startOfWeek,
+  addDays,
+  isSameDay,
+  isBefore,
+  isWithinInterval,
+  endOfDay,
+  isAfter,
+  isValid,
+} from "date-fns";
 
 import RightArrowIcon from "../../../public/svg/arrow-right-black.svg";
-import leftArrowIcon from "../../../public/svg/arrow-left-black.svg"
+import leftArrowIcon from "../../../public/svg/arrow-left-black.svg";
 
-
-export function CalendarPicker({ showCalendarPicker, onChange = (p0) => { } }) {
+export function CalendarPicker({ showCalendarPicker, onChange = (p0) => {} }) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [range, setRange] = useState({ start: null, end: null });
   const [hoveredDate, setHoveredDate] = useState(null);
 
-  const nextMonthDate = addMonths(currentDate, 1)
-  let calenderPickerClass = showCalendarPicker ? 'calender-picker-absolute' : 'calendar-picker'
-
+  const nextMonthDate = addMonths(currentDate, 1);
+  let calenderPickerClass = showCalendarPicker
+    ? "calender-picker-absolute"
+    : "calendar-picker";
 
   function onDateClick(day) {
     if (!range.start || (range.start && range.end)) {
       if (isValid(day)) {
-        setRange({ start: day, end: null })
-        onChange({ start: day, end: null })
-        localStorage.setItem('currentOrder', JSON.stringify({ range: { start: day, end: null } }))
+        setRange({ start: day, end: null });
+        onChange({ start: day, end: null });
+        // localStorage.setItem(
+        //   "currentOrder",
+        //   JSON.stringify({ range: { start: day, end: null } })
+        // );
       }
     } else {
       const newRange = {
         start: range.start,
-        end: day < range.start ? null : day
-      }
+        end: day < range.start ? null : day,
+      };
 
       if (isValid(newRange.end)) {
-        setRange(newRange)
-        onChange({ start: newRange.start, end: newRange.end })
-        localStorage.setItem('currentOrder', JSON.stringify({ range: { start: newRange.start, end: newRange.end } }))
+        setRange(newRange);
+        onChange({ start: newRange.start, end: newRange.end });
+        localStorage.setItem(
+          "currentOrder",
+          JSON.stringify({
+            range: { start: newRange.start, end: newRange.end },
+          })
+        );
       }
     }
-
   }
 
   function onDateHover(day) {
@@ -55,57 +75,86 @@ export function CalendarPicker({ showCalendarPicker, onChange = (p0) => { } }) {
 
   function getMonthName(monthNum) {
     const monthNames = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
     ];
 
     if (monthNum >= 0 && monthNum < 12) {
       return monthNames[monthNum];
     } else {
-      throw new Error("Invalid month number. Please provide a number between 0 and 11.");
-    }
-  }
-
-  const renderDays = () => {
-    const days = [];
-    const dateFormat = "EEEE";
-    const startDate = startOfWeek(currentDate);
-
-    for (let i = 0; i < 7; i++) {
-      days.push(
-        <div className="col col-center" key={i}>
-          {format(addDays(startDate, i), dateFormat)}
-        </div>
+      throw new Error(
+        "Invalid month number. Please provide a number between 0 and 11."
       );
     }
-
-    return <div className="days row">{days}</div>;
-  };
+  }
 
   function renderCells(monthDate) {
     const rows = [];
     let days = [];
     let day = 1;
     let date = 1;
-    const firstDay = getStartDayOfMonth(monthDate.getFullYear(), monthDate.getMonth());
-    const monthDays = getDaysInMonth(monthDate.getFullYear(), monthDate.getMonth());
+    const firstDay = getStartDayOfMonth(
+      monthDate.getFullYear(),
+      monthDate.getMonth()
+    );
+    const monthDays = getDaysInMonth(
+      monthDate.getFullYear(),
+      monthDate.getMonth()
+    );
     const today = startOfDay(new Date());
 
     for (let i = 0; i < 7; i++) {
       // loop for first week
       if (i < firstDay) {
-        days.push(<td key={`${monthDate.getMonth()}-${i}`} className='blank-td'></td>);
+        days.push(
+          <td key={`${monthDate.getMonth()}-${i}`} className="blank-td"></td>
+        );
       } else {
-        const currentDateObj = new Date(monthDate.getFullYear(), monthDate.getMonth(), date);
+        const currentDateObj = new Date(
+          monthDate.getFullYear(),
+          monthDate.getMonth(),
+          date
+        );
         const isSelectedStart = isSameDay(currentDateObj, range.start);
         const isSelectedEnd = isSameDay(currentDateObj, range.end);
-        const isInRange = range.start && range.end && isWithinInterval(currentDateObj, { start: startOfDay(range.start), end: endOfDay(range.end) });
+        const isInRange =
+          range.start &&
+          range.end &&
+          isWithinInterval(currentDateObj, {
+            start: startOfDay(range.start),
+            end: endOfDay(range.end),
+          });
         const isPassed = isBefore(startOfDay(currentDateObj), today);
 
         days.push(
           <td
             key={date}
-            className={`col cell ${isSelectedStart ? "selected selected-start" : ''} ${isSelectedEnd ? "selected selected-end" : ''} ${isInRange ? "in-range" : ""} ${isPassed ? "passed" : ""} ${isWithinInterval(currentDateObj, { start: startOfDay(range.start), end: endOfDay(hoveredDate) }) ? 'hovered-date' : ''} ${isSameDay(currentDateObj, hoveredDate) ? 'hover-selected-date' : ''}`}
+            className={`col cell ${
+              isSelectedStart ? "selected selected-start" : ""
+            } ${isSelectedEnd ? "selected selected-end" : ""} ${
+              isInRange ? "in-range" : ""
+            } ${isPassed ? "passed" : ""} ${
+              isWithinInterval(currentDateObj, {
+                start: startOfDay(range.start),
+                end: endOfDay(hoveredDate),
+              })
+                ? "hovered-date"
+                : ""
+            } ${
+              isSameDay(currentDateObj, hoveredDate)
+                ? "hover-selected-date"
+                : ""
+            }`}
             onClick={() => onDateClick(currentDateObj)}
             onMouseEnter={() => onDateHover(currentDateObj)}
             onMouseLeave={() => onDateHover(null)}
@@ -123,16 +172,41 @@ export function CalendarPicker({ showCalendarPicker, onChange = (p0) => { } }) {
       // Loop for each week (7 days)
       for (let i = 0; i < 7; i++) {
         if (date <= monthDays) {
-          const currentDateObj = new Date(monthDate.getFullYear(), monthDate.getMonth(), date);
+          const currentDateObj = new Date(
+            monthDate.getFullYear(),
+            monthDate.getMonth(),
+            date
+          );
           const isSelectedStart = isSameDay(currentDateObj, range.start);
           const isSelectedEnd = isSameDay(currentDateObj, range.end);
-          const isInRange = range.start && range.end && isWithinInterval(currentDateObj, { start: startOfDay(range.start), end: endOfDay(range.end) });
+          const isInRange =
+            range.start &&
+            range.end &&
+            isWithinInterval(currentDateObj, {
+              start: startOfDay(range.start),
+              end: endOfDay(range.end),
+            });
           const isPassed = isBefore(startOfDay(currentDateObj), today);
 
           days.push(
             <td
               key={date}
-              className={`col cell ${isSelectedStart ? "selected selected-start" : ''} ${isSelectedEnd ? "selected selected-end" : ''} ${isInRange ? "in-range" : ""} ${isPassed ? "passed" : ""} ${isWithinInterval(currentDateObj, { start: startOfDay(range.start), end: endOfDay(hoveredDate) }) ? 'hovered-date' : ''} ${isSameDay(currentDateObj, hoveredDate) ? 'hover-selected-date' : ''}`}
+              className={`col cell ${
+                isSelectedStart ? "selected selected-start" : ""
+              } ${isSelectedEnd ? "selected selected-end" : ""} ${
+                isInRange ? "in-range" : ""
+              } ${isPassed ? "passed" : ""} ${
+                isWithinInterval(currentDateObj, {
+                  start: startOfDay(range.start),
+                  end: endOfDay(hoveredDate),
+                })
+                  ? "hovered-date"
+                  : ""
+              } ${
+                isSameDay(currentDateObj, hoveredDate)
+                  ? "hover-selected-date"
+                  : ""
+              }`}
               onClick={() => onDateClick(currentDateObj)}
               onMouseEnter={() => onDateHover(currentDateObj)}
               onMouseLeave={() => onDateHover(null)}
@@ -144,7 +218,7 @@ export function CalendarPicker({ showCalendarPicker, onChange = (p0) => { } }) {
           date++;
         } else {
           // If the date exceeds the number of days in the month, add an empty cell
-          days.push(<td key={Math.random()} className='blank-td'></td>);
+          days.push(<td key={Math.random()} className="blank-td"></td>);
         }
       }
 
@@ -159,20 +233,24 @@ export function CalendarPicker({ showCalendarPicker, onChange = (p0) => { } }) {
   return (
     <>
       <div className={calenderPickerClass}>
-        <table className='current-month'>
+        <table className="current-month">
           <thead>
-            <tr className='prev-month-nav'>
-              <th onClick={() => {
-                const newDate = subMonths(currentDate, 1)
-                if (!isBefore(newDate, new Date())) {
-                  setCurrentDate(subMonths(currentDate, 2))
-                }
-              }}>
+            <tr className="prev-month-nav">
+              <th
+                onClick={() => {
+                  const newDate = subMonths(currentDate, 1);
+                  if (!isBefore(newDate, new Date())) {
+                    setCurrentDate(subMonths(currentDate, 2));
+                  }
+                }}
+              >
                 <img src={leftArrowIcon}></img>
               </th>
-              <th className='month-name'>{`${getMonthName(currentDate.getMonth())} ${currentDate.getFullYear()}`}</th>
+              <th className="month-name">{`${getMonthName(
+                currentDate.getMonth()
+              )} ${currentDate.getFullYear()}`}</th>
             </tr>
-            <tr className='day-names'>
+            <tr className="day-names">
               <th>Su</th>
               <th>Mo</th>
               <th>Tu</th>
@@ -185,15 +263,17 @@ export function CalendarPicker({ showCalendarPicker, onChange = (p0) => { } }) {
           {renderCells(currentDate)}
         </table>
 
-        <table className='next-month'>
+        <table className="next-month">
           <thead>
-            <tr className='next-month-nav'>
-              <th className='month-name'>{`${getMonthName(nextMonthDate.getMonth())} ${nextMonthDate.getFullYear()}`}</th>
+            <tr className="next-month-nav">
+              <th className="month-name">{`${getMonthName(
+                nextMonthDate.getMonth()
+              )} ${nextMonthDate.getFullYear()}`}</th>
               <th onClick={() => setCurrentDate(addMonths(currentDate, 2))}>
                 <img src={RightArrowIcon}></img>
               </th>
             </tr>
-            <tr className='day-names'>
+            <tr className="day-names">
               <th>Su</th>
               <th>Mo</th>
               <th>Tu</th>

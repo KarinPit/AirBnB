@@ -11,7 +11,6 @@ import { StayList } from "../cmps/Stay/StayList";
 import { StaysIndexSkeleton } from "../cmps/Stay/Skeletons/StaysIndexSkeleton";
 import { useEffectUpdate } from "../customHooks/useEffectUpdate";
 
-
 const StaysIndex = () => {
   const stays = useSelector((storeState) => storeState.stayModule.stays);
   const filterBy = useSelector((storeState) => storeState.stayModule.filterBy);
@@ -24,24 +23,23 @@ const StaysIndex = () => {
     setFilterBy(stayService.getFilterFromParams(searchParams));
   }, []);
 
-
   // Inside your component that renders the category bar
-useEffect(() => {
-  const categoryBar = document.querySelector('.stays-index-category-bar');
-  const headerHeight = document.querySelector('.app-header').offsetHeight;
+  // useEffect(() => {
+  //   const categoryBar = document.querySelector(".stays-index-category-bar");
+  //   const headerHeight = document.querySelector(".app-header").offsetHeight;
 
-  const handleScroll = () => {
-    if (window.scrollY > headerHeight) {
-      categoryBar.style.position = 'sticky';
-      categoryBar.style.top = `${headerHeight}px`;
-    } else {
-      categoryBar.style.position = 'static'; 
-    }
-  };
+  //   const handleScroll = () => {
+  //     if (window.scrollY > headerHeight) {
+  //       categoryBar.style.position = "sticky";
+  //       categoryBar.style.top = `${headerHeight}px`;
+  //     } else {
+  //       categoryBar.style.position = "static";
+  //     }
+  //   };
 
-  window.addEventListener('scroll', handleScroll);
-  return () => window.removeEventListener('scroll', handleScroll);
-}, []);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
   useEffectUpdate(() => {
     if (Object.keys(filterBy).length !== 0) {
@@ -57,18 +55,17 @@ useEffect(() => {
 
   const { category_tag, ...rest } = filterBy;
 
-  if (isLoading) return (
-    <>
-      <section>
-        <div className="stays-index-category-bar">
-          <FilterCategoriesSkeleton />
-          <AdvancedFilter filterBy={rest} onSetFilter={onSetFilter} />
-        </div>
-        <StaysIndexSkeleton count={20} />
-      </section>
-    </>
-  )
-
+  // if (isLoading) return (
+  //   <>
+  //     <section>
+  //       <div className="stays-index-category-bar">
+  //         <FilterCategoriesSkeleton />
+  //         <AdvancedFilter filterBy={rest} onSetFilter={onSetFilter} />
+  //       </div>
+  //       <StaysIndexSkeleton count={20} />
+  //     </section>
+  //   </>
+  // )
 
   return (
     <section>
