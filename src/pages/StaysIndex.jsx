@@ -5,12 +5,11 @@ import { loadStays, setFilterBy } from "../store/actions/stay.actions";
 import { useEffectUpdate } from "../customHooks/useEffectUpdate";
 
 import { stayService } from "../services/stay/stay.service";
-import { StayList } from "../cmps/Stay/StayList";
 import { StaysIndexSkeleton } from "../cmps/Stay/Skeletons/StaysIndexSkeleton";
 import FilterCategories from "../cmps/Filters/FilterCategories";
 import { FilterCategoriesSkeleton } from "../cmps/Filters/Skeleton/FilterCategoriesSkeleton";
 import AdvancedFilter from "../cmps/Filters/AdvancedFilter";
-
+import { StayList } from "../cmps/Stay/StayList";
 
 const StaysIndex = () => {
 
@@ -28,21 +27,23 @@ const StaysIndex = () => {
     setFilterBy(stayService.getFilterFromParams(searchParams));
   }, []);
 
+  // Inside your component that renders the category bar
+  // useEffect(() => {
+  //   const categoryBar = document.querySelector(".stays-index-category-bar");
+  //   const headerHeight = document.querySelector(".app-header").offsetHeight;
 
-useEffect(() => {
-  const categoryBar = document.querySelector('.stays-index-category-bar');
-  const headerHeight = document.querySelector('.app-header').offsetHeight ;
-  console.log("headerHeight", headerHeight);
-  const handleScroll = () => {
-    if (window.scrollY > headerHeight) {
-      categoryBar.style.position = 'sticky';
-      categoryBar.style.top = '86px';
-    }
-  };
+  //   const handleScroll = () => {
+  //     if (window.scrollY > headerHeight) {
+  //       categoryBar.style.position = "sticky";
+  //       categoryBar.style.top = `${headerHeight}px`;
+  //     } else {
+  //       categoryBar.style.position = "static";
+  //     }
+  //   };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
   useEffectUpdate(() => {
     if (Object.keys(filterBy).length !== 0) {
@@ -58,18 +59,17 @@ useEffect(() => {
 
   const { category_tag, ...rest } = filterBy;
 
-  if (isLoading) return (
-    <>
-      <section>
-        <div className="stays-index-category-bar">
-          <FilterCategoriesSkeleton />
-          <AdvancedFilter filterBy={rest} onSetFilter={onSetFilter} />
-        </div>
-        <StaysIndexSkeleton count={20} />
-      </section>
-    </>
-  )
-
+  // if (isLoading) return (
+  //   <>
+  //     <section>
+  //       <div className="stays-index-category-bar">
+  //         <FilterCategoriesSkeleton />
+  //         <AdvancedFilter filterBy={rest} onSetFilter={onSetFilter} />
+  //       </div>
+  //       <StaysIndexSkeleton count={20} />
+  //     </section>
+  //   </>
+  // )
 
   return (
     <section>

@@ -1,6 +1,7 @@
 // actions/order.actions.js
 
-import { orderService } from "../../services/order/order.service";
+// import { orderService } from "../../services/order/order.service";
+import { orderService } from "../../services/order/order.service.local";
 import { store } from "../store.js";
 
 import { showErrorMsg } from "../../services/other/event-bus.service.js";
