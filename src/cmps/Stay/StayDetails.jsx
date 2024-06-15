@@ -174,13 +174,13 @@ export function StayDetails({ stayId }) {
     useEffect(() => {
         if (stayId) {
             loadStay(stayId)
-            orderService.queryCurrentOrder()
-                .then((order) => {
-                    setCurrentOrder(order)
-                })
-                .catch((err) => {
-                    console.log('err in loading current order in the stay details', err)
-                })
+            // orderService.queryCurrentOrder()
+            //     .then((order) => {
+            //         setCurrentOrder(order)
+            //     })
+            //     .catch((err) => {
+            //         console.log('err in loading current order in the stay details', err)
+            //     })
             // const orderToSave = { ...currentOrder, stayId: stayId }
 
             // updateCurrentOrder(orderToSave)

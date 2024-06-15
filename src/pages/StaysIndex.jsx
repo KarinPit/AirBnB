@@ -1,18 +1,20 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
-
-import FilterCategories from "../cmps/Filters/FilterCategories";
-import { FilterCategoriesSkeleton } from "../cmps/Filters/Skeleton/FilterCategoriesSkeleton";
-import { stayService } from "../services/stay/stay.service";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, useSearchParams } from "react-router-dom";
 import { loadStays, setFilterBy } from "../store/actions/stay.actions";
-import AdvancedFilter from "../cmps/Filters/AdvancedFilter";
+import { useEffectUpdate } from "../customHooks/useEffectUpdate";
+
+import { stayService } from "../services/stay/stay.service";
 import { StayList } from "../cmps/Stay/StayList";
 import { StaysIndexSkeleton } from "../cmps/Stay/Skeletons/StaysIndexSkeleton";
-import { useEffectUpdate } from "../customHooks/useEffectUpdate";
+import FilterCategories from "../cmps/Filters/FilterCategories";
+import { FilterCategoriesSkeleton } from "../cmps/Filters/Skeleton/FilterCategoriesSkeleton";
+import AdvancedFilter from "../cmps/Filters/AdvancedFilter";
 
 
 const StaysIndex = () => {
+
+  const params = useParams()
   const stays = useSelector((storeState) => storeState.stayModule.stays);
   const filterBy = useSelector((storeState) => storeState.stayModule.filterBy);
   const isLoading = useSelector(
@@ -20,28 +22,25 @@ const StaysIndex = () => {
   );
   const [searchParams, setSearchParams] = useSearchParams();
 
-  useEffect(() => {
-    setFilterBy(stayService.getFilterFromParams(searchParams));
-  }, []);
-
 
   // Inside your component that renders the category bar
-useEffect(() => {
-  const categoryBar = document.querySelector('.stays-index-category-bar');
-  const headerHeight = document.querySelector('.app-header').offsetHeight;
+  useEffect(() => {
+    setFilterBy(stayService.getFilterFromParams(searchParams));
+    const categoryBar = document.querySelector('.stays-index-category-bar');
+    const headerHeight = document.querySelector('.app-header').offsetHeight;
 
-  const handleScroll = () => {
-    if (window.scrollY > headerHeight) {
-      categoryBar.style.position = 'sticky';
-      categoryBar.style.top = `${headerHeight}px`;
-    } else {
-      categoryBar.style.position = 'static'; 
-    }
-  };
+    const handleScroll = () => {
+      if (window.scrollY > headerHeight) {
+        categoryBar.style.position = 'sticky';
+        categoryBar.style.top = `${headerHeight}px`;
+      } else {
+        categoryBar.style.position = 'static';
+      }
+    };
 
-  window.addEventListener('scroll', handleScroll);
-  return () => window.removeEventListener('scroll', handleScroll);
-}, []);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffectUpdate(() => {
     if (Object.keys(filterBy).length !== 0) {

@@ -50,7 +50,7 @@ export function LoginSignup(props) {
     }
 
     return (
-        <div className="login-page">
+        <div className={`login-page ${props.isOrderPreview ? 'login-order-preview': ''}`}>
             <button className="btn-link" onClick={toggleSignup}>{!isSignup ? 'Switch to signup' : 'Switch to login'}</button>
             {!isSignup && <form className="login-form" onSubmit={onLogin}>
                 <select
@@ -61,7 +61,7 @@ export function LoginSignup(props) {
                     <option value="">Select User</option>
                     {users.map(user => <option key={user._id} value={user.username}>{user.fullname}</option>)}
                 </select>
-                <button>Login</button>
+                <button>Continue</button>
             </form>}
 
             <div className="signup-section">
@@ -100,7 +100,7 @@ export function LoginSignup(props) {
                         <option value="seller">Seller</option>
                     </select> */}
                     {/* <ImageUploader onUploaded={onUploaded} /> */}
-                    <button >Signup</button>
+                    <button >Continue</button>
                 </form>}
             </div>
         </div>

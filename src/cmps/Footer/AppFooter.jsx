@@ -2,9 +2,8 @@ import React from "react";
 import { useLocation } from "react-router";
 
 export function AppFooter() {
-  const location = useLocation();
   return (
-    <div className={`app-footer`}>
+    <div className="app-footer">
       <div className="footer-left">
         <p>© 2024 Airbnb, Inc.</p>
         <a href="/terms">Terms</a>

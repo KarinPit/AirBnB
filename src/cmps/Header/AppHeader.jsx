@@ -22,7 +22,7 @@ export function AppHeader({ location, isCompact}) {
   const [headerSize, setHeaderSize] = useState('normal');
   const [showFilter, setShowFilter] = useState("");
   const [showRow, setShowRow] = useState("");
-  const [showMinimized, setShowMinimized] = useState("");
+  // const [showMinimized, setShowMinimized] = useState("");
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 744);
   const [showMinimized, setShowMinimized] = useState(false);
   const user = useSelector(storeState => storeState.userModule.user);
@@ -55,7 +55,7 @@ export function AppHeader({ location, isCompact}) {
         setShowMinimized("hide-filter");
         break;
       case locationProp.includes('/profile/'):
-        setHeaderSize('compact-header');
+        setHeaderSize('full');
         setShowFilter("hide-filter");
         setShowRow("");
         break;
@@ -86,18 +86,13 @@ export function AppHeader({ location, isCompact}) {
       setShowRow("");
       // setHeaderSize("scroller-header");
     }
-    if(locationProp.includes('/')){
+    if(locationProp.includes('/') && !locationProp.includes('/order')){
       if (isScrolling) {
         setShowMinimized("");
         setShowFilter("hide-filter");
         setShowRow("");
         setHeaderSize("scroller-header");
       }
-      //  } else {
-      //   setShowMinimized("hide-filter");
-      //   setShowFilter("");
-      //   setShowRow("");
-      // }
     }
     
     window.addEventListener("scroll", handleScroll);

@@ -32,27 +32,41 @@ export default function RenterIndex() {
     }
   }
 
+
   return (
     <div className="reservations">
-      <h2>Reservations</h2>
+      <h1>Welcome, {user.fullname.split(' ')[0]}!</h1>
+      <h2>Your reservations</h2>
+
+      <div className='order-categories'>
+        <button>checking out(0)</button>
+        <button>Currently hosting (0)</button>
+        <button>Arriving soon (0)</button>
+        <button>Upcoming (0)</button>
+        <button>Pending review (0)</button>
+      </div>
+
       <table>
         <thead>
           <tr>
+            <th>Client name</th>
+            <th>Stay name</th>
             <th>Status</th>
             <th>Guests</th>
             <th>Check-in</th>
             <th>Check-out</th>
-            <th>Booked</th>
-            <th>Listing</th>
-            <th>Total Payout</th>
-            <th>Action</th>
+            <th>Total </th>
+            <th>Actions</th>
           </tr>
         </thead>
+
         <tbody>
           {orders && orders.map((order, index) => {
             if (order.hostId !== user._id) return null;
             return (
               <tr key={order._id || index}>
+                <td>client name</td>
+                <td>{order.stay.name}</td>
                 <td className={`status-${order.status.toLowerCase()}`}>{String(order.status)}</td>
                 <td>{order.guests ? Object.entries(order.guests)
                   .filter(([key, count]) => count > 0)
@@ -60,8 +74,6 @@ export default function RenterIndex() {
                   .join(', ') : ''}</td>
                 <td>{format(order.startDate, 'd.M.yyyy')}</td>
                 <td>{format(order.endDate, 'd.M.yyyy')}</td>
-                <td>{order.stay.name}</td>
-                <td>{order.totalPrice}</td>
                 <td>{order.totalPrice}</td>
                 <td>
                   {order.status === 'pending' ? (
@@ -82,7 +94,8 @@ export default function RenterIndex() {
           })}
         </tbody>
       </table>
-      <div className="pagination">
+
+      {/* <div className="pagination">
         <label htmlFor="rows-per-page">Rows per page:</label>
         <select id="rows-per-page">
           <option value="5">5</option>
@@ -92,7 +105,7 @@ export default function RenterIndex() {
         <span>1-4 of 4</span>
         <button>Prev</button>
         <button>Next</button>
-      </div>
+      </div> */}
     </div>
   )
 }

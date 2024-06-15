@@ -1,86 +1,101 @@
 .main-layout {
-    display: grid;
-    grid-template-columns: minmax(80px, auto) 1fr minmax(80px, auto);
-    grid-template-rows: auto 1fr minmax(80px, auto);
-  
-    &.compact-layout {
-      grid-template-columns: minmax(80px, auto) minmax(auto, 1120px) minmax(80px, auto);
-      padding-inline: 0;
-  
-      hr {
-        position: absolute;
-        top: 70px;
-        width: 100%;
-        border-style: solid;
-        border-width: 1px;
-        border-color: rgba(190, 190, 190, 0.15);
-      }
-    }
-  
-    &.order-layout {
-      padding-block-start: 24px;
-      grid-template-columns: minmax(80px, auto) 1fr 1fr minmax(80px, auto);
-      padding-inline: 0;
-  
-      hr {
-        position: absolute;
-        top: 70px;
-        width: 100%;
-        border-style: solid;
-        border-width: 1px;
-        border-color: rgba(190, 190, 190, 0.15);
-      }
-    }
-  
-    main {
-      grid-row: 2;
-      grid-column: 2;
-    }
-  
-    .app-header {
-      grid-row: 1;
-      grid-column: 2;
-    }
-  
-    .app-footer {
-      grid-row: 3;
-      grid-column: 1/-1;
-    }
-  
-    .full {
-      grid-column: 1 /-1;
-    }
-  
+  display: grid;
+  grid-template-columns: minmax(80px, auto) 1fr minmax(80px, auto);
+  grid-template-rows: auto 1fr minmax(0, auto);
+  min-height: 100vh;
+
+  &.compact-layout {
+    grid-template-columns: minmax(80px, auto) minmax(auto, 1120px) minmax(80px, auto);
+    padding-inline: 0;
+
     hr {
       position: absolute;
-      top: 158px;
+      top: 70px;
       width: 100%;
       border-style: solid;
       border-width: 1px;
       border-color: rgba(190, 190, 190, 0.15);
     }
-  
-    @include for-narrow-layout {
-      &.compact-layout {
-        grid-template-columns: minmax(20px, auto) minmax(auto, 1280px) minmax(20px, auto);
-      }
+  }
+
+  &.order-layout {
+    padding-block-start: 24px;
+    grid-template-rows: auto 1fr auto;
+    padding: 0;
+    height: 100vh;
+
+    hr {
+      position: absolute;
+      top: 70px;
+      width: 100%;
+      border-style: solid;
+      border-width: 1px;
+      border-color: rgba(190, 190, 190, 0.15);
     }
-  
-    @include for-normal-layout {
-      &.compact-layout {
-        grid-template-columns: minmax(0, auto) minmax(auto, 1280px) minmax(0, auto);
-      }
-    }    
-    @include for-normal-layout {
-      &.order-layout {
-        grid-template-columns: minmax(0, auto) minmax(auto, 1400px) minmax(0, auto);
-      }
+
+    .app-header {
+      grid-row: 1;
+      grid-column: 1/-1;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
-  
-    @include for-wide-layout {
-      &>* {
-        padding-inline: 80px;
-      }
+
+    .app-footer {
+      position: relative;
+      background-color: rgb(247, 247, 247);
+      justify-content: space-evenly;
+    }
+
+  }
+
+  main {
+    grid-row: 2;
+    grid-column: 2;
+  }
+
+  .app-header {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .app-footer {
+    grid-row: 3;
+    grid-column: 1/-1;
+  }
+
+  .full {
+    grid-column: 1 /-1;
+  }
+
+  hr {
+    position: absolute;
+    top: 158px;
+    width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(190, 190, 190, 0.15);
+  }
+
+  @include for-narrow-layout {
+    &.compact-layout {
+      grid-template-columns: minmax(20px, auto) minmax(auto, 1280px) minmax(20px, auto);
     }
   }
-  
+
+  @include for-normal-layout {
+    &.compact-layout {
+      grid-template-columns: minmax(0, auto) minmax(auto, 1280px) minmax(0, auto);
+    }
+  }
+
+  @include for-normal-layout {
+    &.order-layout {
+      grid-template-columns: minmax(0, auto) minmax(auto, 1400px) minmax(0, auto);
+    }
+  }
+
+  @include for-wide-layout {
+    &>* {
+      padding-inline: 80px;
+    }
+  }
+}

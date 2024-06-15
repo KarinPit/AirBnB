@@ -2,75 +2,131 @@
   display: flex;
   flex-direction: row;
   justify-content: start;
-  gap: 200px;
+  gap: 80px;
   margin: 20px 0;
+  padding-block-start: 32px;
+  height: 100%;
 
   p {
     margin: 0;
   }
 
+  h3 {
+    font-size: 24px;
+    font-family: AirbnbCereal-Light;
+    display: inline;
+    padding-inline-end: 10px;
+  }
+
+
   .order-summary {
-    display: flex;
-    gap: 50px;
-
-    .order-header {
-      display: block;
-      align-items: center;
-    }
-
-    .order-preview-container {
-      height: 1008px;
-      width: 1280px;
-      align-items: stretch;
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      margin-right: 69px;
-      margin-left: 69px;
-      padding-right: 80px;
-      padding-left: 80px;
-      line-height: 20px;
-      box-sizing: border-box;
-
-      .trip-summary {
-        width: 560px;
-        height: 1008px;
-      }
-
-      .trip-summary-container {
-        margin-block-end: 64px;
-        line-height: 20px;
-      }
-    }
+    display: grid;
+    grid-template-columns: auto minmax(200px, 30vw);
+    grid-template-rows: auto 1fr;
+    align-items: start;
 
     h2 {
-      margin-bottom: 20px;
+      grid-column: 2;
+      grid-row: 1;
+      font-size: 30px;
+      margin: 0;
     }
 
+    img {
+      align-self: center;
+      grid-column: 1;
+      grid-row: 1;
+      width: 20px;
+      height: 20px;
+      margin-inline-end: 20px;
+    }
+
+
     .trip-summary {
+      grid-column: 2;
+      grid-row: 2;
       margin-bottom: 20px;
+      padding-block-start: 32px;
 
       .trip-details {
         margin-block-end: 24px;
+        border-bottom: 1px solid rgb(221, 221, 221);
 
-        h3 {
-          display: inline;
-          padding-inline-end: 10px;
+        .trip-info {
+          display: flex;
+          justify-content: space-between;
+
+          button {
+            text-decoration: underline;
+            font-size: 18px;
+            font-family: AirbnbCereal-Medium;
+          }
+
+          >div p:nth-child(1) {
+            font-family: AirbnbCereal-Book;
+            font-size: 16px;
+          }
+
+          >div p:nth-child(2) {
+            font-family: AirbnbCereal-Light;
+            font-size: 16px;
+          }
+
+          &:nth-of-type(1) {
+            padding-block-start: 18px;
+          }
+
+          &:last-child {
+            padding-block-start: 18px;
+            padding-block-end: 24px;
+          }
         }
+
       }
 
       .payment-summary {
-        margin-bottom: 10px;
+        margin-bottom: 32px;
+
+        >div {
+          margin-block-start: 24px;
+          margin-block-end: 32px;
+          box-shadow: rgb(221, 221, 221) 0px 0px 0px 1px inset;
+          border-radius: 8px;
+
+          .payment-option {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px;
+            box-shadow: rgb(221, 221, 221) 0px 0px 0px 1px inset;
+
+            p {
+              font-size: 16px;
+            }
+
+            img {
+              width: 30px;
+              height: 30px;
+            }
+
+            &.selected {
+              background-color: transparent;
+              color: black;
+              box-shadow: rgb(0, 0, 0) 0px 0px 0px 1px inset;
+            }
+
+            &:first-of-type {
+              border-radius: 8px 8px 0 0;
+            }
+
+            &:last-of-type {
+              border-radius: 0 0 8px 8px;
+            }
+          }
+        }
+
       }
     }
 
-    .price-details {
-      margin-bottom: 20px;
-
-      h3 {
-        margin-bottom: 10px;
-      }
-    }
 
     .confirm-btn {
       background-color: #FF385C;
@@ -84,12 +140,15 @@
   }
 
   .order-details {
-    width: 415.656px;
+    position: sticky;
+    top: 100px;
+    width: 415px;
     min-height: 289px;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     border: 1px solid #ddd;
-    padding: 24px 24px 24px 24px;
+    padding: 24px;
     align-items: center;
     border-bottom-color: rgb(221, 221, 221);
     border-radius: 12px;
