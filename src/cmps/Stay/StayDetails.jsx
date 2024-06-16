@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { intervalToDuration, format } from 'date-fns';
 import { loadStay } from '../../store/actions/stay.actions';
 import { orderService } from '../../services/order/order.service'
+import { updateCurrentOrder } from "../../store/actions/order.actions";
 
 import { StayDetailsSkeleton } from './Skeletons/StayDetailsSkeleton';
 import { OrderSideBar } from "../Order/OrderSideBar"
@@ -220,16 +221,17 @@ export function StayDetails({ stayId }) {
         }
     }
 
-function handleDateRangeChange(range) {
-    setCurrentOrder(prevOrder => {
-        const updatedOrder = {
-            ...prevOrder,
-            range
-        };
-        orderService.saveCurrentOrder(updatedOrder); // Save the updated order
-        return updatedOrder; // Return the updated order to set the state
-    });
-}
+    function handleDateRangeChange(range) {
+        setCurrentOrder(prevOrder => {
+            const updatedOrder = {
+                ...prevOrder,
+                range
+            };
+            updateCurrentOrder(updatedOrder);
+            return updatedOrder;
+        });
+    }
+    
 
     if (isLoading || !stay) return <StayDetailsSkeleton />;
 

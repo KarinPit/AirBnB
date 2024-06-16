@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, NavLink, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { format, intervalToDuration } from 'date-fns';
+
 import { showErrorMsg, showSuccessMsg } from '../../services/other/event-bus.service.js';
 import { login, logout, signup } from '../../store/actions/user.actions.js';
 import { saveOrder } from '../../store/actions/order.actions.js';
-import { orderService } from '../../services/order/order.service.local';
-import { stayService } from '../../services/stay/stay.service.local';
+import { stayService } from '../../services/stay/stay.service';
 import { LoginSignup } from '../Header/LoginSignup.jsx';
+
 import LeftArrowIcon from '../../../public/svg/arrow-left-black.svg';
 import circleSelect from "../../../public/svg/circle.svg";
 import circleSelected from "../../../public/svg/circle-selected.svg";
 
+
 export default function OrderPreview() {
-  const [currentOrder, setCurrentOrder] = useState(null);
+  const [currentOrder, setCurrentOrder] = useState(JSON.parse(localStorage.getItem('currentOrder')));
   const [currentStay, setCurrentStay] = useState(null);
   const [loggedUser, setLoggedUser] = useState(null);
   const [selectedPayment, setSelectedPayment] = useState(null);
@@ -23,6 +25,30 @@ export default function OrderPreview() {
   const cleaningFee = 10;
   const airbnbFee = 25;
 
+  useEffect(() => {
+    setLoggedUser(sessionStorage.loggedinUser ? JSON.parse(sessionStorage.loggedinUser) : null);
+
+    stayService.getById(stayId)
+      .then((stay) => {
+        setCurrentStay(stay);
+      })
+      .catch((err) => {
+        console.log('Error loading current stay in order preview', err);
+      });
+  }, [stayId]);
+
+
+  // function handleReserve() {
+  //   setCurrentOrder(prevOrder => {
+  //     const updatedOrder = {
+  //       ...prevOrder,
+  //       stayId: currentStay._id
+  //     };
+  //     localStorage.setItem('currentOrder', JSON.stringify(updatedOrder));
+  //     return updatedOrder;
+  //   });
+  // }
+
   function createOrder() {
     const order = {
       hostId: currentStay.host._id,
@@ -31,8 +57,8 @@ export default function OrderPreview() {
         fullname: loggedUser.fullname,
       },
       totalPrice: currentStay.price * intervalToDuration({
-        start: currentOrder.range.start,
-        end: currentOrder.range.end
+        start: new Date(currentOrder.range.start),
+        end: new Date(currentOrder.range.end)
       }).days - cleaningFee - airbnbFee,
       startDate: currentOrder.range.start,
       endDate: currentOrder.range.end,
@@ -45,6 +71,8 @@ export default function OrderPreview() {
       msgs: [],
       status: "pending",
     };
+
+    console.log(order);
 
     saveOrder(order);
     navigate(`/profile/buyer/${loggedUser._id}`);
@@ -93,37 +121,13 @@ export default function OrderPreview() {
     });
   }
 
-  useEffect(() => {
-    if ('loggedinUser' in sessionStorage) {
-      const loggedUser = JSON.parse(sessionStorage.loggedinUser);
-      setLoggedUser(loggedUser);
-    }
-
-    orderService.queryCurrentOrder()
-      .then((order) => {
-        setCurrentOrder(order);
-      })
-      .catch((err) => {
-        console.log('err in loading current order in the stay details', err);
-      });
-
-    stayService.getById(stayId)
-      .then((stay) => {
-        setCurrentStay(stay);
-      })
-      .catch((err) => {
-        console.log('err in loading current stay in the order preview', err);
-      });
-
-  }, [loggedUser]);
-
   if (!currentStay) return '';
 
   return (
     <div className="order-preview">
       <div className="order-summary">
         <NavLink to={`/stay/${stayId}`}>
-          <img src={LeftArrowIcon}></img>
+          <img src={LeftArrowIcon} alt="Back" />
         </NavLink>
         <div className="trip-summary">
           <h2>Confirm and pay</h2>
@@ -131,13 +135,20 @@ export default function OrderPreview() {
             <h3>Your trip</h3>
             <div className='trip-info'>
               <div>
-                <p><strong>Dates</strong>: {format(currentOrder.range.start, 'd.MM.yyyy')} - {format(currentOrder.range.end, 'd.MM.yyyy')}</p>
-                <p><strong>Guests</strong>: {Object.entries(currentOrder.guests)
-                  .filter(([key, count]) => count > 0)
-                  .map(([key, count]) => count > 0 ? `${count} ${key}` : '')
-                  .join(', ')}</p>
+                {currentOrder?.range?.start && currentOrder?.range?.end ?
+                  <>
+                    <p><strong>Dates</strong>: {format(new Date(currentOrder.range.start), 'd.MM.yyyy')} - {format(new Date(currentOrder.range.end), 'd.MM.yyyy')}</p>
+                    <button>Edit</button>
+                  </> : ''}
+                {currentOrder?.guests ?
+                  <>
+                    <p><strong>Guests</strong>: {Object.entries(currentOrder.guests)
+                      .filter(([key, count]) => count > 0)
+                      .map(([key, count]) => `${count} ${key}`)
+                      .join(', ')}</p>
+                    <button>Edit</button>
+                  </> : ''}
               </div>
-              <button>Edit</button>
             </div>
           </div>
           <div className="payment-summary">
@@ -162,7 +173,7 @@ export default function OrderPreview() {
           </div>
           {loggedUser ? <button className="confirm-btn" onClick={createOrder}>Confirm and pay</button> : <div className='login-menu'>
             <h3>Log in or sign up to book</h3>
-            <LoginSignup onLogin={onLogin} onSignup={onSignup} onUserLogIn={() => setLoggedUser(JSON.parse(sessionStorage.loggedinUser))} isOrderPreview={true} />
+            <LoginSignup onLogin={onLogin} onSignup={onSignup} isOrderPreview={true} />
           </div>}
         </div>
       </div>
@@ -196,17 +207,18 @@ export default function OrderPreview() {
             <div className='stay-info-container-title'>
               <p>Price details</p>
             </div>
-            <div className='stay-info-price-container'>
-              <p>Accommodation: ${currentStay.price * intervalToDuration({
-                start: new Date(currentOrder.range.start),
-                end: new Date(currentOrder.range.end)
-              }).days}</p>
-              <p>Taxes: ${cleaningFee + airbnbFee}</p>
-              <p>Total: ${currentStay.price * intervalToDuration({
-                start: new Date(currentOrder.range.start),
-                end: new Date(currentOrder.range.end)
-              }).days - cleaningFee - airbnbFee}</p>
-            </div>
+            {currentOrder?.range?.start && currentOrder?.range?.end ?
+              <div className='stay-info-price-container'>
+                <p>Accommodation: ${currentStay.price * intervalToDuration({
+                  start: new Date(currentOrder.range.start),
+                  end: new Date(currentOrder.range.end)
+                }).days}</p>
+                <p>Taxes: ${cleaningFee + airbnbFee}</p>
+                <p>Total: ${currentStay.price * intervalToDuration({
+                  start: new Date(currentOrder.range.start),
+                  end: new Date(currentOrder.range.end)
+                }).days - cleaningFee - airbnbFee}</p>
+              </div> : ''}
           </div>
         </div>
       </div>

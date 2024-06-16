@@ -15,12 +15,22 @@ export const orderService = {
     saveCurrentOrder,
     remove,
     getEmptyOrder,
-    addOrderMsg
+    addOrderMsg,
+    fetchBuyerOrders
 }
 window.cs = orderService
 
 async function query(filterBy = {}) {
     return httpService.get(BASE_URL, filterBy)
+}
+
+async function fetchBuyerOrders(buyerId) {
+    try {
+        const orders = await orderService.query({ buyerId });
+        return orders
+    } catch (error) {
+        console.error('Failed to fetch orders:', error);
+    }
 }
 
 function getById(orderId) {
@@ -59,8 +69,8 @@ async function queryCurrentOrder() {
 }
 
 async function saveCurrentOrder(order) {
-    var savedorder
     // console.log('POST', order);
-    savedorder = await storageService.post(STORAGE_KEY_CURRENT_ORDER, order)
-    return savedorder
+    // savedorder = await storageService.post(STORAGE_KEY_CURRENT_ORDER, order)
+    // console.log(order);
+    localStorage.setItem(STORAGE_KEY_CURRENT_ORDER, order)
 }

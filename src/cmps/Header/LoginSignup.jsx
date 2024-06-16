@@ -95,7 +95,7 @@ export function LoginSignup(props) {
                         onChange={handleChange}
                         required
                     />
-                    <button >Continue</button>
+                    <button>Continue</button>
                 </form>}
             </div>
         </div>

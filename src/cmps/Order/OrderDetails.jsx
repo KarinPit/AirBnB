@@ -7,7 +7,7 @@ import { updateCurrentOrder } from '../../store/actions/order.actions';
 
 
 export function OrderDetails({ price }) {
-    
+
     const currentOrder = useSelector(storeState => storeState.orderModule.currentOrder);
     const stay = useSelector(storeState => storeState.stayModule.stay);
 
@@ -19,10 +19,12 @@ export function OrderDetails({ price }) {
         return String(format(new Date(date), 'dd.MM.yyyy'));
     }
 
-    function handleReserve() {
-        console.log('reserving');
-    }
-    
+    // function handleReserve() {
+    //     const orderToSave = { ...currentOrder, stayId: stay._id }
+    //     console.log(orderToSave);
+    //     updateCurrentOrder(orderToSave)
+    // }
+
     function handleDateChange(event, type) {
         const value = event.target.value;
         const parsedDate = parse(value, 'dd.MM.yyyy', new Date());
@@ -49,7 +51,7 @@ export function OrderDetails({ price }) {
             <form>
                 <input
                     className="check-in"
-                    placeholder={formatDate('startDate')? formatDate('startDate') : "CHECK-IN"}
+                    placeholder={formatDate('startDate') ? formatDate('startDate') : "CHECK-IN"}
                     value={formatDate('startDate')}
                     onChange={(e) => handleDateChange(e, 'startDate')}
                 />
@@ -61,10 +63,10 @@ export function OrderDetails({ price }) {
                 />
                 <input className="guests" placeholder="GUESTS"
                     value={currentOrder.guestCount}
-                    onChange={(e) => handleGuestChange(e,'guestCount')} />
+                    onChange={(e) => handleGuestChange(e, 'guestCount')} />
             </form>
             <Link to={`/order/${stay._id}`}>
-                <button onClick={handleReserve}>Reserve</button>
+                <button >Reserve</button>
             </Link>
             <p>You won't be charged yet</p>
 

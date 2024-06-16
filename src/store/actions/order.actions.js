@@ -70,16 +70,16 @@ export function updateOrder(order) {
 }
 
 export function updateCurrentOrder(order) {
-    return orderService.saveCurrentOrder(order)
-        .then(savedOrder => {
-            store.dispatch({ type: SET_CURRENT_ORDER, order });
-            return savedOrder;
-        })
-        .catch(err => {
-            console.log('Cannot save order', err);
-            throw err;
-        });
-
+    localStorage.setItem("currentOrder", JSON.stringify(order));
+    store.dispatch({ type: SET_CURRENT_ORDER, order });
+    // return orderService.saveCurrentOrder(order)
+    //     .then(savedOrder => {
+    //         return savedOrder;
+    //     })
+    //     .catch(err => {
+    //         console.log('Cannot save order', err);
+    //         throw err;
+    //     });
 }
 
 export async function saveOrder(order) {

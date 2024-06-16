@@ -52,7 +52,7 @@ export function FilterStay({ isMinimize, changeMinimizeFilter }) {
   });
 
   useEffect(() => {
-    loadCurrentOrder();
+    // loadCurrentOrder();
   }, []);
 
   useEffect(() => {
