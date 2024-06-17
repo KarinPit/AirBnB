@@ -102,8 +102,9 @@
 
 
   &.compact-layout {
-    grid-template-columns: minmax(80px, auto) minmax(auto, 1120px) minmax(80px, auto);
+    grid-template-columns: minmax(20px, auto) minmax(auto, 1120px) minmax(20px, auto);
     padding-inline: 0;
+    padding-block-start: 20px;
 
     hr {
       position: absolute;

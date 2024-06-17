@@ -139,7 +139,7 @@
         justify-content: flex-end;
         a {
           display: flex;
-          padding: 12px;
+          padding-block: 10px;
           align-items: center;
         }
         .language {
@@ -229,7 +229,8 @@
     width: 200px;
     height: auto;
     z-index: 10005;
-    padding-block: 5px;
+    padding: 10px;
+    // padding-block: 5px;
 
     div {
       width: 100%;
@@ -260,6 +261,10 @@
         border: 1px solid rgb(221, 221, 221);
         border-radius: 5px;
       }
+    }
+
+    .extra-options {
+      padding-block-start: 10px;
     }
   }
 }

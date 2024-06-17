@@ -48,7 +48,7 @@ export default function RenterIndex() {
           <div className="order-card" key={order._id}>
             <div className="order-summary">
               <h3>{order.stay.name}</h3>
-              <p>Entire apartment hosted by {order.owner.fullname}</p>
+              <p>Order placed by {order.buyer.fullname}</p>
             </div>
             <div className="order-dates">
               <p>{format(new Date(order.startDate), 'dd MMM')} - {format(new Date(order.endDate), 'dd MMM')}</p>

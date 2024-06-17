@@ -11,16 +11,25 @@ const MainStayerLayout = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
-  useEffect(() => {
-    let lastScrollTop = 0;
+  let lastScrollTop = 0;
 
-    const handleScroll = () => {
-      setIsHeaderCompact(window.scrollY > 0);
-    };
-    // handleResize();
+  const handleScroll = () => {
+    setIsHeaderCompact(window.scrollY > 0);
+  };
+
+  const handleResize = () => {
+    setIsMobile(window.innerWidth < 850);
+  };
+
+  useEffect(() => {
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("resize", handleResize)
+    }
   }, []);
 
   return (
