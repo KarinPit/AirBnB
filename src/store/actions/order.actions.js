@@ -84,6 +84,7 @@ export function updateCurrentOrder(order) {
 
 export async function saveOrder(order) {
     try {
+        console.log(order._id);
         const type = order._id ? UPDATE_ORDER : ADD_ORDER;
         const savedOrder = await orderService.save(order);
         store.dispatch({ type, order: savedOrder });
