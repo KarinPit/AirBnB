@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loadOrders } from '../store/actions/order.actions';
-import { orderService } from '../services/order/order.service';
 import { format } from 'date-fns';
+import { socketService, SOCKET_EVENT_ORDER_ADDED, SOCKET_EVENT_ORDER_UPDATED, SOCKET_EVENT_ORDER_REMOVED } from '../services/other/socket.service';
+
 
 export default function TravelerIndex() {
   const user = useSelector(storeState => storeState.userModule.user);
   const orders = useSelector(storeState => storeState.orderModule.orders)
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!sessionStorage.loggedinUser) {
@@ -18,7 +20,23 @@ export default function TravelerIndex() {
     else {
       loadOrders({ buyerId: user._id })
     }
-  }, [user, navigate])
+
+    function handleOrderChange() {
+      if (user) {
+        loadOrders({ buyerId: user._id })
+      }
+    };
+
+    socketService.on(SOCKET_EVENT_ORDER_ADDED, handleOrderChange);
+    socketService.on(SOCKET_EVENT_ORDER_UPDATED, handleOrderChange);
+    socketService.on(SOCKET_EVENT_ORDER_REMOVED, handleOrderChange);
+
+    return () => {
+      socketService.off(SOCKET_EVENT_ORDER_ADDED, handleOrderChange);
+      socketService.off(SOCKET_EVENT_ORDER_UPDATED, handleOrderChange);
+      socketService.off(SOCKET_EVENT_ORDER_REMOVED, handleOrderChange);
+    };
+  }, [user, navigate, dispatch])
 
 
   if (!orders) return ''

@@ -68,6 +68,24 @@
 
     }
 
+    .order-status {
+      select {
+        width:100px;
+        padding: 10px;
+        border: 1px solid rgb(221, 221, 221);
+        border-radius: 8px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: transparent;
+        background-image: url("../../../../../public/svg/arrow-down.svg");
+        background-repeat: no-repeat;
+        background-position-x: 85%;
+        background-position-y: 50%;
+        background-size: 15px;
+    }
+
+    }
 
     .order-images {
       display: grid;
@@ -201,25 +219,25 @@
     }
   }
 
-  .pagination {
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
+  // .pagination {
+  //   margin-top: 20px;
+  //   display: flex;
+  //   align-items: center;
 
-    label {
-      margin-right: 10px;
-    }
+  //   label {
+  //     margin-right: 10px;
+  //   }
 
-    select {
-      margin-right: 20px;
-    }
+  //   select {
+  //     margin-right: 20px;
+  //   }
 
-    span {
-      margin-right: 20px;
-    }
+  //   span {
+  //     margin-right: 20px;
+  //   }
 
-    button {
-      margin-right: 10px;
-    }
-  }
+  //   button {
+  //     margin-right: 10px;
+  //   }
+  // }
 }

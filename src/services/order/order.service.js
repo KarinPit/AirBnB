@@ -39,6 +39,7 @@ function getById(orderId) {
 
 async function remove(orderId) {
     return httpService.delete(BASE_URL + orderId)
+    
 }
 async function save(order) {
     var savedOrder
