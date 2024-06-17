@@ -16,10 +16,11 @@ import {
     SET_CURRENT_ORDER
 } from "../reducers/order.reducer.js";
 
-export async function loadOrders() {
+export async function loadOrders(filterBy) {
     store.dispatch({ type: SET_IS_LOADING, isLoading: true });
     try {
-        const orders = await orderService.query();
+        const orders = await orderService.query(filterBy);
+        console.log(orders);
         store.dispatch({ type: SET_ORDERS, orders });
     } catch (err) {
         console.error("OrderActions: err in loadOrders", err);

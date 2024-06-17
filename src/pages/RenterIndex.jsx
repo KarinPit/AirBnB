@@ -19,7 +19,7 @@ export default function RenterIndex() {
       navigate("/")
     }
     else {
-      loadOrders()
+      loadOrders({hostId: user._id})
     }
   }, [user, navigate])
 
@@ -32,80 +32,55 @@ export default function RenterIndex() {
     }
   }
 
-
   return (
     <div className="reservations">
-      <h1>Welcome, {user.fullname.split(' ')[0]}!</h1>
-      <h2>Your reservations</h2>
+      <h1>Welcome, {user?.fullname.split(' ')[0]}!</h1>
+      {/* <h2>Trips</h2> */}
+      <h2>Upcoming reservations</h2>
 
-      <div className='order-categories'>
-        <button>checking out(0)</button>
-        <button>Currently hosting (0)</button>
-        <button>Arriving soon (0)</button>
-        <button>Upcoming (0)</button>
-        <button>Pending review (0)</button>
+      <div className="buyer-reservations">
+        {orders && orders.map((order, idx) => (
+          <div className="order-card" key={order._id}>
+            <div className="order-summary">
+              <h3>{order.stay.name}</h3>
+              <p>Entire apartment hosted by {order.owner.fullname}</p>
+            </div>
+
+            <div className="order-dates">
+              <p>{format(new Date(order.startDate), 'dd MMM')} - {format(new Date(order.endDate), 'dd MMM')}</p>
+              <p>{format(new Date(order.startDate), 'yyyy')}</p>
+            </div>
+
+            <div className='order-status'>
+              {order.status === 'pending' ? (
+                <select
+                  value={order.status}
+                  onChange={(e) => onUpdateOrder(order, e.target.value)}
+                >
+                  <option value="Pending">Pending</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Declined">Declined</option>
+                </select>
+              ) : <p>{order.status}</p>}
+            </div>
+
+            <div className="order-location">
+              <p>{order.stayDetails.loc.address}</p>
+            </div>
+
+            <div className="order-images">
+              {order.stayDetails.imgUrls.length > 0 && (
+                <div className="main-image">
+                  <img src={order.stayDetails.imgUrls[0]} alt="Main Image" />
+                </div>
+              )}
+              {order.stayDetails.imgUrls.slice(1, 3).map((imgUrl, imgIdx) => (
+                <img key={imgIdx} src={imgUrl} alt={`Image ${imgIdx + 2}`} />
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Client name</th>
-            <th>Stay name</th>
-            <th>Status</th>
-            <th>Guests</th>
-            <th>Check-in</th>
-            <th>Check-out</th>
-            <th>Total </th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {orders && orders.map((order, index) => {
-            if (order.hostId !== user._id) return null;
-            return (
-              <tr key={order._id || index}>
-                <td>client name</td>
-                <td>{order.stay.name}</td>
-                <td className={`status-${order.status.toLowerCase()}`}>{String(order.status)}</td>
-                <td>{order.guests ? Object.entries(order.guests)
-                  .filter(([key, count]) => count > 0)
-                  .map(([key, count]) => count > 0 ? `${count} ${key}` : '')
-                  .join(', ') : ''}</td>
-                <td>{format(order.startDate, 'd.M.yyyy')}</td>
-                <td>{format(order.endDate, 'd.M.yyyy')}</td>
-                <td>{order.totalPrice}</td>
-                <td>
-                  {order.status === 'pending' ? (
-                    <select
-                      value={order.status}
-                      onChange={(e) => onUpdateOrder(order, e.target.value)}
-                    >
-                      <option value="Pending">Pending</option>
-                      <option value="Approved">Approved</option>
-                      <option value="Declined">Declined</option>
-                    </select>
-                  ) : (
-                    order.status
-                  )}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-
-      {/* <div className="pagination">
-        <label htmlFor="rows-per-page">Rows per page:</label>
-        <select id="rows-per-page">
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="20">20</option>
-        </select>
-        <span>1-4 of 4</span>
-        <button>Prev</button>
-        <button>Next</button>
-      </div> */}
     </div>
   )
 }
