@@ -32,6 +32,10 @@ export default function RenterIndex() {
     }
   }
 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
+
   return (
     <div className="reservations">
       <h1>Welcome, {user?.fullname.split(' ')[0]}!</h1>
@@ -57,11 +61,11 @@ export default function RenterIndex() {
                   value={order.status}
                   onChange={(e) => onUpdateOrder(order, e.target.value)}
                 >
-                  <option value="Pending">Pending</option>
-                  <option value="Approved">Approved</option>
-                  <option value="Declined">Declined</option>
+                  <option value="pending">Pending</option>
+                  <option value="approved">Approved</option>
+                  <option value="declined">Declined</option>
                 </select>
-              ) : <p>{order.status}</p>}
+              ) : <p className={`${order.status}`}>{capitalizeFirstLetter(order.status)}</p>}
             </div>
 
             <div className="order-location">

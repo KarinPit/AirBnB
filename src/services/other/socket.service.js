@@ -7,9 +7,10 @@ export const SOCKET_EMIT_SET_TOPIC = 'chat-set-topic'
 export const SOCKET_EMIT_USER_WATCH = 'user-watch'
 export const SOCKET_EMIT_USER_UNWATCH = 'user-unwatch'
 
-// export const SOCKET_EVENT_CAR_ADDED = 'car-added'
-// export const SOCKET_EVENT_CAR_REMOVED = 'car-removed'
-// export const SOCKET_EVENT_CAR_UPDATED = 'car-updated'
+export const SOCKET_EVENT_ORDER_LOADED = 'order-loaded'
+export const SOCKET_EVENT_ORDER_ADDED = 'order-added'
+export const SOCKET_EVENT_ORDER_REMOVED = 'order-removed'
+export const SOCKET_EVENT_ORDER_UPDATED = 'order-updated'
 
 export const SOCKET_EVENT_USER_UPDATED = 'user-updated'
 export const SOCKET_EVENT_REVIEW_ADDED = 'review-added'

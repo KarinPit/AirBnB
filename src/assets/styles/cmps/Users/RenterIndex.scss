@@ -1,3 +1,21 @@
+.order-status {
+  place-content: start;
+  grid-column: 1;
+  grid-row: 2;
+
+  p {
+    &.pending {
+      color: orange;
+    }
+    &.approved {
+      color: green;
+    }
+    &.declined {
+      color: red;
+    }
+  }
+}
+
 .reservations {
   display: flex;
   flex-direction: column;
@@ -33,12 +51,6 @@
       grid-column: 1/ 4;
       grid-row: 1;
       // background-color: yellow;
-    }
-
-    .order-status {
-      place-content: start;
-      grid-column: 1;
-      grid-row: 2;
     }
 
     .order-location {
