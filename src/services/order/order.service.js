@@ -20,7 +20,7 @@ export const orderService = {
 }
 window.cs = orderService
 
-async function query(filterBy = {}) {
+async function query(filterBy) {
     return httpService.get(BASE_URL, filterBy)
 }
 
@@ -39,6 +39,7 @@ function getById(orderId) {
 
 async function remove(orderId) {
     return httpService.delete(BASE_URL + orderId)
+    
 }
 async function save(order) {
     var savedOrder
