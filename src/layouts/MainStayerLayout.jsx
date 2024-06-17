@@ -26,11 +26,9 @@ const MainStayerLayout = () => {
   return (
     <div className={`main-layout ${location === "/" ? "" : "compact-layout"}`}>
       <main className={`${location === "/" ? "full" : ""}`}>
-        {!(isMobile && location.includes("/stay/")) && <AppHeader location={location} isCompact={isHeaderCompact} />}
-        <Outlet />
+      {!(isMobile && location.includes("/stay/")) && !(location.includes("profile/renter") || location.includes("profile/buyer")) && <AppHeader location={location} isCompact={isHeaderCompact} />}        <Outlet />
       </main>
-      {(isMobile ? <AppFooterMobile isVisible={isVisible} /> : <AppFooter />)}
-    </div>
+      {(!location.includes("profile/renter") && !location.includes("profile/buyer")) && (isMobile ? <AppFooterMobile isVisible={isVisible} /> : <AppFooter />)}    </div>
   );
 }
 export default MainStayerLayout;

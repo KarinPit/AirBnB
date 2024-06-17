@@ -5,7 +5,7 @@
   padding-inline: 40px;
 
   &.compact-layout {
-    grid-template-columns: minmax(80px, auto) minmax(auto, 1120px) minmax(80px, auto);
+    grid-template-columns: minmax(50px, auto) minmax(auto, 1120px) minmax(50px, auto);
     padding-inline: 0;
 
     hr {
@@ -102,7 +102,6 @@
 
 
   &.compact-layout {
-    grid-template-columns: minmax(80px, auto) minmax(auto, 1120px) minmax(80px, auto);
     padding-inline: 0;
 
     hr {
