@@ -138,7 +138,7 @@ export default function OrderPreview() {
                 {currentOrder?.range?.start && currentOrder?.range?.end ?
                   <>
                     <p><strong>Dates</strong>: {format(new Date(currentOrder.range.start), 'd.MM.yyyy')} - {format(new Date(currentOrder.range.end), 'd.MM.yyyy')}</p>
-                    <button>Edit</button>
+                    {/* <button>Edit</button> */}
                   </> : ''}
                 {currentOrder?.guests ?
                   <>
@@ -146,16 +146,17 @@ export default function OrderPreview() {
                       .filter(([key, count]) => count > 0)
                       .map(([key, count]) => `${count} ${key}`)
                       .join(', ')}</p>
-                    <button>Edit</button>
+                    {/* <button>Edit</button> */}
                   </> : ''}
               </div>
             </div>
           </div>
           <div className="payment-summary">
             <h3>Choose how to pay</h3>
+            <br></br>
             <div>
               <div className={`payment-option ${selectedPayment === 'pay-now' ? 'selected' : ''}`}>
-                <p><strong>Pay $1500 now</strong></p>
+                <p><strong>Pay the full price now</strong></p>
                 <button onClick={() => onSelectPayment(imgRef1)}>
                   <img className="pay-now" ref={imgRef1} src={circleSelect} alt="Pay Now" />
                 </button>
@@ -163,7 +164,7 @@ export default function OrderPreview() {
               <div className={`payment-option ${selectedPayment === 'pay-later' ? 'selected' : ''}`}>
                 <div>
                   <p><strong>Pay part now, part later</strong></p>
-                  <p>$774.09 due today, $774.09 on Jun 20, 2024. No extra fees.</p>
+                  {/* <p>$774.09 due today, $774.09 on Jun 20, 2024. No extra fees.</p> */}
                 </div>
                 <button onClick={() => onSelectPayment(imgRef2)}>
                   <img className="pay-later" ref={imgRef2} src={circleSelect} alt="Pay Later" />

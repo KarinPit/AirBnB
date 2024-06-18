@@ -7,14 +7,14 @@ export function StayDetailsSkeleton() {
     return (
         <>
             <div className="skeleton-stay-header">
-                <h1><Skeleton height={30} width={500} /></h1>
+                <h1><Skeleton height={30} width={600} /></h1>
             </div>
 
             <div className="skeleton-stay-img-gallery">
                 {Array(6).fill(0).map((img, idx) => {
                     if (idx <= 5) {
                         return (
-                            <Skeleton key={idx} width={idx === 0 ? 550 : 270} height={idx === 0 ? 550 : 270} />
+                            <Skeleton key={idx} width={idx === 0 ? 620 : 310} height={idx === 0 ? 550 : 270} />
                         )
                     }
                     return null

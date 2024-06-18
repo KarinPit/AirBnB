@@ -59,17 +59,17 @@ const StaysIndex = () => {
 
   const { category_tag, ...rest } = filterBy;
 
-  // if (isLoading) return (
-  //   <>
-  //     <section>
-  //       <div className="stays-index-category-bar">
-  //         <FilterCategoriesSkeleton />
-  //         <AdvancedFilter filterBy={rest} onSetFilter={onSetFilter} />
-  //       </div>
-  //       <StaysIndexSkeleton count={20} />
-  //     </section>
-  //   </>
-  // )
+  if (isLoading) return (
+    <>
+      <section>
+        <div className="stays-index-category-bar">
+          <FilterCategoriesSkeleton />
+          <AdvancedFilter filterBy={rest} onSetFilter={onSetFilter} />
+        </div>
+        <StaysIndexSkeleton count={20} />
+      </section>
+    </>
+  )
 
   return (
     <section>
