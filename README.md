@@ -9,11 +9,13 @@ This project is a clone of Airbnb, developed using React and Vite. It's designed
 - Property details view with image gallery.
 - User profile and listings management.
 - Interactive map to explore properties.
-
+- Real-time Updates: WebSockets enable instant updates to property listings, availability, and user interactions.
+  
 ## Technology Stack
 
 - **Frontend:** React,Scss.
-- **Backend Integration:** Example API calls are demonstrated, ready to be integrated with real backends.
+- **Backend Integration:** MongoDB (for data storage), Node.js (for the server), Express.js (for API endpoints)
+- **WebSockets:** Socket.IO for real-time communication between the client and server.
 - **Map Integration:** Api for interactive maps.
 - **State Management:** React Redux for global state management, demonstrating a scalable approach beyond simple use cases.
 
@@ -29,3 +31,5 @@ Idan ben abu
 - React documentation
 - Vite documentation
 - Scss
+- MongoDB documentation
+- Socket.IO documentation
